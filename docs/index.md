@@ -4,6 +4,8 @@ A set of libraries for communicating with industrial PLCs over TCP/UDP and RS-23
 
 ![PLC Communication Libraries](assets/plc-communication-libraries.png)
 
+Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) · [FA Labo](https://fa-yoshinobu.github.io/FA_Labo/index.html)
+
 ## Computerlink (JTEKT TOYOPUC)
 
 | Language | Docs | GitHub | Registry |
