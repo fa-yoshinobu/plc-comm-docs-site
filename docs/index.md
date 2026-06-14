@@ -6,7 +6,7 @@ A set of libraries for communicating with industrial PLCs over TCP/UDP.
 |----------|----------|-----------|
 | [Computerlink](computerlink/dotnet/GETTING_STARTED.md) | JTEKT TOYOPUC | .NET, Python |
 | [KV Host Link](hostlink/dotnet/GETTING_STARTED.md) | KEYENCE KV series | .NET, Python, Rust, Node-RED |
-| [SLMP](slmp/dotnet/GETTING_STARTED.md) | Mitsubishi iQ-R/F/L, Q, L | .NET, Python, Rust, C++, Node-RED |
+| [SLMP](slmp/dotnet/GETTING_STARTED.md) | MELSEC iQ-R/F/L, Q, L | .NET, Python, Rust, C++, Node-RED |
 
 ## Connection settings used in all examples
 
