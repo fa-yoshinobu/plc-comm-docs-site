@@ -58,3 +58,5 @@ Step-by-step PLC-side configuration for each supported hardware model.
 | SLMP | 192.168.250.100 | 1025 | 1035 |
 | Computerlink | 192.168.250.100 | 1025 | 1035 |
 | KV Host Link | 192.168.250.100 | 8501 | 8501 |
+
+Note: For SLMP communication with GX Simulator 3, use IP `127.0.0.1` and port `5511`.

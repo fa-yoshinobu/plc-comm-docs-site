@@ -32,18 +32,15 @@ nav:
       - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
       - Supported registers: hostlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/dotnet/PROFILES.md
-      - Device handling: hostlink/dotnet/DEVICE_HANDLING.md
       - Gotchas: hostlink/dotnet/GOTCHAS.md
       - Latest Communication Verification: hostlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
       - Usage guide: hostlink/python/USAGE_GUIDE.md
       - API reference: hostlink/python/API_REFERENCE.md
-      - Performance guide: hostlink/python/PERFORMANCE_GUIDE.md
       - Supported registers: hostlink/python/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/python/PROFILES.md
       - Gotchas: hostlink/python/GOTCHAS.md
-      - Troubleshooting: hostlink/python/TROUBLESHOOTING.md
       - Latest Communication Verification: hostlink/python/LATEST_COMMUNICATION_VERIFICATION.md
     - Rust:
       - Getting started: hostlink/rust/GETTING_STARTED.md
@@ -72,7 +69,6 @@ nav:
     - Python:
       - Getting started: slmp/python/GETTING_STARTED.md
       - Usage guide: slmp/python/USAGE_GUIDE.md
-      - Samples: slmp/python/SAMPLES.md
       - Supported registers: slmp/python/SUPPORTED_REGISTERS.md
       - Profiles: slmp/python/PROFILES.md
       - Bit device access table: slmp/python/BIT_DEVICE_ACCESS_TABLE.md
@@ -84,7 +80,6 @@ nav:
       - Usage guide: slmp/rust/USAGE_GUIDE.md
       - Supported registers: slmp/rust/SUPPORTED_REGISTERS.md
       - Profiles: slmp/rust/PROFILES.md
-      - Address forms: slmp/rust/ADDRESS_FORMS.md
       - Device ranges: slmp/rust/DEVICE_RANGES.md
       - Recipes: slmp/rust/RECIPES.md
       - Gotchas: slmp/rust/GOTCHAS.md
@@ -95,7 +90,6 @@ nav:
       - Supported registers: slmp/cpp/SUPPORTED_REGISTERS.md
       - Profiles: slmp/cpp/PROFILES.md
       - Gotchas: slmp/cpp/GOTCHAS.md
-      - Troubleshooting: slmp/cpp/TROUBLESHOOTING.md
       - Latest Communication Verification: slmp/cpp/LATEST_COMMUNICATION_VERIFICATION.md
     - Node-RED:
       - Getting started: slmp/nodered/GETTING_STARTED.md
@@ -109,7 +103,6 @@ nav:
       - Getting started: mcprotocol/cpp/GETTING_STARTED.md
       - Usage guide: mcprotocol/cpp/USAGE_GUIDE.md
       - Library entrypoints: mcprotocol/cpp/LIBRARY_ENTRYPOINTS.md
-      - MCU quickstart: mcprotocol/cpp/MCU_QUICKSTART.md
       - PlatformIO: mcprotocol/cpp/PLATFORMIO.md
       - Wiring guide: mcprotocol/cpp/WIRING_GUIDE.md
       - Supported registers: mcprotocol/cpp/SUPPORTED_REGISTERS.md
@@ -137,10 +130,6 @@ nav:
       - KV-7000: plc-setup/kv/kv-7000.md
       - KV-5000: plc-setup/kv/kv-5000.md
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
-    - Computerlink (TOYOPUC):
-      - Coming soon: plc-setup/computerlink/index.md
-    - MC Protocol Serial:
-      - Coming soon: plc-setup/mcprotocol-serial/index.md
 
 plugins:
   - search
