@@ -2,6 +2,8 @@
 
 A set of libraries for communicating with industrial PLCs over TCP/UDP and RS-232C/RS-485 serial.
 
+![PLC Communication Libraries](assets/plc-communication-libraries.png)
+
 ## Computerlink (JTEKT TOYOPUC)
 
 | Language | Docs | GitHub | Registry |
