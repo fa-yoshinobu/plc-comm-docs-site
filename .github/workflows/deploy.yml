@@ -1,0 +1,96 @@
+name: Deploy docs
+
+on:
+  repository_dispatch:
+    types: [source-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout source repos
+        run: |
+          set -euo pipefail
+          mkdir -p _src
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet.git _src/computerlink-dotnet
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-python.git _src/computerlink-python
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet.git _src/hostlink-dotnet
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-python.git _src/hostlink-python
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-rust.git _src/hostlink-rust
+          git clone --depth 1 https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink.git _src/hostlink-nodered
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet.git _src/slmp-dotnet
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-python.git _src/slmp-python
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-rust.git _src/slmp-rust
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal.git _src/slmp-cpp
+          git clone --depth 1 https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp.git _src/slmp-nodered
+
+      - name: Collect docs
+        run: |
+          set -euo pipefail
+          copy_docs() {
+            local source_dir="$1"
+            local target_dir="$2"
+            mkdir -p "$target_dir"
+            cp -R "$source_dir"/. "$target_dir"/
+          }
+
+          copy_docs _src/computerlink-dotnet/docsrc/user docs/computerlink/dotnet
+          copy_docs _src/computerlink-python/docsrc/user docs/computerlink/python
+          copy_docs _src/hostlink-dotnet/docsrc/user docs/hostlink/dotnet
+          copy_docs _src/hostlink-python/docsrc/user docs/hostlink/python
+          copy_docs _src/hostlink-rust/docs docs/hostlink/rust
+          copy_docs _src/hostlink-nodered/docsrc/user docs/hostlink/nodered
+          copy_docs _src/slmp-dotnet/docsrc/user docs/slmp/dotnet
+          copy_docs _src/slmp-python/docsrc/user docs/slmp/python
+          copy_docs _src/slmp-rust/docs docs/slmp/rust
+          copy_docs _src/slmp-cpp/docsrc/user docs/slmp/cpp
+          copy_docs _src/slmp-nodered/docsrc/user docs/slmp/nodered
+
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              Path("docs/slmp/rust"): {
+                  "(../src/": "(https://github.com/fa-yoshinobu/plc-comm-slmp-rust/blob/main/src/",
+              },
+          }
+
+          for folder, rules in replacements.items():
+              for path in folder.rglob("*.md"):
+                  text = path.read_text(encoding="utf-8")
+                  updated = text
+                  for old, new in rules.items():
+                      updated = updated.replace(old, new)
+                  if updated != text:
+                      path.write_text(updated, encoding="utf-8")
+          PY
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install MkDocs
+        run: pip install mkdocs-material
+
+      - name: Build
+        run: mkdocs build --strict
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Deploy
+        run: mkdocs gh-deploy --force --clean

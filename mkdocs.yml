@@ -1,0 +1,139 @@
+site_name: PLC Communication Libraries
+site_url: https://fa-yoshinobu.github.io/plc-comm-docs-site/
+theme:
+  name: material
+  language: en
+  palette:
+    primary: indigo
+
+nav:
+  - Home: index.md
+  - Computerlink:
+    - .NET:
+      - Getting started: computerlink/dotnet/GETTING_STARTED.md
+      - Usage guide: computerlink/dotnet/USAGE_GUIDE.md
+      - User guide: computerlink/dotnet/USER_GUIDE.md
+      - Supported registers: computerlink/dotnet/SUPPORTED_REGISTERS.md
+      - Profiles: computerlink/dotnet/PROFILES.md
+      - Gotchas: computerlink/dotnet/GOTCHAS.md
+      - Troubleshooting: computerlink/dotnet/TROUBLESHOOTING.md
+      - Latest verification: computerlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
+    - Python:
+      - Getting started: computerlink/python/GETTING_STARTED.md
+      - Usage guide: computerlink/python/USAGE_GUIDE.md
+      - User guide: computerlink/python/USER_GUIDE.md
+      - Supported registers: computerlink/python/SUPPORTED_REGISTERS.md
+      - Profiles: computerlink/python/PROFILES.md
+      - Model ranges: computerlink/python/MODEL_RANGES.md
+      - Gotchas: computerlink/python/GOTCHAS.md
+      - Latest verification: computerlink/python/LATEST_COMMUNICATION_VERIFICATION.md
+  - Host Link (KV):
+    - .NET:
+      - Getting started: hostlink/dotnet/GETTING_STARTED.md
+      - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
+      - User guide: hostlink/dotnet/USER_GUIDE.md
+      - Supported registers: hostlink/dotnet/SUPPORTED_REGISTERS.md
+      - Profiles: hostlink/dotnet/PROFILES.md
+      - Device handling: hostlink/dotnet/DEVICE_HANDLING.md
+      - Gotchas: hostlink/dotnet/GOTCHAS.md
+      - Latest verification: hostlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
+    - Python:
+      - Getting started: hostlink/python/GETTING_STARTED.md
+      - Usage guide: hostlink/python/USAGE_GUIDE.md
+      - User guide: hostlink/python/USER_GUIDE.md
+      - API reference: hostlink/python/API_REFERENCE.md
+      - Performance guide: hostlink/python/PERFORMANCE_GUIDE.md
+      - Supported registers: hostlink/python/SUPPORTED_REGISTERS.md
+      - Profiles: hostlink/python/PROFILES.md
+      - Gotchas: hostlink/python/GOTCHAS.md
+      - Troubleshooting: hostlink/python/TROUBLESHOOTING.md
+      - Latest verification: hostlink/python/LATEST_COMMUNICATION_VERIFICATION.md
+    - Rust:
+      - Getting started: hostlink/rust/GETTING_STARTED.md
+      - Usage guide: hostlink/rust/USAGE_GUIDE.md
+      - Supported registers: hostlink/rust/SUPPORTED_REGISTERS.md
+      - Profiles: hostlink/rust/PROFILES.md
+      - Device ranges: hostlink/rust/DEVICE_RANGES.md
+      - Gotchas: hostlink/rust/GOTCHAS.md
+      - Development history: hostlink/rust/DEVELOPMENT_HISTORY.md
+      - KV-5000 validation: hostlink/rust/KV5000_LIVE_VALIDATION_2026-05-03.md
+      - KV-7000 validation: hostlink/rust/KV7000_LIVE_VALIDATION_2026-05-03.md
+      - Release publication: hostlink/rust/RELEASE_PUBLICATION_2026-06-12.md
+    - Node-RED:
+      - Getting started: hostlink/nodered/GETTING_STARTED.md
+      - Usage guide: hostlink/nodered/USAGE_GUIDE.md
+      - User guide: hostlink/nodered/USER_GUIDE.md
+      - Supported registers: hostlink/nodered/SUPPORTED_REGISTERS.md
+      - Profiles: hostlink/nodered/PROFILES.md
+      - Gotchas: hostlink/nodered/GOTCHAS.md
+      - Latest verification: hostlink/nodered/LATEST_COMMUNICATION_VERIFICATION.md
+  - SLMP:
+    - .NET:
+      - Getting started: slmp/dotnet/GETTING_STARTED.md
+      - Usage guide: slmp/dotnet/USAGE_GUIDE.md
+      - User guide: slmp/dotnet/USER_GUIDE.md
+      - Supported registers: slmp/dotnet/SUPPORTED_REGISTERS.md
+      - Profiles: slmp/dotnet/PROFILES.md
+      - Device ranges: slmp/dotnet/DEVICE_RANGES.md
+      - Gotchas: slmp/dotnet/GOTCHAS.md
+      - Latest verification: slmp/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
+    - Python:
+      - Getting started: slmp/python/GETTING_STARTED.md
+      - Usage guide: slmp/python/USAGE_GUIDE.md
+      - User guide: slmp/python/USER_GUIDE.md
+      - Samples: slmp/python/SAMPLES.md
+      - Supported registers: slmp/python/SUPPORTED_REGISTERS.md
+      - Profiles: slmp/python/PROFILES.md
+      - Bit device access table: slmp/python/BIT_DEVICE_ACCESS_TABLE.md
+      - Error codes: slmp/python/ERROR_CODES.md
+      - Gotchas: slmp/python/GOTCHAS.md
+      - Latest verification: slmp/python/LATEST_COMMUNICATION_VERIFICATION.md
+    - Rust:
+      - Getting started: slmp/rust/GETTING_STARTED.md
+      - Usage guide: slmp/rust/USAGE_GUIDE.md
+      - Supported registers: slmp/rust/SUPPORTED_REGISTERS.md
+      - Profiles: slmp/rust/PROFILES.md
+      - Address forms: slmp/rust/ADDRESS_FORMS.md
+      - Device ranges: slmp/rust/DEVICE_RANGES.md
+      - Recipes: slmp/rust/RECIPES.md
+      - Gotchas: slmp/rust/GOTCHAS.md
+      - Development history: slmp/rust/DEVELOPMENT_HISTORY.md
+      - Extended device coverage latest: slmp/rust/EXTENDED_DEVICE_COVERAGE_LATEST.md
+      - iQ-F range validation: slmp/rust/IQF_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md
+      - iQ-L range validation: slmp/rust/IQL_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md
+      - iQ-L extended coverage: slmp/rust/IQL_EXTENDED_DEVICE_COVERAGE_2026-05-03.md
+      - iQ-L live stress: slmp/rust/IQL_LIVE_STRESS_VALIDATION_2026-05-03.md
+      - iQ-R range validation: slmp/rust/IQR_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md
+      - iQ-R extended coverage: slmp/rust/IQR_EXTENDED_DEVICE_COVERAGE_2026-05-29.md
+      - LCPU range validation: slmp/rust/LCPU_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md
+      - Mixed block write notes: slmp/rust/MIXED_BLOCK_WRITE_1406_NOTES_2026-05-03.md
+      - QCPU runtime range validation: slmp/rust/QCPU_RUNTIME_RANGE_VALIDATION_2026-05-15.md
+      - QnU runtime range validation: slmp/rust/QNU_RUNTIME_RANGE_VALIDATION_2026-05-15.md
+      - QnUDV range validation: slmp/rust/QNUDV_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md
+      - QnUDV runtime range validation: slmp/rust/QNUDV_RUNTIME_RANGE_VALIDATION_2026-05-15.md
+      - Release publication: slmp/rust/RELEASE_PUBLICATION_2026-06-12.md
+    - C++ (Arduino/PlatformIO):
+      - Getting started: slmp/cpp/GETTING_STARTED.md
+      - Usage guide: slmp/cpp/USAGE_GUIDE.md
+      - Setup guide: slmp/cpp/SETUP_GUIDE.md
+      - Supported registers: slmp/cpp/SUPPORTED_REGISTERS.md
+      - Profiles: slmp/cpp/PROFILES.md
+      - Gotchas: slmp/cpp/GOTCHAS.md
+      - Troubleshooting: slmp/cpp/TROUBLESHOOTING.md
+    - Node-RED:
+      - Getting started: slmp/nodered/GETTING_STARTED.md
+      - Usage guide: slmp/nodered/USAGE_GUIDE.md
+      - User guide: slmp/nodered/USER_GUIDE.md
+      - Supported registers: slmp/nodered/SUPPORTED_REGISTERS.md
+      - Profiles: slmp/nodered/PROFILES.md
+      - Gotchas: slmp/nodered/GOTCHAS.md
+      - Latest verification: slmp/nodered/LATEST_COMMUNICATION_VERIFICATION.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
