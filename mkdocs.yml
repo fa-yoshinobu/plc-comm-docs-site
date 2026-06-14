@@ -125,7 +125,6 @@ nav:
     - Node-RED:
       - Getting started: slmp/nodered/GETTING_STARTED.md
       - Usage guide: slmp/nodered/USAGE_GUIDE.md
-      - User guide: slmp/nodered/USER_GUIDE.md
       - Supported registers: slmp/nodered/SUPPORTED_REGISTERS.md
       - Profiles: slmp/nodered/PROFILES.md
       - Gotchas: slmp/nodered/GOTCHAS.md
