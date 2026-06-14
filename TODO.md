@@ -27,6 +27,7 @@
 
 - [x] Trigger a manual deploy (Actions -> Deploy docs -> Run workflow)
 - [x] Verify all 11 repos' pages appear on the site
+- [x] Verify `repository_dispatch` deploy path in `plc-comm-docs-site`
 - [ ] Run GOAL_CLEANUP_DOCFX.md to remove DocFX artifacts from source repos
 
 ## Current blockers for fully automatic rebuilds
