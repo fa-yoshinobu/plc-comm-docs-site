@@ -1,6 +1,12 @@
 name: Deploy docs
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - docs/**
+      - mkdocs.yml
+      - .github/workflows/deploy.yml
   repository_dispatch:
     types: [source-updated]
   workflow_dispatch:
