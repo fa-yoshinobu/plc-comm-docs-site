@@ -38,6 +38,19 @@ Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) · [FA Labo](https
 |----------|------|--------|----------|
 | C++ (Arduino/PlatformIO) | [Getting started](mcprotocol/cpp/GETTING_STARTED.md) | [plc-comm-mcprotocol-serial-cpp](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp) | [PlatformIO](https://registry.platformio.org/libraries/fa-yoshinobu/mcprotocol-serial-cpp) |
 
+## PLC Setup Guide
+
+Step-by-step PLC-side configuration for each supported hardware model.
+
+| Protocol | Models covered |
+|----------|---------------|
+| MELSEC SLMP | iQ-R, iQ-F, iQ-L, MX-R, MX-F, QnUDV, QnU, LCPU, RJ71EN71, QJ71E71-100, LJ71E71-100 |
+| KV Host Link | KV-X500, KV-8000, KV-7000, KV-5000, KV-XLE02 |
+| Computerlink | *(coming soon)* |
+| MC Protocol Serial | *(coming soon)* |
+
+→ [Open PLC Setup Guide](plc-setup/index.md)
+
 ## Connection settings used in TCP/UDP examples
 
 | Protocol | Host | TCP port | UDP port |

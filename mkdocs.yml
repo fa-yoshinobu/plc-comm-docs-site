@@ -123,6 +123,30 @@ nav:
       - Gotchas: mcprotocol/cpp/GOTCHAS.md
       - Latest Communication Verification: mcprotocol/cpp/LATEST_COMMUNICATION_VERIFICATION.md
       - FAQ: mcprotocol/cpp/FAQ.md
+  - PLC Setup Guide:
+    - Overview: plc-setup/index.md
+    - MELSEC (SLMP):
+      - iQ-R (built-in Ethernet): plc-setup/slmp/iq-r.md
+      - iQ-F (built-in Ethernet): plc-setup/slmp/iq-f.md
+      - iQ-L (built-in Ethernet): plc-setup/slmp/iq-l.md
+      - MX-R (built-in Ethernet): plc-setup/slmp/mx-r.md
+      - MX-F (built-in Ethernet): plc-setup/slmp/mx-f.md
+      - QnUDV (built-in Ethernet): plc-setup/slmp/qnudv.md
+      - QnU (built-in Ethernet): plc-setup/slmp/qnu.md
+      - LCPU (built-in Ethernet): plc-setup/slmp/lcpu.md
+      - RJ71EN71 (comm unit): plc-setup/slmp/rj71en71.md
+      - QJ71E71-100 (comm unit): plc-setup/slmp/qj71e71-100.md
+      - LJ71E71-100 (comm unit): plc-setup/slmp/lj71e71-100.md
+    - KV Host Link (KEYENCE):
+      - KV-X500: plc-setup/kv/kv-x500.md
+      - KV-8000: plc-setup/kv/kv-8000.md
+      - KV-7000: plc-setup/kv/kv-7000.md
+      - KV-5000: plc-setup/kv/kv-5000.md
+      - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
+    - Computerlink (TOYOPUC):
+      - Coming soon: plc-setup/computerlink/index.md
+    - MC Protocol Serial:
+      - Coming soon: plc-setup/mcprotocol-serial/index.md
 
 plugins:
   - search
@@ -132,3 +156,5 @@ markdown_extensions:
   - admonition
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
