@@ -69,6 +69,5 @@ Code example:
 
 ## Screenshots
 
-!!! note "Screenshots pending"
-    Add screenshots under `docs/plc-setup/images/kv/kv-xle02/`.
-    See the image checklist in `GOAL_PLC_SETUP.md` for recommended filenames.
+![KV-XLE02 unit settings screen for upper-level communication](../images/kv/kv-xle02/screenshot-01.png)
+*KV-XLE02 unit settings screen for upper-level communication.*

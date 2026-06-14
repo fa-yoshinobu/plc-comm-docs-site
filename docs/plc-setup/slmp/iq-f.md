@@ -83,6 +83,8 @@ Code example:
 
 ## Screenshots
 
-!!! note "Screenshots pending"
-    Add screenshots under `docs/plc-setup/images/slmp/iq-f/`.
-    See the image checklist in `GOAL_PLC_SETUP.md` for recommended filenames.
+![Unit parameters screen for the built-in Ethernet port](../images/slmp/iq-f/screenshot-01.png)
+*Unit parameters screen for the built-in Ethernet port.*
+
+![Connection settings for SLMP communication](../images/slmp/iq-f/screenshot-02.png)
+*Connection settings for SLMP communication.*

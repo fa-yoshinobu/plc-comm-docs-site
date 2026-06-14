@@ -83,6 +83,11 @@ Code example:
 
 ## Screenshots
 
-!!! note "Screenshots pending"
-    Add screenshots under `docs/plc-setup/images/slmp/mx-f/`.
-    See the image checklist in `GOAL_PLC_SETUP.md` for recommended filenames.
+![Unit parameters screen for the built-in Ethernet port](../images/slmp/mx-f/screenshot-01.png)
+*Unit parameters screen for the built-in Ethernet port.*
+
+![Connection settings screen for the first SLMP entry](../images/slmp/mx-f/screenshot-02.png)
+*Connection settings screen for the first SLMP entry.*
+
+![Connection settings screen for the second SLMP entry](../images/slmp/mx-f/screenshot-03.png)
+*Connection settings screen for the second SLMP entry.*

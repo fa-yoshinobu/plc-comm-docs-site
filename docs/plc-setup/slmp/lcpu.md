@@ -78,6 +78,8 @@ Code example:
 
 ## Screenshots
 
-!!! note "Screenshots pending"
-    Add screenshots under `docs/plc-setup/images/slmp/lcpu/`.
-    See the image checklist in `GOAL_PLC_SETUP.md` for recommended filenames.
+![Built-in Ethernet port settings screen](../images/slmp/lcpu/screenshot-01.png)
+*Built-in Ethernet port settings screen.*
+
+![Built-in Ethernet port open settings screen](../images/slmp/lcpu/screenshot-02.png)
+*Built-in Ethernet port open settings screen.*
