@@ -41,6 +41,27 @@ Go to Actions -> Deploy docs -> Run workflow.
 2. Add the page to `nav:` in `mkdocs.yml` in this repo.
 3. Push both changes. The CI will rebuild the site after the source repo dispatches the event.
 
+## README maintenance policy
+
+Keep each source repository README as a stable entrance page. When README points
+to another page, that linked page becomes the maintained detail page and must
+carry the actual table, cautions, and evidence.
+
+README should usually contain only:
+
+- badges
+- title and one-sentence purpose
+- short links to the maintained `PROFILES.md`, `SUPPORTED_REGISTERS.md`, and verification pages
+- installation command
+- one minimal quick example
+- documentation links
+- license and registry table
+
+Do not delete detail from README unless the same detail is already present in a
+linked docs page or is moved there in the same change. Large PLC profile tables,
+device-range tables, and live-device verification matrices should live in the
+linked docs pages so README stays stable without becoming an empty signpost.
+
 ## How to add a new source repo
 
 1. Add a `git clone` line for the new repo in `deploy.yml`.

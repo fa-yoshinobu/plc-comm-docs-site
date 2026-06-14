@@ -18,7 +18,7 @@ A set of libraries for communicating with industrial PLCs over TCP/UDP.
 | Rust | [Getting started](hostlink/rust/GETTING_STARTED.md) | [plc-comm-hostlink-rust](https://github.com/fa-yoshinobu/plc-comm-hostlink-rust) | [crates.io](https://crates.io/crates/plc-comm-hostlink-rust) |
 | Node-RED | [Getting started](hostlink/nodered/GETTING_STARTED.md) | [node-red-contrib-plc-comm-kvhostlink](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-kvhostlink) |
 
-## SLMP (Mitsubishi MELSEC iQ-R/F/L, Q, L)
+## SLMP (MELSEC iQ-R/F/L, Q, L)
 
 | Language | Docs | GitHub | Registry |
 |----------|------|--------|----------|

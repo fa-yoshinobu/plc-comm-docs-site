@@ -55,6 +55,7 @@ nav:
       - Profiles: hostlink/rust/PROFILES.md
       - Device ranges: hostlink/rust/DEVICE_RANGES.md
       - Gotchas: hostlink/rust/GOTCHAS.md
+      - Latest verification: hostlink/rust/LATEST_COMMUNICATION_VERIFICATION.md
       - Development history: hostlink/rust/DEVELOPMENT_HISTORY.md
       - KV-5000 validation: hostlink/rust/KV5000_LIVE_VALIDATION_2026-05-03.md
       - KV-7000 validation: hostlink/rust/KV7000_LIVE_VALIDATION_2026-05-03.md
@@ -97,6 +98,7 @@ nav:
       - Device ranges: slmp/rust/DEVICE_RANGES.md
       - Recipes: slmp/rust/RECIPES.md
       - Gotchas: slmp/rust/GOTCHAS.md
+      - Latest verification: slmp/rust/LATEST_COMMUNICATION_VERIFICATION.md
       - Development history: slmp/rust/DEVELOPMENT_HISTORY.md
       - Extended device coverage latest: slmp/rust/EXTENDED_DEVICE_COVERAGE_LATEST.md
       - iQ-F range validation: slmp/rust/IQF_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md

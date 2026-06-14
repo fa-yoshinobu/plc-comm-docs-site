@@ -16,7 +16,7 @@ and publishes the HTML to GitHub Pages.
 |----------|----------|-----------|
 | Computerlink | JTEKT TOYOPUC | .NET, Python |
 | Host Link (KV) | KEYENCE KV series | .NET, Python, Rust, Node-RED |
-| SLMP | Mitsubishi iQ-R/F/L, Q, L | .NET, Python, Rust, C++, Node-RED |
+| SLMP | MELSEC iQ-R/F/L, Q, L | .NET, Python, Rust, C++, Node-RED |
 
 ## How it works
 
