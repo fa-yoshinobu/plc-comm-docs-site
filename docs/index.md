@@ -2,11 +2,31 @@
 
 A set of libraries for communicating with industrial PLCs over TCP/UDP.
 
-| Protocol | Hardware | Languages |
-|----------|----------|-----------|
-| [Computerlink](computerlink/dotnet/GETTING_STARTED.md) | JTEKT TOYOPUC | .NET, Python |
-| [KV Host Link](hostlink/dotnet/GETTING_STARTED.md) | KEYENCE KV series | .NET, Python, Rust, Node-RED |
-| [SLMP](slmp/dotnet/GETTING_STARTED.md) | MELSEC iQ-R/F/L, Q, L | .NET, Python, Rust, C++, Node-RED |
+## Computerlink (JTEKT TOYOPUC)
+
+| Language | Docs | GitHub | Registry |
+|----------|------|--------|----------|
+| .NET | [Getting started](computerlink/dotnet/GETTING_STARTED.md) | [plc-comm-computerlink-dotnet](https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet) | [NuGet](https://www.nuget.org/packages/PlcComm.Toyopuc/) |
+| Python | [Getting started](computerlink/python/GETTING_STARTED.md) | [plc-comm-computerlink-python](https://github.com/fa-yoshinobu/plc-comm-computerlink-python) | [PyPI](https://pypi.org/project/toyopuc-computerlink/) |
+
+## KV Host Link (KEYENCE KV series)
+
+| Language | Docs | GitHub | Registry |
+|----------|------|--------|----------|
+| .NET | [Getting started](hostlink/dotnet/GETTING_STARTED.md) | [plc-comm-hostlink-dotnet](https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet) | [NuGet](https://www.nuget.org/packages/PlcComm.KvHostLink/) |
+| Python | [Getting started](hostlink/python/GETTING_STARTED.md) | [plc-comm-hostlink-python](https://github.com/fa-yoshinobu/plc-comm-hostlink-python) | [PyPI](https://pypi.org/project/kv-hostlink/) |
+| Rust | [Getting started](hostlink/rust/GETTING_STARTED.md) | [plc-comm-hostlink-rust](https://github.com/fa-yoshinobu/plc-comm-hostlink-rust) | [crates.io](https://crates.io/crates/plc-comm-hostlink-rust) |
+| Node-RED | [Getting started](hostlink/nodered/GETTING_STARTED.md) | [node-red-contrib-plc-comm-kvhostlink](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-kvhostlink) |
+
+## SLMP (Mitsubishi MELSEC iQ-R/F/L, Q, L)
+
+| Language | Docs | GitHub | Registry |
+|----------|------|--------|----------|
+| .NET | [Getting started](slmp/dotnet/GETTING_STARTED.md) | [plc-comm-slmp-dotnet](https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet) | [NuGet](https://www.nuget.org/packages/PlcComm.Slmp/) |
+| Python | [Getting started](slmp/python/GETTING_STARTED.md) | [plc-comm-slmp-python](https://github.com/fa-yoshinobu/plc-comm-slmp-python) | [PyPI](https://pypi.org/project/slmp-connect-python/) |
+| Rust | [Getting started](slmp/rust/GETTING_STARTED.md) | [plc-comm-slmp-rust](https://github.com/fa-yoshinobu/plc-comm-slmp-rust) | [crates.io](https://crates.io/crates/plc-comm-slmp-rust) |
+| C++ (Arduino/PlatformIO) | [Getting started](slmp/cpp/GETTING_STARTED.md) | [plc-comm-slmp-cpp-minimal](https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal) | [PlatformIO](https://registry.platformio.org/libraries/fa-yoshinobu/slmp-connect-cpp-minimal) |
+| Node-RED | [Getting started](slmp/nodered/GETTING_STARTED.md) | [node-red-contrib-plc-comm-slmp](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-slmp) |
 
 ## Connection settings used in all examples
 
