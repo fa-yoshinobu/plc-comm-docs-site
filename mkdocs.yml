@@ -131,6 +131,20 @@ nav:
       - Profiles: slmp/nodered/PROFILES.md
       - Gotchas: slmp/nodered/GOTCHAS.md
       - Latest Communication Verification: slmp/nodered/LATEST_COMMUNICATION_VERIFICATION.md
+  - MC Protocol Serial:
+    - C++ (Arduino/PlatformIO):
+      - User docs index: mcprotocol/cpp/README.md
+      - Getting started: mcprotocol/cpp/GETTING_STARTED.md
+      - Usage guide: mcprotocol/cpp/USAGE_GUIDE.md
+      - Library entrypoints: mcprotocol/cpp/LIBRARY_ENTRYPOINTS.md
+      - MCU quickstart: mcprotocol/cpp/MCU_QUICKSTART.md
+      - PlatformIO: mcprotocol/cpp/PLATFORMIO.md
+      - Wiring guide: mcprotocol/cpp/WIRING_GUIDE.md
+      - Supported registers: mcprotocol/cpp/SUPPORTED_REGISTERS.md
+      - Profiles: mcprotocol/cpp/PROFILES.md
+      - Gotchas: mcprotocol/cpp/GOTCHAS.md
+      - Latest Communication Verification: mcprotocol/cpp/LATEST_COMMUNICATION_VERIFICATION.md
+      - FAQ: mcprotocol/cpp/FAQ.md
 
 plugins:
   - search

@@ -3,14 +3,14 @@
 ## Architecture
 
 This repo does not permanently store source documentation content.
-It collects Markdown files from 11 source repos at build time and publishes HTML to GitHub Pages.
+It collects Markdown files from 12 source repos at build time and publishes HTML to GitHub Pages.
 
 ```text
 Source repo (docsrc/user/*.md or docs/*.md)
   -> push to main
   -> triggers repository_dispatch to plc-comm-docs-site
   -> deploy.yml runs
-  -> collects all current Markdown files from all 11 repos
+  -> collects all current Markdown files from all 12 repos
   -> mkdocs build
   -> publishes to GitHub Pages (gh-pages branch)
 ```
@@ -30,6 +30,7 @@ Source repo (docsrc/user/*.md or docs/*.md)
 | plc-comm-slmp-rust | docs/ | docs/slmp/rust/ |
 | plc-comm-slmp-cpp-minimal | docsrc/user/ | docs/slmp/cpp/ |
 | node-red-contrib-plc-comm-slmp | docsrc/user/ | docs/slmp/nodered/ |
+| plc-comm-mcprotocol-serial-cpp | docsrc/user/ | docs/mcprotocol/cpp/ |
 
 ## How to trigger a rebuild manually
 
@@ -74,7 +75,7 @@ linked docs pages so README stays stable without becoming an empty signpost.
 
 | Secret | Where to set | Purpose |
 |--------|-------------|---------|
-| `DOCS_REPO_TOKEN` | Each of the 11 source repos | Allows source repos to trigger this repo's CI |
+| `DOCS_REPO_TOKEN` | Each of the 12 source repos | Allows source repos to trigger this repo's CI |
 
 Token type: GitHub fine-grained personal access token.
 Required permission: `Contents: write` on `plc-comm-docs-site`.
@@ -101,7 +102,8 @@ $repos = @(
   "plc-comm-slmp-python",
   "plc-comm-slmp-rust",
   "plc-comm-slmp-cpp-minimal",
-  "node-red-contrib-plc-comm-slmp"
+  "node-red-contrib-plc-comm-slmp",
+  "plc-comm-mcprotocol-serial-cpp"
 )
 
 foreach ($repo in $repos) {

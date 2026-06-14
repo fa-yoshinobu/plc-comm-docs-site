@@ -1,6 +1,6 @@
 # PLC Communication Libraries
 
-A set of libraries for communicating with industrial PLCs over TCP/UDP.
+A set of libraries for communicating with industrial PLCs over TCP/UDP and RS-232C/RS-485 serial.
 
 ## Computerlink (JTEKT TOYOPUC)
 
@@ -28,7 +28,13 @@ A set of libraries for communicating with industrial PLCs over TCP/UDP.
 | C++ (Arduino/PlatformIO) | [Getting started](slmp/cpp/GETTING_STARTED.md) | [plc-comm-slmp-cpp-minimal](https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal) | [PlatformIO](https://registry.platformio.org/libraries/fa-yoshinobu/slmp-connect-cpp-minimal) |
 | Node-RED | [Getting started](slmp/nodered/GETTING_STARTED.md) | [node-red-contrib-plc-comm-slmp](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-slmp) |
 
-## Connection settings used in all examples
+## MC Protocol Serial (MELSEC iQ-R/L, Q, A)
+
+| Language | Docs | GitHub | Registry |
+|----------|------|--------|----------|
+| C++ (Arduino/PlatformIO) | [Getting started](mcprotocol/cpp/GETTING_STARTED.md) | [plc-comm-mcprotocol-serial-cpp](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp) | [PlatformIO](https://registry.platformio.org/libraries/fa-yoshinobu/mcprotocol-serial-cpp) |
+
+## Connection settings used in TCP/UDP examples
 
 | Protocol | Host | TCP port | UDP port |
 |----------|------|----------|----------|
