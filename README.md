@@ -1,25 +1,44 @@
-# plc-comm-docs-site
+# PLC Communication Libraries
 
-Unified documentation site for the PLC communication libraries.
-Published at: https://fa-yoshinobu.github.io/plc-comm-docs-site/
+Documentation hub for the PLC communication libraries.
 
-## What this repo is
+[Open the documentation site](https://fa-yoshinobu.github.io/plc-comm-docs-site/)
 
-This repo does not contain documentation content.
-It collects `.md` files from 12 source repos at build time,
-builds a [MkDocs](https://squidfunk.github.io/mkdocs-material/) site,
-and publishes the HTML to GitHub Pages.
+![PLC Communication Libraries](docs/assets/plc-communication-libraries.png)
 
-## Source libraries
+This site collects setup guides, supported PLC profiles, device/register notes,
+sample workflows, and release-oriented documentation for the PLC communication
+libraries maintained under the `fa-yoshinobu` GitHub account.
+
+The documentation is organized by protocol and implementation language, so each
+library can stay focused while users still have one entry point for comparing
+protocols and finding the right package.
+
+## What You Can Find
+
+| Area | Contents |
+|------|----------|
+| PLC setup | Practical connection settings for supported PLC families and modules |
+| Library docs | Getting started guides, usage notes, supported profiles, and samples |
+| Communication verification | Current live-device verification summaries and limitations |
+| Release navigation | Links to package registries, source repositories, and published docs |
+
+## Source Libraries
 
 | Protocol | Hardware | Languages |
 |----------|----------|-----------|
 | Computerlink | JTEKT TOYOPUC | .NET, Python |
-| Host Link (KV) | KEYENCE KV series | .NET, Python, Rust, Node-RED |
+| KV Host Link | KEYENCE KV series | .NET, Python, Rust, Node-RED |
 | SLMP | MELSEC iQ-R/F/L, Q, L | .NET, Python, Rust, C++, Node-RED |
 | MC Protocol Serial | MELSEC iQ-R/L, Q, A (RS-232C/RS-485) | C++ |
 
-## How it works
+## How This Repo Works
+
+This repository builds the public site with
+[MkDocs Material](https://squidfunk.github.io/mkdocs-material/). Most page
+content is collected from the source library repositories during deployment.
+
+## Deployment Flow
 
 1. A source repo pushes to `main`
 2. Its CI sends a `repository_dispatch` event to this repo
