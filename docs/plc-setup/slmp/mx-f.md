@@ -18,7 +18,7 @@ MELSEC MX-F — built-in Ethernet port (CPU module).
 
 ## PLC-side settings
 
-MX-F uses its own canonical library profile string (`melsec:mx-f`) while keeping iQ-F-compatible SLMP connection settings.
+MX-F uses its own canonical library profile (`melsec:mx-f`) while keeping iQ-F-compatible SLMP connection settings.
 
 ### Screen: Unit parameters
 
@@ -46,7 +46,7 @@ MX-F uses its own canonical library profile string (`melsec:mx-f`) while keeping
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:mx-f` |
+| Canonical profile | `melsec:mx-f` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 

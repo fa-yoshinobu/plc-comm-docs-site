@@ -45,7 +45,7 @@ GX Works2 labels this as "MC Protocol" in the open settings, not "SLMP". The lib
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:qnudv` |
+| Canonical profile | `melsec:qnudv` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 

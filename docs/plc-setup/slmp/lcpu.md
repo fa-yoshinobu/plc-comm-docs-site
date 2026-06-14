@@ -41,7 +41,7 @@ LCPU uses the GX Works2 MC Protocol open-setting flow used by the Q series.
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:lcpu` |
+| Canonical profile | `melsec:lcpu` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 

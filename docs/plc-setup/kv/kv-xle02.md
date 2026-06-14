@@ -32,7 +32,7 @@ Use the KV-XLE02 when the KV series CPU does not have a built-in Ethernet port. 
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | Not required for connection |
+| Canonical profile | Not required for connection |
 | Port (TCP) | `8501` |
 | Port (UDP) | `8501` |
 

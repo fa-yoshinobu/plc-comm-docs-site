@@ -41,7 +41,7 @@ QnU is the base series; QnUDV uses the same screen pattern.
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:qnu` |
+| Canonical profile | `melsec:qnu` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 

@@ -46,7 +46,7 @@ iQ-F does not have "Write Permission During RUN" or "Open Method Setting" in the
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:iq-f` |
+| Canonical profile | `melsec:iq-f` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 

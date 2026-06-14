@@ -42,7 +42,7 @@ MELSEC iQ-L — built-in Ethernet port (CPU module).
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:iq-l` |
+| Canonical profile | `melsec:iq-l` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 

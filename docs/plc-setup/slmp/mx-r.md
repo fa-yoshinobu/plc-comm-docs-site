@@ -18,7 +18,7 @@ MELSEC MX-R — built-in Ethernet port (CPU module).
 
 ## PLC-side settings
 
-MX-R uses its own canonical library profile string (`melsec:mx-r`) while keeping iQ-R-compatible SLMP connection settings.
+MX-R uses its own canonical library profile (`melsec:mx-r`) while keeping iQ-R-compatible SLMP connection settings.
 
 ### Screen: Unit parameters
 
@@ -42,7 +42,7 @@ MX-R uses its own canonical library profile string (`melsec:mx-r`) while keeping
 
 | Parameter | Value |
 |-----------|-------|
-| Profile string | `melsec:mx-r` |
+| Canonical profile | `melsec:mx-r` |
 | Port (TCP) | `1025` |
 | Port (UDP) | `1035` |
 
