@@ -17,11 +17,15 @@
   - [x] plc-comm-slmp-cpp-minimal
   - [x] node-red-contrib-plc-comm-slmp
 - [x] Enable GitHub Pages on `plc-comm-docs-site` (Settings -> Pages -> Source: gh-pages branch)
-- [ ] Disable GitHub Pages on each source repo that currently publishes its own site:
-  - [ ] plc-comm-computerlink-dotnet
-  - [ ] plc-comm-hostlink-dotnet
-  - [ ] plc-comm-slmp-dotnet
-  - [ ] plc-comm-slmp-rust
+- [x] Disable GitHub Pages on each source repo that was publishing its own site:
+  - [x] plc-comm-computerlink-dotnet
+  - [x] plc-comm-computerlink-python
+  - [x] plc-comm-hostlink-dotnet
+  - [x] plc-comm-hostlink-python
+  - [x] plc-comm-slmp-dotnet
+  - [x] plc-comm-slmp-python
+  - [x] plc-comm-slmp-rust
+  - [x] plc-comm-slmp-cpp-minimal
 
 ## After token setup
 
@@ -29,7 +33,7 @@
 - [x] Verify all 11 repos' pages appear on the site
 - [x] Verify `repository_dispatch` deploy path in `plc-comm-docs-site`
 - [x] Verify a source repo `docsrc/user` push triggers `plc-comm-docs-site`
-- [ ] Run GOAL_CLEANUP_DOCFX.md to remove DocFX artifacts from source repos
+- [x] Run GOAL_CLEANUP_DOCFX.md to remove DocFX artifacts from source repos
 
 ## Fully automatic rebuilds
 
