@@ -5,6 +5,7 @@ theme:
   language: en
   palette:
     primary: indigo
+  custom_dir: overrides
 
 nav:
   - Home: index.md
