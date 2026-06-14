@@ -133,7 +133,7 @@ nav:
       - Latest Communication Verification: slmp/nodered/LATEST_COMMUNICATION_VERIFICATION.md
   - MC Protocol Serial:
     - C++ (Arduino/PlatformIO):
-      - User docs index: mcprotocol/cpp/README.md
+      - Overview: mcprotocol/cpp/README.md
       - Getting started: mcprotocol/cpp/GETTING_STARTED.md
       - Usage guide: mcprotocol/cpp/USAGE_GUIDE.md
       - Library entrypoints: mcprotocol/cpp/LIBRARY_ENTRYPOINTS.md
