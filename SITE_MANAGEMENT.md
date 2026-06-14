@@ -60,6 +60,45 @@ Required permission: `Contents: write` on `plc-comm-docs-site`.
 
 The source workflows skip the dispatch step when `DOCS_REPO_TOKEN` is not set, so normal CI can stay green before the manual secret setup is complete.
 
+## Registering `DOCS_REPO_TOKEN`
+
+Use a fine-grained personal access token that is limited to `plc-comm-docs-site`
+with `Contents: write`. Avoid reusing a broad `repo` token unless you accept that
+larger blast radius.
+
+After creating the token, set it in every source repo:
+
+```powershell
+$repos = @(
+  "plc-comm-computerlink-dotnet",
+  "plc-comm-computerlink-python",
+  "plc-comm-hostlink-dotnet",
+  "plc-comm-hostlink-python",
+  "plc-comm-hostlink-rust",
+  "node-red-contrib-plc-comm-kvhostlink",
+  "plc-comm-slmp-dotnet",
+  "plc-comm-slmp-python",
+  "plc-comm-slmp-rust",
+  "plc-comm-slmp-cpp-minimal",
+  "node-red-contrib-plc-comm-slmp"
+)
+
+foreach ($repo in $repos) {
+  gh secret set DOCS_REPO_TOKEN --repo "fa-yoshinobu/$repo"
+}
+```
+
+When prompted by `gh`, paste the token value. The token is stored as an Actions
+secret in each source repo and is not committed to git.
+
+To verify registration:
+
+```powershell
+foreach ($repo in $repos) {
+  gh secret list --repo "fa-yoshinobu/$repo" | Select-String "^DOCS_REPO_TOKEN\s"
+}
+```
+
 ## Local preview
 
 ```bash

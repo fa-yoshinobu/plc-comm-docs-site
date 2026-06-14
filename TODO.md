@@ -35,3 +35,4 @@
 - [ ] `DOCS_REPO_TOKEN` is not configured in the 11 source repos yet.
       Until it is configured, the trigger job logs a notice and skips the
       `repository_dispatch` call so normal CI remains green.
+      See `SITE_MANAGEMENT.md` for the exact `gh secret set` loop.
