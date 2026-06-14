@@ -117,7 +117,6 @@ nav:
     - C++ (Arduino/PlatformIO):
       - Getting started: slmp/cpp/GETTING_STARTED.md
       - Usage guide: slmp/cpp/USAGE_GUIDE.md
-      - Setup guide: slmp/cpp/SETUP_GUIDE.md
       - Supported registers: slmp/cpp/SUPPORTED_REGISTERS.md
       - Profiles: slmp/cpp/PROFILES.md
       - Gotchas: slmp/cpp/GOTCHAS.md
