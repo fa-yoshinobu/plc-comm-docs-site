@@ -32,7 +32,7 @@
 
 - [x] Trigger a manual deploy (Actions -> Deploy docs -> Run workflow)
 - [x] Verify all 11 repos' pages appear on the site
-- [ ] Verify `plc-comm-mcprotocol-serial-cpp` pages appear on the site after adding it
+- [x] Verify `plc-comm-mcprotocol-serial-cpp` pages appear on the site after adding it
 - [x] Disable GitHub Pages on `plc-comm-mcprotocol-serial-cpp`
 - [x] Verify `repository_dispatch` deploy path in `plc-comm-docs-site`
 - [x] Verify a source repo `docsrc/user` push triggers `plc-comm-docs-site`
