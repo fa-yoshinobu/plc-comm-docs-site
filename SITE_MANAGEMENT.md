@@ -75,5 +75,6 @@ mkdocs serve
 | `mkdocs.yml` | Site structure and theme config |
 | `docs/index.md` | Top-level landing page |
 | `.github/workflows/deploy.yml` | Collects docs and deploys to GitHub Pages |
+| `README.md` | Short repository overview |
 | `SITE_MANAGEMENT.md` | Maintainer guide for this repo |
 | `TODO.md` | Pending manual setup tasks |

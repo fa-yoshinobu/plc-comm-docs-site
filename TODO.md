@@ -26,5 +26,11 @@
 ## After token setup
 
 - [x] Trigger a manual deploy (Actions -> Deploy docs -> Run workflow)
-- [ ] Verify all 11 repos' pages appear on the site
+- [x] Verify all 11 repos' pages appear on the site
 - [ ] Run GOAL_CLEANUP_DOCFX.md to remove DocFX artifacts from source repos
+
+## Current blockers for fully automatic rebuilds
+
+- [ ] `DOCS_REPO_TOKEN` is not configured in the 11 source repos yet.
+      Until it is configured, the trigger job logs a notice and skips the
+      `repository_dispatch` call so normal CI remains green.
