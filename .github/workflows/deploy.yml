@@ -58,6 +58,7 @@ jobs:
           copy_docs _src/slmp-cpp/docsrc/user docs/slmp/cpp
           copy_docs _src/slmp-nodered/docsrc/user docs/slmp/nodered
           copy_docs _src/mcprotocol-serial-cpp/docsrc/user docs/mcprotocol/cpp
+          rm -f docs/mcprotocol/cpp/README.md
 
           python - <<'PY'
           from pathlib import Path
