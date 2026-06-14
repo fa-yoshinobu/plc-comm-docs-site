@@ -59,21 +59,38 @@ jobs:
           copy_docs _src/slmp-nodered/docsrc/user docs/slmp/nodered
           copy_docs _src/mcprotocol-serial-cpp/docsrc/user docs/mcprotocol/cpp
           rm -f docs/mcprotocol/cpp/README.md
+          rm -f \
+            docs/hostlink/rust/DEVELOPMENT_HISTORY.md \
+            docs/hostlink/rust/KV5000_LIVE_VALIDATION_2026-05-03.md \
+            docs/hostlink/rust/KV7000_LIVE_VALIDATION_2026-05-03.md \
+            docs/hostlink/rust/RELEASE_PUBLICATION_2026-06-12.md \
+            docs/slmp/rust/DEVELOPMENT_HISTORY.md \
+            docs/slmp/rust/EXTENDED_DEVICE_COVERAGE_LATEST.md \
+            docs/slmp/rust/IQF_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md \
+            docs/slmp/rust/IQL_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md \
+            docs/slmp/rust/IQL_EXTENDED_DEVICE_COVERAGE_2026-05-03.md \
+            docs/slmp/rust/IQL_LIVE_STRESS_VALIDATION_2026-05-03.md \
+            docs/slmp/rust/IQR_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md \
+            docs/slmp/rust/IQR_EXTENDED_DEVICE_COVERAGE_2026-05-29.md \
+            docs/slmp/rust/LCPU_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md \
+            docs/slmp/rust/MIXED_BLOCK_WRITE_1406_NOTES_2026-05-03.md \
+            docs/slmp/rust/QCPU_RUNTIME_RANGE_VALIDATION_2026-05-15.md \
+            docs/slmp/rust/QNU_RUNTIME_RANGE_VALIDATION_2026-05-15.md \
+            docs/slmp/rust/QNUDV_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03.md \
+            docs/slmp/rust/QNUDV_RUNTIME_RANGE_VALIDATION_2026-05-15.md \
+            docs/slmp/rust/RELEASE_PUBLICATION_2026-06-12.md
 
           python - <<'PY'
+          import re
           from pathlib import Path
 
           replacements = {
               Path("docs/slmp/rust"): {
                   "(../src/": "(https://github.com/fa-yoshinobu/plc-comm-slmp-rust/blob/main/src/",
               },
-              Path("docs/slmp/cpp"): {
-                  "(../validation/reports/": "(https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal/blob/main/docsrc/validation/reports/",
-              },
               Path("docs/mcprotocol/cpp"): {
                   "(../../examples/": "(https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/examples/",
                   "(../../include/": "(https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/include/",
-                  "(../validation/reports/": "(https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/docsrc/validation/reports/",
               },
           }
 
@@ -85,6 +102,40 @@ jobs:
                       updated = updated.replace(old, new)
                   if updated != text:
                       path.write_text(updated, encoding="utf-8")
+
+          retained_note = "retained in the source repository technical notes"
+          local_validation_link = re.compile(r"\[([^\]]+)\]\(\.\./validation/reports/[A-Za-z0-9_./-]+\.md\)")
+          technical_record_link = re.compile(
+              r"\[([^\]]+)\]\((?:"
+              r"KV5000_LIVE_VALIDATION_2026-05-03|"
+              r"KV7000_LIVE_VALIDATION_2026-05-03|"
+              r"IQF_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03|"
+              r"IQL_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03|"
+              r"IQL_LIVE_STRESS_VALIDATION_2026-05-03|"
+              r"IQR_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03|"
+              r"LCPU_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03|"
+              r"QCPU_RUNTIME_RANGE_VALIDATION_2026-05-15|"
+              r"QNU_RUNTIME_RANGE_VALIDATION_2026-05-15|"
+              r"QNUDV_DEVICE_RANGE_SAMPLE_VALIDATION_2026-05-03|"
+              r"QNUDV_RUNTIME_RANGE_VALIDATION_2026-05-15"
+              r")\.md\)"
+          )
+
+          for folder in (Path("docs/slmp/cpp"), Path("docs/mcprotocol/cpp")):
+              for path in folder.rglob("*.md"):
+                  text = path.read_text(encoding="utf-8")
+                  updated = local_validation_link.sub(lambda match: f"{match.group(1)} ({retained_note})", text)
+                  if updated != text:
+                      path.write_text(updated, encoding="utf-8")
+
+          for path in (
+              Path("docs/hostlink/rust/LATEST_COMMUNICATION_VERIFICATION.md"),
+              Path("docs/slmp/rust/LATEST_COMMUNICATION_VERIFICATION.md"),
+          ):
+              text = path.read_text(encoding="utf-8")
+              updated = technical_record_link.sub(lambda match: f"{match.group(1)} ({retained_note})", text)
+              if updated != text:
+                  path.write_text(updated, encoding="utf-8")
           PY
 
       - name: Set up Python
