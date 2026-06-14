@@ -27,7 +27,7 @@ nav:
       - Model ranges: computerlink/python/MODEL_RANGES.md
       - Gotchas: computerlink/python/GOTCHAS.md
       - Latest verification: computerlink/python/LATEST_COMMUNICATION_VERIFICATION.md
-  - Host Link (KV):
+  - KV Host Link:
     - .NET:
       - Getting started: hostlink/dotnet/GETTING_STARTED.md
       - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
