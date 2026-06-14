@@ -13,7 +13,6 @@ nav:
     - .NET:
       - Getting started: computerlink/dotnet/GETTING_STARTED.md
       - Usage guide: computerlink/dotnet/USAGE_GUIDE.md
-      - User guide: computerlink/dotnet/USER_GUIDE.md
       - Supported registers: computerlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: computerlink/dotnet/PROFILES.md
       - Gotchas: computerlink/dotnet/GOTCHAS.md
@@ -22,7 +21,6 @@ nav:
     - Python:
       - Getting started: computerlink/python/GETTING_STARTED.md
       - Usage guide: computerlink/python/USAGE_GUIDE.md
-      - User guide: computerlink/python/USER_GUIDE.md
       - Supported registers: computerlink/python/SUPPORTED_REGISTERS.md
       - Profiles: computerlink/python/PROFILES.md
       - Model ranges: computerlink/python/MODEL_RANGES.md
@@ -32,7 +30,6 @@ nav:
     - .NET:
       - Getting started: hostlink/dotnet/GETTING_STARTED.md
       - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
-      - User guide: hostlink/dotnet/USER_GUIDE.md
       - Supported registers: hostlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/dotnet/PROFILES.md
       - Device handling: hostlink/dotnet/DEVICE_HANDLING.md
@@ -41,7 +38,6 @@ nav:
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
       - Usage guide: hostlink/python/USAGE_GUIDE.md
-      - User guide: hostlink/python/USER_GUIDE.md
       - API reference: hostlink/python/API_REFERENCE.md
       - Performance guide: hostlink/python/PERFORMANCE_GUIDE.md
       - Supported registers: hostlink/python/SUPPORTED_REGISTERS.md
@@ -60,7 +56,6 @@ nav:
     - Node-RED:
       - Getting started: hostlink/nodered/GETTING_STARTED.md
       - Usage guide: hostlink/nodered/USAGE_GUIDE.md
-      - User guide: hostlink/nodered/USER_GUIDE.md
       - Supported registers: hostlink/nodered/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/nodered/PROFILES.md
       - Gotchas: hostlink/nodered/GOTCHAS.md
@@ -69,7 +64,6 @@ nav:
     - .NET:
       - Getting started: slmp/dotnet/GETTING_STARTED.md
       - Usage guide: slmp/dotnet/USAGE_GUIDE.md
-      - User guide: slmp/dotnet/USER_GUIDE.md
       - Supported registers: slmp/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: slmp/dotnet/PROFILES.md
       - Device ranges: slmp/dotnet/DEVICE_RANGES.md
@@ -78,7 +72,6 @@ nav:
     - Python:
       - Getting started: slmp/python/GETTING_STARTED.md
       - Usage guide: slmp/python/USAGE_GUIDE.md
-      - User guide: slmp/python/USER_GUIDE.md
       - Samples: slmp/python/SAMPLES.md
       - Supported registers: slmp/python/SUPPORTED_REGISTERS.md
       - Profiles: slmp/python/PROFILES.md
