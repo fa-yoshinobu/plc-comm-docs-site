@@ -66,7 +66,7 @@ linked docs pages so README stays stable without becoming an empty signpost.
 ## How to add a new source repo
 
 1. Add a `git clone` line for the new repo in `deploy.yml`.
-2. Add a `copy_docs` line for the new repo's docs folder.
+2. Add a `SourceDocs(...)` entry for the new repo in `scripts/collect_docs.py`.
 3. Add the new repo's pages to `nav:` in `mkdocs.yml`.
 4. Add the `repository_dispatch` trigger job to the new repo's CI.
 5. Register `DOCS_REPO_TOKEN` as a secret in the new repo.
@@ -124,10 +124,24 @@ foreach ($repo in $repos) {
 
 ## Local preview
 
-```bash
+From this repo, collect docs from sibling source repositories first:
+
+```powershell
+python scripts/collect_docs.py --source-root ..
+```
+
+Then serve the site:
+
+```powershell
 pip install mkdocs-material
-# Collect docs manually from source repos first, then:
 mkdocs serve
+```
+
+In GitHub Actions, the same script runs against the `_src` directory populated
+by the checkout step:
+
+```bash
+python scripts/collect_docs.py --source-root _src
 ```
 
 ## Files in this repo
@@ -136,7 +150,8 @@ mkdocs serve
 |------|---------|
 | `mkdocs.yml` | Site structure and theme config |
 | `docs/index.md` | Top-level landing page |
-| `.github/workflows/deploy.yml` | Collects docs and deploys to GitHub Pages |
+| `scripts/collect_docs.py` | Collects source repo docs into the MkDocs tree |
+| `.github/workflows/deploy.yml` | Checks out source repos, collects docs, and deploys to GitHub Pages |
 | `README.md` | Short repository overview |
 | `SITE_MANAGEMENT.md` | Maintainer guide for this repo |
 | `TODO.md` | Pending manual setup tasks |
