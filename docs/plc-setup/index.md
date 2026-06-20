@@ -3,6 +3,10 @@
 Configure the PLC before using any communication library.
 A **power cycle is required** after every parameter change.
 
+For KV Host Link libraries, choose and pass the canonical PLC profile explicitly
+when opening a standard connection. The setup pages below list the profile to
+use for each KV CPU family.
+
 ## Supported models
 
 | Protocol | Model | Connection type | Port |
