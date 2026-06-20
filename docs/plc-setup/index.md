@@ -37,3 +37,29 @@ use for each KV CPU family.
 | GX Works3 | MELSEC iQ-R, iQ-F, iQ-L, MX-R, MX-F, RJ71EN71 |
 | GX Works2 | MELSEC Q series (QnUDV, QnU, QJ71E71-100), L series (LCPU, LJ71E71-100) |
 | KV Studio | KEYENCE KV-X500, KV-8000, KV-7000, KV-5000, KV-XLE02 |
+
+## Simulator connection notes
+
+### GX Simulator 3
+
+GX Simulator 3 uses IP `127.0.0.1` and port `5511` for SLMP over TCP.
+
+The following parameter must be enabled:
+
+- `Enable/Disable Online Change: Enable All (SLMP)`
+
+Simulator model support:
+
+- Model: iQ-R/iQ-L only
+
+Verified with GX Works3 Version 1.125F.
+
+### KV STUDIO Simulator
+
+KV STUDIO Simulator uses IP `127.0.0.1` and port `8501` for Host Link over TCP.
+
+Simulator model support:
+
+- Model: KV-X500/KV-8000 only
+
+Verified with KV STUDIO Ver.12.41.
