@@ -32,9 +32,12 @@ Use the KV-XLE02 when the KV series CPU does not have a built-in Ethernet port. 
 
 | Parameter | Value |
 |-----------|-------|
-| Canonical profile | Not required for connection |
+| Canonical profile | Connected CPU profile, for example `keyence:kv-x500` |
 | Port (TCP) | `8501` |
 | Port (UDP) | `8501` |
+
+Pass the connected CPU's canonical profile explicitly. The standard connection
+helpers do not infer it from the PLC or communication unit.
 
 Code example:
 
@@ -47,7 +50,11 @@ Code example:
 
 
     async def main() -> None:
-        options = HostLinkConnectionOptions(host="192.168.250.100", port=8501)
+        options = HostLinkConnectionOptions(
+            host="192.168.250.100",
+            plc_profile="keyence:kv-x500",
+            port=8501,
+        )
         async with await open_and_connect(options) as client:
             dm0 = await read_typed(client, "DM0", "U")
             print(f"DM0={dm0}")
@@ -61,7 +68,7 @@ Code example:
     ```csharp
     using PlcComm.KvHostLink;
 
-    var options = new KvHostLinkConnectionOptions("192.168.250.100", 8501);
+    var options = new KvHostLinkConnectionOptions("192.168.250.100", "keyence:kv-x500", 8501);
     await using var client = await KvHostLinkClientFactory.OpenAndConnectAsync(options);
     var dm0 = await client.ReadTypedAsync("DM0", "U");
     Console.WriteLine($"DM0={dm0}");
