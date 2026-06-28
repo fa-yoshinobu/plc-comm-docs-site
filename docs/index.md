@@ -6,6 +6,9 @@ A set of libraries for communicating with industrial PLCs over TCP/UDP and RS-23
 
 Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) · [FA Labo](https://fa-yoshinobu.github.io/FA_Labo/index.html)
 
+For license terms, commercial support, sponsorship, and donations, see
+[License & Support](support.md).
+
 ## Computerlink (JTEKT TOYOPUC)
 
 | Language | Docs | GitHub | Registry |

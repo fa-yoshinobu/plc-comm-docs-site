@@ -9,6 +9,7 @@ theme:
 
 nav:
   - Home: index.md
+  - License & Support: support.md
   - Computerlink:
     - .NET:
       - Getting started: computerlink/dotnet/GETTING_STARTED.md
