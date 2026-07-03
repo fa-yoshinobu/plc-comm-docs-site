@@ -80,11 +80,13 @@ For normal library usage, select the PLC profile in the library or Node-RED conn
 | Page | Use it for |
 | --- | --- |
 | [Profile comparison](profile-comparison.md) | Compare frame defaults, feature decisions, point limits, write policy, and profile differences. |
-| [Device range rules](device-range-rules.md) | Check device family notation and the source rules used to build device range catalogs. |
+| [Device range rules](device-range-rules.md) | Check device family notation and the source rules used by monitor, diagnostics, and application-layer validation tools. |
 
 ## Scope
 
 The profile data targets CPU built-in Ethernet ports. Extension Ethernet modules may support additional commands, but the built-in Ethernet profiles remain the conservative baseline.
+
+Device range rules are not send/receive address guards for communication libraries. They are for applications that need to discover or display the valid device range of a selected PLC profile.
 """
 
 
