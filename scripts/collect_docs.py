@@ -71,7 +71,7 @@ SLMP_PROFILE_REFERENCE_INDEX = """# SLMP Profile Reference
 
 This section is built from the canonical `plc-comm-slmp-profiles` data repository during the documentation build.
 
-Use it when you need to compare MELSEC SLMP profiles or device range rules across the supported built-in Ethernet profiles.
+Use it when you need to compare MELSEC SLMP profiles across the supported built-in Ethernet profiles.
 
 For normal library usage, select the PLC profile in the library or Node-RED connection settings and follow that library's getting started guide.
 
@@ -79,8 +79,7 @@ For normal library usage, select the PLC profile in the library or Node-RED conn
 
 | Page | Use it for |
 | --- | --- |
-| [Profile comparison](profile-comparison.md) | Compare frame defaults, feature decisions, point limits, write policy, and profile differences. |
-| [Device range rules](device-range-rules.md) | Check device family notation and the source rules used by monitor, diagnostics, and application-layer validation tools. |
+| [Profile comparison](profile-comparison.md) | Compare frame defaults, feature decisions, point limits, write policy, device-range differences, and profile differences. |
 
 ## Scope
 
