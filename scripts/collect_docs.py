@@ -27,6 +27,14 @@ class SourceDocs:
     target_dir: str
 
 
+@dataclass(frozen=True)
+class SourceFile:
+    repo_name: str
+    ci_dir: str
+    source_file: str
+    target_file: str
+
+
 SOURCES: tuple[SourceDocs, ...] = (
     SourceDocs("plc-comm-computerlink-dotnet", "computerlink-dotnet", "docsrc/user", "computerlink/dotnet"),
     SourceDocs("plc-comm-computerlink-python", "computerlink-python", "docsrc/user", "computerlink/python"),
@@ -41,6 +49,43 @@ SOURCES: tuple[SourceDocs, ...] = (
     SourceDocs("node-red-contrib-plc-comm-slmp", "slmp-nodered", "docsrc/user", "slmp/nodered"),
     SourceDocs("plc-comm-mcprotocol-serial-cpp", "mcprotocol-serial-cpp", "docsrc/user", "mcprotocol/cpp"),
 )
+
+
+SOURCE_FILES: tuple[SourceFile, ...] = (
+    SourceFile(
+        "plc-comm-slmp-profiles",
+        "slmp-profiles",
+        "tables/slmp_profile_comparison.md",
+        "slmp/profile-reference/profile-comparison.md",
+    ),
+    SourceFile(
+        "plc-comm-slmp-profiles",
+        "slmp-profiles",
+        "device-ranges/slmp_device_range_rules.md",
+        "slmp/profile-reference/device-range-rules.md",
+    ),
+)
+
+
+SLMP_PROFILE_REFERENCE_INDEX = """# SLMP Profile Reference
+
+This section is built from the canonical `plc-comm-slmp-profiles` data repository during the documentation build.
+
+Use it when you need to compare MELSEC SLMP profiles or device range rules across the supported built-in Ethernet profiles.
+
+For normal library usage, select the PLC profile in the library or Node-RED connection settings and follow that library's getting started guide.
+
+## Pages
+
+| Page | Use it for |
+| --- | --- |
+| [Profile comparison](profile-comparison.md) | Compare frame defaults, feature decisions, point limits, write policy, and profile differences. |
+| [Device range rules](device-range-rules.md) | Check device family notation and the source rules used to build device range catalogs. |
+
+## Scope
+
+The profile data targets CPU built-in Ethernet ports. Extension Ethernet modules may support additional commands, but the built-in Ethernet profiles remain the conservative baseline.
+"""
 
 
 REMOVE_AFTER_COPY: tuple[str, ...] = (
@@ -116,6 +161,18 @@ def resolve_source(source_root: Path, source: SourceDocs) -> Path:
     )
 
 
+def resolve_source_file(source_root: Path, source: SourceFile) -> Path:
+    for directory_name in (source.repo_name, source.ci_dir):
+        candidate = source_root / directory_name / source.source_file
+        if candidate.is_file():
+            return candidate
+    raise FileNotFoundError(
+        f"Could not find source file for {source.repo_name}. Tried "
+        f"{source_root / source.repo_name / source.source_file} and "
+        f"{source_root / source.ci_dir / source.source_file}."
+    )
+
+
 def copy_contents(source_dir: Path, target_dir: Path) -> None:
     if target_dir.exists():
         shutil.rmtree(target_dir)
@@ -127,6 +184,16 @@ def copy_contents(source_dir: Path, target_dir: Path) -> None:
             shutil.copytree(child, target)
         else:
             shutil.copy2(child, target)
+
+
+def copy_file(source_file: Path, target_file: Path) -> None:
+    target_file.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source_file, target_file)
+
+
+def write_generated_page(target_file: Path, text: str) -> None:
+    target_file.parent.mkdir(parents=True, exist_ok=True)
+    target_file.write_text(text, encoding="utf-8")
 
 
 def remove_unpublished_files(docs_root: Path) -> None:
@@ -182,6 +249,14 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
         target_dir = docs_root / source.target_dir
         copy_contents(source_dir, target_dir)
         print(f"collected {source.repo_name}: {source_dir} -> {target_dir}")
+
+    for source in SOURCE_FILES:
+        source_file = resolve_source_file(source_root, source)
+        target_file = docs_root / source.target_file
+        copy_file(source_file, target_file)
+        print(f"collected {source.repo_name}: {source_file} -> {target_file}")
+
+    write_generated_page(docs_root / "slmp/profile-reference/index.md", SLMP_PROFILE_REFERENCE_INDEX)
 
     remove_unpublished_files(docs_root)
     postprocess_links(docs_root)

@@ -41,6 +41,7 @@ jobs:
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-rust.git _src/slmp-rust
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal.git _src/slmp-cpp
           git clone --depth 1 https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp.git _src/slmp-nodered
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-profiles.git _src/slmp-profiles
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp.git _src/mcprotocol-serial-cpp
 
       - name: Collect docs

@@ -59,6 +59,10 @@ nav:
       - Gotchas: hostlink/nodered/GOTCHAS.md
       - Latest Communication Verification: hostlink/nodered/LATEST_COMMUNICATION_VERIFICATION.md
   - SLMP:
+    - Profile Reference:
+      - Overview: slmp/profile-reference/index.md
+      - Profile comparison: slmp/profile-reference/profile-comparison.md
+      - Device range rules: slmp/profile-reference/device-range-rules.md
     - .NET:
       - Getting started: slmp/dotnet/GETTING_STARTED.md
       - Usage guide: slmp/dotnet/USAGE_GUIDE.md
