@@ -7,6 +7,7 @@ on:
       - docs/**
       - scripts/**
       - mkdocs.yml
+      - requirements-docs.txt
       - .github/workflows/deploy.yml
   repository_dispatch:
     types: [source-updated]
@@ -52,8 +53,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install MkDocs
-        run: pip install mkdocs-material
+      - name: Install documentation dependencies
+        run: pip install -r requirements-docs.txt
 
       - name: Build
         run: mkdocs build --strict

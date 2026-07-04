@@ -1,0 +1,5 @@
+mkdocs-material
+mkdocstrings[python]
+kv-hostlink
+toyopuc-computerlink
+slmp-connect-python

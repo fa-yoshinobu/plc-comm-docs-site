@@ -19,7 +19,7 @@ protocols and finding the right package.
 | Area | Contents |
 |------|----------|
 | PLC setup | Practical connection settings for supported PLC families and modules |
-| Library docs | Getting started guides, usage notes, supported profiles, and samples |
+| Library docs | Getting started guides, usage notes, API references, supported profiles, and samples |
 | Communication verification | Current live-device verification summaries and limitations |
 | Release navigation | Links to package registries, source repositories, and published docs |
 
@@ -37,6 +37,8 @@ protocols and finding the right package.
 This repository builds the public site with
 [MkDocs Material](https://squidfunk.github.io/mkdocs-material/). Most page
 content is collected from the source library repositories during deployment.
+Python API reference pages are generated with mkdocstrings from the installed
+PyPI release packages during the site build.
 
 ## Deployment Flow
 
