@@ -83,7 +83,6 @@ For PLC-side Binary data code, port/open settings, and RUN-time write permission
 | --- | --- |
 | [Parameters](parameters.md) | Compare frame defaults, feature decisions, point limits, write policy, and device availability across profiles. |
 | [Device ranges](device-ranges.md) | Check SD-derived range rules, fixed ranges, probe markers, and unsupported device families. |
-| [Troubleshooting & end codes](troubleshooting-end-codes.md) | Map common SLMP end codes to likely causes and checks. |
 
 ## Scope
 
@@ -102,11 +101,19 @@ This page summarizes situations observed during this project's live PLC verifica
 Before chasing one code, confirm these basics:
 
 - The application selected the correct canonical PLC profile.
-- The PLC Ethernet port uses Binary SLMP data code; see the [MELSEC SLMP PLC Setup Guide](../../plc-setup/index.md).
+- The PLC Ethernet port uses Binary SLMP data code; see the [MELSEC SLMP PLC Setup Guide](../index.md).
 - PLC-side RUN-time write permission is enabled before write tests where the PLC exposes that setting.
 - Strict profile mode is enabled unless you intentionally want to send unsupported commands and let the PLC answer.
 - Point counts are within the selected profile limits.
 - Routed devices such as `Un\\Gn`, `Jn\\...`, and `U3En\\G` exist in the actual PLC configuration.
+
+## Common Symptoms
+
+| Symptom | Likely cause | First check |
+| --- | --- | --- |
+| The connection opens, but every request returns an end code. | The selected PLC profile does not match the PLC, or the PLC Ethernet port data-code setting does not match the library request format. | Select the canonical profile for the connected PLC and confirm Binary SLMP is configured on the PLC-side port. |
+| Reads work, but writes fail. | PLC-side RUN-time write permission, remote password state, or profile write policy blocks the write. | Check RUN-time write permission, remote password state, and the selected profile's write policy. |
+| Block commands fail on Q/L profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
 
 ## Common End Codes
 
@@ -145,9 +152,112 @@ Use this only for troubleshooting or compatibility investigation. Normal applica
 """
 
 
+KV_HOSTLINK_ERROR_CODES = """# KV Host Link Error Codes
+
+This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup guide. It is not a complete manufacturer code table; use the KEYENCE manuals for formal definitions.
+
+## PLC Error Codes
+
+| Code | Typical cause | First check |
+| --- | --- | --- |
+| `E0` | Device number is invalid, outside range, or not available on the selected PLC model. | Check the address and selected canonical profile. |
+| `E1` | Command is not supported by the selected PLC/model. Timer/counter preset writes are a common case on unsupported models. | Check the model profile and avoid unsupported write helpers. |
+| `E2` | Program is not registered. | Check the PLC project/program state. |
+| `E4` | Write is disabled by CPU protection, lock state, or project settings. | Check KV Studio and CPU write-protection settings. |
+| `E5` | Unit error. | Check the PLC/unit error state. |
+| `E6` | Comment data is not registered. | Check comment registration before using comment reads. |
+
+## First Checks
+
+- Confirm that Host Link / Upper Link communication is enabled on the PLC.
+- Confirm the port number, protocol, and IP settings in the [KV PLC setup pages](../index.md).
+- Confirm that the application selected the canonical profile for the actual PLC model.
+- For write errors, check CPU protection, lock state, project settings, and RUN-time write permission where applicable.
+"""
+
+
+COMPUTERLINK_ERROR_CODES = """# Computerlink Error Codes
+
+This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.
+
+## Common PLC Error Codes
+
+| Code | Typical cause | First check |
+| --- | --- | --- |
+| `0x40` | Address or address plus count is outside the CPU range. This is also the common result when FR is not exposed on the tested unit. | Check the selected profile, address range, and count. |
+| `0x24` | Subcommand is not supported by the CPU or routed target. | Check whether the feature exists on that CPU; for example some targets reject `A0`. |
+| `0x23` | Command code is not supported. | Check the selected helper and profile. |
+| `0x31` | Write or function call is prohibited while the sequence is running. | Check PLC run/write settings before retrying. |
+| `0x34` | Access is prohibited by configuration. | Check PLC communication and protection settings. |
+| `0x41` | Word or byte count is outside the permitted range. | Split the request or reduce the count. |
+| `0x52` | Timer/counter set-value and current-value command type do not match. | Check whether the helper targets a preset or current value. |
+| `0x66`, `0x70`, `0x72` | Relay link module did not answer or could not execute the request. | Check relay hops and the target PLC path. |
+| `0x73` | Relay command collision on the same link module; retry is appropriate. | Retry after a short delay or reduce concurrent relay access. |
+| `0x11` | CPU module hardware failure. | Check the PLC CPU status before continuing. |
+
+## First Checks
+
+- Confirm that Computerlink communication is enabled on the PLC side.
+- Confirm the TCP/UDP port and network settings in the [TOYOPUC setup page](toyopuc.md).
+- Confirm that the application selected the canonical TOYOPUC profile.
+- For write errors, check PLC run/write permission and protection settings before retrying.
+"""
+
+
+MCPROTOCOL_SERIAL_ERROR_CODES = """# MC Protocol Serial Error Codes
+
+This page is a practical guide for errors returned by MELSEC serial MC Protocol targets. It is not a complete Mitsubishi error-code table. Use the PLC and serial-module manuals for formal definitions.
+
+## Library Status Categories
+
+The C++ library reports transport and parser failures separately from PLC/module error responses.
+
+| Status category | Typical meaning | First checks |
+| --- | --- | --- |
+| Timeout | No complete response arrived before the response timeout. | Check wiring, baud rate, parity, stop bits, station number, and whether the PLC module is configured for the same frame type. |
+| Framing | Bytes arrived, but they did not match the selected response frame. | Check 1C/2C/3C/4C/1E selection, ASCII format, binary vs ASCII mode, and CR/LF settings. |
+| Sum-check mismatch | A response arrived, but its sum-check did not match. | Check whether sum-check is enabled on both sides. If it is, check serial noise and wiring. |
+| Parse | The response frame shape was recognized, but a numeric field or payload length could not be decoded. | Capture the raw frame and check whether the selected frame/profile matches the PLC setting. |
+| Unsupported configuration | The request cannot be encoded for the selected profile, frame, or build options. | Select an explicit PLC profile, choose a supported frame helper, and check disabled feature macros. |
+| PLC/module error | The PLC or serial module returned an error response. | Read the preserved PLC/module error code and use the sections below. |
+
+## PLC and Serial-Module Error Families
+
+Serial MC Protocol uses more than one error-code family. Do not interpret every code as an SLMP Ethernet end code.
+
+| Code family | Where it appears | How to handle it |
+| --- | --- | --- |
+| CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP end-code guide](../slmp/troubleshooting-end-codes.md) for practical checks. |
+| `7Fxx` serial-module responses | Serial-module rejection before or around CPU forwarding. | Treat as target/module dependent. Check frame mode, profile, device family, route, and module settings. |
+| `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Not yet published as a user table. Record the raw response and target settings; deliberately malformed-request measurements are still a TODO. |
+| No response | The module ignores the request or cannot answer in the selected mode. | Treat as a transport/configuration problem first, not as an error code. |
+
+## Observed Codes
+
+Only project-observed cases are listed here. If you see a code not listed here, record the raw response, frame kind, ASCII/binary mode, station, sum-check setting, PLC model, serial module, and selected PLC profile.
+
+| Code | Observed situation | Practical check |
+| --- | --- | --- |
+| `0x4031` | CPU-side device or route rejection observed on serial paths, for example unsupported link-direct access on a target setup. | Check the selected profile, route notation, mounted module, and whether the requested device family exists on that PLC. |
+| `0x7F22` | Serial-module rejection observed for unsupported serial-MC device/command shapes, such as `S` device probes on a C24 path before CPU forwarding. | Do not treat unsupported device families as valid access paths. Recheck the profile support table and the serial-module MC protocol format. |
+
+## Codes Intentionally Not Expanded Yet
+
+The decoder preserves error codes such as two-digit `1C` NAK codes and four-digit QnA serial responses, but this page does not assign meanings to unmeasured codes.
+
+The active TODO is to collect live-device evidence for:
+
+- `1C` NAK codes from deliberately malformed but transmitted requests.
+- `3C` / `4C` serial-link `7Fxx` codes from deliberately malformed serial requests.
+
+After those measurements exist, add only observed codes to this page.
+"""
+
+
 REMOVE_AFTER_COPY: tuple[str, ...] = (
     "slmp/profile-reference/device-range-rules.md",
     "slmp/profile-reference/profile-comparison.md",
+    "slmp/profile-reference/troubleshooting-end-codes.md",
     "mcprotocol/cpp/README.md",
     "hostlink/rust/DEVELOPMENT_HISTORY.md",
     "hostlink/rust/KV5000_LIVE_VALIDATION_2026-05-03.md",
@@ -305,10 +415,10 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
         print(f"collected {source.repo_name}: {source_file} -> {target_file}")
 
     write_generated_page(docs_root / "slmp/profile-reference/index.md", SLMP_PROFILE_REFERENCE_INDEX)
-    write_generated_page(
-        docs_root / "slmp/profile-reference/troubleshooting-end-codes.md",
-        SLMP_TROUBLESHOOTING_END_CODES,
-    )
+    write_generated_page(docs_root / "plc-setup/slmp/troubleshooting-end-codes.md", SLMP_TROUBLESHOOTING_END_CODES)
+    write_generated_page(docs_root / "plc-setup/kv/error-codes.md", KV_HOSTLINK_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/computerlink/error-codes.md", COMPUTERLINK_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/mcprotocol/error-codes.md", MCPROTOCOL_SERIAL_ERROR_CODES)
 
     remove_unpublished_files(docs_root)
     postprocess_links(docs_root)

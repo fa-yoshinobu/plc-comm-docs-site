@@ -8,7 +8,8 @@ when opening a standard connection. The setup pages below list the profile to
 use for each KV CPU family.
 
 For MELSEC SLMP profile limits and end-code troubleshooting after the PLC-side
-settings are correct, use the [SLMP profile reference](../slmp/profile-reference/index.md).
+settings are correct, use the [SLMP profile reference](../slmp/profile-reference/index.md)
+and [SLMP troubleshooting and end codes](slmp/troubleshooting-end-codes.md).
 
 ## Supported models
 
@@ -32,6 +33,17 @@ settings are correct, use the [SLMP profile reference](../slmp/profile-reference
 | KV Host Link | KV-XLE02 | Communication unit | 8501 |
 | Computerlink | [TOYOPUC](computerlink/toyopuc.md) | Ethernet | 1025 |
 | MC Protocol Serial | [MELSEC serial modules](mcprotocol/serial.md) | Serial module | *(serial)* |
+
+## Protocol error-code pages
+
+These pages are shared by all language implementations for the same protocol.
+
+| Protocol | Page |
+|----------|------|
+| MELSEC SLMP | [Troubleshooting and end codes](slmp/troubleshooting-end-codes.md) |
+| KV Host Link | [Error codes](kv/error-codes.md) |
+| Computerlink | [Error codes](computerlink/error-codes.md) |
+| MC Protocol Serial | [Error codes](mcprotocol/error-codes.md) |
 
 ## Configuration tools
 

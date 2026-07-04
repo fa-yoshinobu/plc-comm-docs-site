@@ -17,7 +17,6 @@ nav:
       - Supported registers: computerlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: computerlink/dotnet/PROFILES.md
       - Gotchas: computerlink/dotnet/GOTCHAS.md
-      - Error codes: computerlink/dotnet/ERROR_CODES.md
       - Troubleshooting: computerlink/dotnet/TROUBLESHOOTING.md
     - Python:
       - Getting started: computerlink/python/GETTING_STARTED.md
@@ -26,7 +25,6 @@ nav:
       - Profiles: computerlink/python/PROFILES.md
       - Model ranges: computerlink/python/MODEL_RANGES.md
       - Gotchas: computerlink/python/GOTCHAS.md
-      - Error codes: computerlink/python/ERROR_CODES.md
       - Troubleshooting: computerlink/python/TROUBLESHOOTING.md
   - KV Host Link:
     - .NET:
@@ -35,7 +33,6 @@ nav:
       - Supported registers: hostlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/dotnet/PROFILES.md
       - Gotchas: hostlink/dotnet/GOTCHAS.md
-      - Error codes: hostlink/dotnet/ERROR_CODES.md
       - Troubleshooting: hostlink/dotnet/TROUBLESHOOTING.md
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
@@ -44,7 +41,6 @@ nav:
       - Supported registers: hostlink/python/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/python/PROFILES.md
       - Gotchas: hostlink/python/GOTCHAS.md
-      - Error codes: hostlink/python/ERROR_CODES.md
       - Troubleshooting: hostlink/python/TROUBLESHOOTING.md
     - Rust:
       - Getting started: hostlink/rust/GETTING_STARTED.md
@@ -53,7 +49,6 @@ nav:
       - Profiles: hostlink/rust/PROFILES.md
       - Device ranges: hostlink/rust/DEVICE_RANGES.md
       - Gotchas: hostlink/rust/GOTCHAS.md
-      - Error codes: hostlink/rust/ERROR_CODES.md
       - Troubleshooting: hostlink/rust/TROUBLESHOOTING.md
     - Node-RED:
       - Getting started: hostlink/nodered/GETTING_STARTED.md
@@ -61,48 +56,35 @@ nav:
       - Supported registers: hostlink/nodered/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/nodered/PROFILES.md
       - Gotchas: hostlink/nodered/GOTCHAS.md
-      - Error codes: hostlink/nodered/ERROR_CODES.md
       - Troubleshooting: hostlink/nodered/TROUBLESHOOTING.md
   - SLMP:
     - Profile Reference:
       - Overview: slmp/profile-reference/index.md
       - Parameters: slmp/profile-reference/parameters.md
       - Device ranges: slmp/profile-reference/device-ranges.md
-      - Troubleshooting & end codes: slmp/profile-reference/troubleshooting-end-codes.md
     - .NET:
       - Getting started: slmp/dotnet/GETTING_STARTED.md
       - Usage guide: slmp/dotnet/USAGE_GUIDE.md
-      - Supported registers: slmp/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: slmp/dotnet/PROFILES.md
-      - Device ranges: slmp/dotnet/DEVICE_RANGES.md
       - Gotchas: slmp/dotnet/GOTCHAS.md
     - Python:
       - Getting started: slmp/python/GETTING_STARTED.md
       - Usage guide: slmp/python/USAGE_GUIDE.md
-      - Supported registers: slmp/python/SUPPORTED_REGISTERS.md
       - Profiles: slmp/python/PROFILES.md
-      - Bit device access: slmp/python/BIT_DEVICE_ACCESS_TABLE.md
-      - Extended device access: slmp/python/EXTENDED_DEVICE_ACCESS.md
-      - Error codes: slmp/python/ERROR_CODES.md
       - Gotchas: slmp/python/GOTCHAS.md
     - Rust:
       - Getting started: slmp/rust/GETTING_STARTED.md
       - Usage guide: slmp/rust/USAGE_GUIDE.md
-      - Supported registers: slmp/rust/SUPPORTED_REGISTERS.md
       - Profiles: slmp/rust/PROFILES.md
-      - Device ranges: slmp/rust/DEVICE_RANGES.md
-      - Recipes: slmp/rust/RECIPES.md
       - Gotchas: slmp/rust/GOTCHAS.md
     - C++ (Arduino/PlatformIO):
       - Getting started: slmp/cpp/GETTING_STARTED.md
       - Usage guide: slmp/cpp/USAGE_GUIDE.md
-      - Supported registers: slmp/cpp/SUPPORTED_REGISTERS.md
       - Profiles: slmp/cpp/PROFILES.md
       - Gotchas: slmp/cpp/GOTCHAS.md
     - Node-RED:
       - Getting started: slmp/nodered/GETTING_STARTED.md
       - Usage guide: slmp/nodered/USAGE_GUIDE.md
-      - Supported registers: slmp/nodered/SUPPORTED_REGISTERS.md
       - Profiles: slmp/nodered/PROFILES.md
       - Gotchas: slmp/nodered/GOTCHAS.md
   - MC Protocol Serial:
@@ -115,12 +97,12 @@ nav:
       - Supported registers: mcprotocol/cpp/SUPPORTED_REGISTERS.md
       - Profiles: mcprotocol/cpp/PROFILES.md
       - Gotchas: mcprotocol/cpp/GOTCHAS.md
-      - Error codes: mcprotocol/cpp/ERROR_CODES.md
       - Latest Communication Verification: mcprotocol/cpp/LATEST_COMMUNICATION_VERIFICATION.md
       - FAQ: mcprotocol/cpp/FAQ.md
   - PLC Setup Guide:
     - Overview: plc-setup/index.md
     - MELSEC (SLMP):
+      - Troubleshooting & end codes: plc-setup/slmp/troubleshooting-end-codes.md
       - iQ-R (built-in Ethernet): plc-setup/slmp/iq-r.md
       - iQ-F (built-in Ethernet): plc-setup/slmp/iq-f.md
       - iQ-L (built-in Ethernet): plc-setup/slmp/iq-l.md
@@ -133,14 +115,17 @@ nav:
       - QJ71E71-100 (comm unit): plc-setup/slmp/qj71e71-100.md
       - LJ71E71-100 (comm unit): plc-setup/slmp/lj71e71-100.md
     - KV Host Link (KEYENCE):
+      - Error codes: plc-setup/kv/error-codes.md
       - KV-X500: plc-setup/kv/kv-x500.md
       - KV-8000: plc-setup/kv/kv-8000.md
       - KV-7000: plc-setup/kv/kv-7000.md
       - KV-5000: plc-setup/kv/kv-5000.md
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
     - Computerlink (TOYOPUC):
+      - Error codes: plc-setup/computerlink/error-codes.md
       - TOYOPUC: plc-setup/computerlink/toyopuc.md
     - MC Protocol Serial (MELSEC):
+      - Error codes: plc-setup/mcprotocol/error-codes.md
       - Serial modules: plc-setup/mcprotocol/serial.md
 
 plugins:

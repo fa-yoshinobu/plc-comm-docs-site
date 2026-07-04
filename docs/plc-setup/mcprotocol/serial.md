@@ -31,3 +31,7 @@ Detailed model-specific screenshots and setting names will be added later.
 
 Pass the canonical profile explicitly. The standard connection helpers do not
 infer it from the PLC model or serial settings.
+
+## Troubleshooting
+
+- [MC Protocol Serial error codes](error-codes.md)

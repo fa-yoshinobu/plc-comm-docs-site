@@ -30,3 +30,6 @@ Detailed model-specific screenshots and setting names will be added later.
 Pass the canonical profile explicitly. The standard connection helpers do not
 infer it from the PLC.
 
+## Troubleshooting
+
+- [Computerlink error codes](error-codes.md)

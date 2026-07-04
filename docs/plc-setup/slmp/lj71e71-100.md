@@ -79,7 +79,7 @@ Code example:
 ## Related SLMP docs
 
 - [SLMP profile parameters](../../slmp/profile-reference/parameters.md)
-- [SLMP troubleshooting and end codes](../../slmp/profile-reference/troubleshooting-end-codes.md)
+- [SLMP troubleshooting and end codes](troubleshooting-end-codes.md)
 
 ## Screenshots
 

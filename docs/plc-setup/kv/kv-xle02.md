@@ -78,3 +78,6 @@ Code example:
 
 ![KV-XLE02 unit settings screen for upper-level communication](../images/kv/kv-xle02/screenshot-01.png)
 *KV-XLE02 unit settings screen for upper-level communication.*
+## Troubleshooting
+
+- [KV Host Link error codes](error-codes.md)
