@@ -17,6 +17,7 @@ nav:
       - Supported registers: computerlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: computerlink/dotnet/PROFILES.md
       - Gotchas: computerlink/dotnet/GOTCHAS.md
+      - Error codes: computerlink/dotnet/ERROR_CODES.md
       - Troubleshooting: computerlink/dotnet/TROUBLESHOOTING.md
       - Latest Communication Verification: computerlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
     - Python:
@@ -26,6 +27,8 @@ nav:
       - Profiles: computerlink/python/PROFILES.md
       - Model ranges: computerlink/python/MODEL_RANGES.md
       - Gotchas: computerlink/python/GOTCHAS.md
+      - Error codes: computerlink/python/ERROR_CODES.md
+      - Troubleshooting: computerlink/python/TROUBLESHOOTING.md
       - Latest Communication Verification: computerlink/python/LATEST_COMMUNICATION_VERIFICATION.md
   - KV Host Link:
     - .NET:
@@ -34,6 +37,8 @@ nav:
       - Supported registers: hostlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/dotnet/PROFILES.md
       - Gotchas: hostlink/dotnet/GOTCHAS.md
+      - Error codes: hostlink/dotnet/ERROR_CODES.md
+      - Troubleshooting: hostlink/dotnet/TROUBLESHOOTING.md
       - Latest Communication Verification: hostlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
@@ -42,6 +47,8 @@ nav:
       - Supported registers: hostlink/python/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/python/PROFILES.md
       - Gotchas: hostlink/python/GOTCHAS.md
+      - Error codes: hostlink/python/ERROR_CODES.md
+      - Troubleshooting: hostlink/python/TROUBLESHOOTING.md
       - Latest Communication Verification: hostlink/python/LATEST_COMMUNICATION_VERIFICATION.md
     - Rust:
       - Getting started: hostlink/rust/GETTING_STARTED.md
@@ -50,6 +57,8 @@ nav:
       - Profiles: hostlink/rust/PROFILES.md
       - Device ranges: hostlink/rust/DEVICE_RANGES.md
       - Gotchas: hostlink/rust/GOTCHAS.md
+      - Error codes: hostlink/rust/ERROR_CODES.md
+      - Troubleshooting: hostlink/rust/TROUBLESHOOTING.md
       - Latest Communication Verification: hostlink/rust/LATEST_COMMUNICATION_VERIFICATION.md
     - Node-RED:
       - Getting started: hostlink/nodered/GETTING_STARTED.md
@@ -57,6 +66,8 @@ nav:
       - Supported registers: hostlink/nodered/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/nodered/PROFILES.md
       - Gotchas: hostlink/nodered/GOTCHAS.md
+      - Error codes: hostlink/nodered/ERROR_CODES.md
+      - Troubleshooting: hostlink/nodered/TROUBLESHOOTING.md
       - Latest Communication Verification: hostlink/nodered/LATEST_COMMUNICATION_VERIFICATION.md
   - SLMP:
     - Profile Reference:
