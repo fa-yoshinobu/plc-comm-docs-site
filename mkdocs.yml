@@ -140,6 +140,8 @@ nav:
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
     - Computerlink (TOYOPUC):
       - TOYOPUC: plc-setup/computerlink/toyopuc.md
+    - MC Protocol Serial (MELSEC):
+      - Serial modules: plc-setup/mcprotocol/serial.md
 
 plugins:
   - search

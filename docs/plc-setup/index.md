@@ -31,7 +31,7 @@ settings are correct, use the [SLMP profile reference](../slmp/profile-reference
 | KV Host Link | KV-5000 | Built-in Ethernet | 8501 |
 | KV Host Link | KV-XLE02 | Communication unit | 8501 |
 | Computerlink | [TOYOPUC](computerlink/toyopuc.md) | Ethernet | 1025 |
-| MC Protocol Serial | MELSEC | - | *(serial)* |
+| MC Protocol Serial | [MELSEC serial modules](mcprotocol/serial.md) | Serial module | *(serial)* |
 
 ## Configuration tools
 
