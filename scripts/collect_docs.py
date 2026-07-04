@@ -233,7 +233,6 @@ def postprocess_links(docs_root: Path) -> None:
 
     for relative in (
         "hostlink/rust/LATEST_COMMUNICATION_VERIFICATION.md",
-        "slmp/rust/LATEST_COMMUNICATION_VERIFICATION.md",
     ):
         path = docs_root / relative
         if not path.exists():
