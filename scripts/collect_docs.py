@@ -289,16 +289,6 @@ def postprocess_links(docs_root: Path) -> None:
             if updated != text:
                 path.write_text(updated, encoding="utf-8")
 
-    for relative in (
-        "hostlink/rust/LATEST_COMMUNICATION_VERIFICATION.md",
-    ):
-        path = docs_root / relative
-        if not path.exists():
-            continue
-        text = path.read_text(encoding="utf-8")
-        updated = TECHNICAL_RECORD_LINK_RE.sub(lambda match: f"{match.group(1)} ({RETAINED_NOTE})", text)
-        if updated != text:
-            path.write_text(updated, encoding="utf-8")
 
 
 def collect_docs(source_root: Path, docs_root: Path) -> None:

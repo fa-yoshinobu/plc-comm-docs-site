@@ -6,6 +6,7 @@ Initial setup is complete. Use this file to track future tasks.
 
 - [ ] Add PLC setup guide content for Computerlink (TOYOPUC) — run `GOAL_PLC_SETUP.md` after content is ready
 - [ ] Add PLC setup guide content for MC Protocol Serial — run `GOAL_PLC_SETUP.md` after content is ready
+- [ ] Create a shared CL/KV range reference for Host Link and Computerlink. Keep maintainer evidence in source repositories, and publish only user-facing range tables through docs-site.
 
 ## How to add a new source repo
 

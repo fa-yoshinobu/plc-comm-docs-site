@@ -19,7 +19,6 @@ nav:
       - Gotchas: computerlink/dotnet/GOTCHAS.md
       - Error codes: computerlink/dotnet/ERROR_CODES.md
       - Troubleshooting: computerlink/dotnet/TROUBLESHOOTING.md
-      - Latest Communication Verification: computerlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
     - Python:
       - Getting started: computerlink/python/GETTING_STARTED.md
       - Usage guide: computerlink/python/USAGE_GUIDE.md
@@ -29,7 +28,6 @@ nav:
       - Gotchas: computerlink/python/GOTCHAS.md
       - Error codes: computerlink/python/ERROR_CODES.md
       - Troubleshooting: computerlink/python/TROUBLESHOOTING.md
-      - Latest Communication Verification: computerlink/python/LATEST_COMMUNICATION_VERIFICATION.md
   - KV Host Link:
     - .NET:
       - Getting started: hostlink/dotnet/GETTING_STARTED.md
@@ -39,7 +37,6 @@ nav:
       - Gotchas: hostlink/dotnet/GOTCHAS.md
       - Error codes: hostlink/dotnet/ERROR_CODES.md
       - Troubleshooting: hostlink/dotnet/TROUBLESHOOTING.md
-      - Latest Communication Verification: hostlink/dotnet/LATEST_COMMUNICATION_VERIFICATION.md
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
       - Usage guide: hostlink/python/USAGE_GUIDE.md
@@ -49,7 +46,6 @@ nav:
       - Gotchas: hostlink/python/GOTCHAS.md
       - Error codes: hostlink/python/ERROR_CODES.md
       - Troubleshooting: hostlink/python/TROUBLESHOOTING.md
-      - Latest Communication Verification: hostlink/python/LATEST_COMMUNICATION_VERIFICATION.md
     - Rust:
       - Getting started: hostlink/rust/GETTING_STARTED.md
       - Usage guide: hostlink/rust/USAGE_GUIDE.md
@@ -59,7 +55,6 @@ nav:
       - Gotchas: hostlink/rust/GOTCHAS.md
       - Error codes: hostlink/rust/ERROR_CODES.md
       - Troubleshooting: hostlink/rust/TROUBLESHOOTING.md
-      - Latest Communication Verification: hostlink/rust/LATEST_COMMUNICATION_VERIFICATION.md
     - Node-RED:
       - Getting started: hostlink/nodered/GETTING_STARTED.md
       - Usage guide: hostlink/nodered/USAGE_GUIDE.md
@@ -68,7 +63,6 @@ nav:
       - Gotchas: hostlink/nodered/GOTCHAS.md
       - Error codes: hostlink/nodered/ERROR_CODES.md
       - Troubleshooting: hostlink/nodered/TROUBLESHOOTING.md
-      - Latest Communication Verification: hostlink/nodered/LATEST_COMMUNICATION_VERIFICATION.md
   - SLMP:
     - Profile Reference:
       - Overview: slmp/profile-reference/index.md
@@ -121,6 +115,7 @@ nav:
       - Supported registers: mcprotocol/cpp/SUPPORTED_REGISTERS.md
       - Profiles: mcprotocol/cpp/PROFILES.md
       - Gotchas: mcprotocol/cpp/GOTCHAS.md
+      - Error codes: mcprotocol/cpp/ERROR_CODES.md
       - Latest Communication Verification: mcprotocol/cpp/LATEST_COMMUNICATION_VERIFICATION.md
       - FAQ: mcprotocol/cpp/FAQ.md
   - PLC Setup Guide:
