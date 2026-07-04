@@ -25,7 +25,7 @@ For license terms, commercial support, sponsorship, and donations, see
 | Rust | [Getting started](hostlink/rust/GETTING_STARTED.md) | [plc-comm-hostlink-rust](https://github.com/fa-yoshinobu/plc-comm-hostlink-rust) | [crates.io](https://crates.io/crates/plc-comm-hostlink-rust) |
 | Node-RED | [Getting started](hostlink/nodered/GETTING_STARTED.md) | [node-red-contrib-plc-comm-kvhostlink](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-kvhostlink) |
 
-## SLMP (MELSEC iQ-R/F/L, Q, L)
+## SLMP (MELSEC iQ-R/F/L, MX-R/F, Q, L)
 
 | Language | Docs | GitHub | Registry |
 |----------|------|--------|----------|
