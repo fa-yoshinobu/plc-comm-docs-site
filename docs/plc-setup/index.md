@@ -7,6 +7,9 @@ For KV Host Link libraries, choose and pass the canonical PLC profile explicitly
 when opening a standard connection. The setup pages below list the profile to
 use for each KV CPU family.
 
+For MELSEC SLMP profile limits and end-code troubleshooting after the PLC-side
+settings are correct, use the [SLMP profile reference](../slmp/profile-reference/index.md).
+
 ## Supported models
 
 | Protocol | Model | Connection type | Port |
@@ -27,7 +30,7 @@ use for each KV CPU family.
 | KV Host Link | KV-7000 | Built-in Ethernet | 8501 |
 | KV Host Link | KV-5000 | Built-in Ethernet | 8501 |
 | KV Host Link | KV-XLE02 | Communication unit | 8501 |
-| Computerlink | TOYOPUC | - | 1025 |
+| Computerlink | [TOYOPUC](computerlink/toyopuc.md) | Ethernet | 1025 |
 | MC Protocol Serial | MELSEC | - | *(serial)* |
 
 ## Configuration tools

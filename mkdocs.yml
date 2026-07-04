@@ -87,7 +87,8 @@ nav:
       - Usage guide: slmp/python/USAGE_GUIDE.md
       - Supported registers: slmp/python/SUPPORTED_REGISTERS.md
       - Profiles: slmp/python/PROFILES.md
-      - Bit device access table: slmp/python/BIT_DEVICE_ACCESS_TABLE.md
+      - Bit device access: slmp/python/BIT_DEVICE_ACCESS_TABLE.md
+      - Extended device access: slmp/python/EXTENDED_DEVICE_ACCESS.md
       - Error codes: slmp/python/ERROR_CODES.md
       - Gotchas: slmp/python/GOTCHAS.md
     - Rust:
@@ -142,6 +143,8 @@ nav:
       - KV-7000: plc-setup/kv/kv-7000.md
       - KV-5000: plc-setup/kv/kv-5000.md
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
+    - Computerlink (TOYOPUC):
+      - TOYOPUC: plc-setup/computerlink/toyopuc.md
 
 plugins:
   - search

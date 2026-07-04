@@ -77,6 +77,11 @@ Code example:
     Console.WriteLine($"D100={value}");
     ```
 
+## Related SLMP docs
+
+- [SLMP profile parameters](../../slmp/profile-reference/parameters.md)
+- [SLMP troubleshooting and end codes](../../slmp/profile-reference/troubleshooting-end-codes.md)
+
 ## Screenshots
 
 ![Unit parameters screen for the built-in Ethernet port](../images/slmp/iq-r/screenshot-01.png)

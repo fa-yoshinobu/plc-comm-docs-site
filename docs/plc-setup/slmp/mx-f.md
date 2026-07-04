@@ -20,6 +20,9 @@ MELSEC MX-F — built-in Ethernet port (CPU module).
 
 MX-F uses its own canonical library profile (`melsec:mx-f`) while keeping iQ-F-compatible SLMP connection settings.
 
+!!! note "Connection reports wanted"
+    This project has not yet received live connection reports for the `melsec:mx-f` profile. If you use this profile, please report both successful and failed connection examples, including the PLC model, port setting, selected profile, and first SLMP end code when a connection fails.
+
 ### Screen: Unit parameters
 
 | Parameter | Setting |
@@ -80,6 +83,11 @@ Code example:
     var value = await client.ReadTypedAsync("D100", "U");
     Console.WriteLine($"D100={value}");
     ```
+
+## Related SLMP docs
+
+- [SLMP profile parameters](../../slmp/profile-reference/parameters.md)
+- [SLMP troubleshooting and end codes](../../slmp/profile-reference/troubleshooting-end-codes.md)
 
 ## Screenshots
 

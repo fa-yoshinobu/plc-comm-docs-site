@@ -75,6 +75,8 @@ Use it when you need to compare MELSEC SLMP profiles across the supported built-
 
 For normal library usage, select the PLC profile in the library or Node-RED connection settings and follow that library's getting started guide.
 
+For PLC-side Binary data code, port/open settings, and RUN-time write permission, use the [MELSEC SLMP PLC Setup Guide](../../plc-setup/index.md).
+
 ## Pages
 
 | Page | Use it for |
@@ -100,7 +102,8 @@ This page summarizes situations observed during this project's live PLC verifica
 Before chasing one code, confirm these basics:
 
 - The application selected the correct canonical PLC profile.
-- The PLC Ethernet port uses the expected binary SLMP data code.
+- The PLC Ethernet port uses Binary SLMP data code; see the [MELSEC SLMP PLC Setup Guide](../../plc-setup/index.md).
+- PLC-side RUN-time write permission is enabled before write tests where the PLC exposes that setting.
 - Strict profile mode is enabled unless you intentionally want to send unsupported commands and let the PLC answer.
 - Point counts are within the selected profile limits.
 - Routed devices such as `Un\\Gn`, `Jn\\...`, and `U3En\\G` exist in the actual PLC configuration.
