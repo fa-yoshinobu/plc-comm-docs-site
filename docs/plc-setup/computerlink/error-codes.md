@@ -2,6 +2,41 @@
 
 This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.
 
+## First Checks
+
+- Confirm that Computerlink communication is enabled on the PLC side.
+- Confirm the TCP/UDP port and network settings in the [TOYOPUC setup page](toyopuc.md).
+- Confirm that the application selected the exact canonical TOYOPUC profile.
+- For write errors, check PLC run/write permission and protection settings before retrying.
+- For relay access, configure the relay hops explicitly; relay topology is not auto-discovered.
+
+## Connection Checks
+
+| Symptom | First check |
+| --- | --- |
+| Connection timeout | Confirm the PLC host address and the configured Computerlink port. TCP examples use `1025`. |
+| TCP connection refused | Confirm Computerlink is enabled on the target PLC and the TCP port is open. |
+| UDP requests do not return | Confirm the UDP port configured for the target PLC. |
+| Intermittent timeouts | Increase timeout/retry settings, reuse a connection, and avoid reconnecting for every small request. |
+
+## Addressing Checks
+
+| Symptom | First check |
+| --- | --- |
+| Profile rejected before communication | Use one exact canonical profile from the library's PLC Profiles page. |
+| Unknown device area | Confirm that the selected profile supports that family. |
+| Address out of range | Compare the selected profile with the shared [Computerlink Device Ranges](device-ranges.md) page. |
+| Basic address rejected | Use `P1-`, `P2-`, or `P3-` for basic families such as `D`, `M`, `X`, `Y`, `T`, `C`, `L`, `N`, `R`, and `S`. |
+| Dword read returns a bit | Use `:D` for dword access and `.D` only for bit 13 inside a word. |
+
+## Write Checks
+
+| Symptom | First check |
+| --- | --- |
+| A write appears to change the wrong value | Stop and confirm that you are using a test address you control. |
+| FR value does not survive power cycle | Stage the FR write and then commit it when persistence is intended. |
+| Relay write or read does not reach the target PLC | Set the relay hop string explicitly. |
+
 ## Common PLC Error Codes
 
 | Code | Typical cause | First check |
@@ -16,10 +51,3 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 | `0x66`, `0x70`, `0x72` | Relay link module did not answer or could not execute the request. | Check relay hops and the target PLC path. |
 | `0x73` | Relay command collision on the same link module; retry is appropriate. | Retry after a short delay or reduce concurrent relay access. |
 | `0x11` | CPU module hardware failure. | Check the PLC CPU status before continuing. |
-
-## First Checks
-
-- Confirm that Computerlink communication is enabled on the PLC side.
-- Confirm the TCP/UDP port and network settings in the [TOYOPUC setup page](toyopuc.md).
-- Confirm that the application selected the canonical TOYOPUC profile.
-- For write errors, check PLC run/write permission and protection settings before retrying.

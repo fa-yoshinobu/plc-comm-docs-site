@@ -14,49 +14,34 @@ nav:
     - .NET:
       - Getting started: computerlink/dotnet/GETTING_STARTED.md
       - Usage guide: computerlink/dotnet/USAGE_GUIDE.md
-      - Supported registers: computerlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: computerlink/dotnet/PROFILES.md
       - Gotchas: computerlink/dotnet/GOTCHAS.md
-      - Troubleshooting: computerlink/dotnet/TROUBLESHOOTING.md
     - Python:
       - Getting started: computerlink/python/GETTING_STARTED.md
       - Usage guide: computerlink/python/USAGE_GUIDE.md
-      - Supported registers: computerlink/python/SUPPORTED_REGISTERS.md
       - Profiles: computerlink/python/PROFILES.md
-      - Model ranges: computerlink/python/MODEL_RANGES.md
       - Gotchas: computerlink/python/GOTCHAS.md
-      - Troubleshooting: computerlink/python/TROUBLESHOOTING.md
   - KV Host Link:
     - .NET:
       - Getting started: hostlink/dotnet/GETTING_STARTED.md
       - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
-      - Supported registers: hostlink/dotnet/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/dotnet/PROFILES.md
       - Gotchas: hostlink/dotnet/GOTCHAS.md
-      - Troubleshooting: hostlink/dotnet/TROUBLESHOOTING.md
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
       - Usage guide: hostlink/python/USAGE_GUIDE.md
-      - API reference: hostlink/python/API_REFERENCE.md
-      - Supported registers: hostlink/python/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/python/PROFILES.md
       - Gotchas: hostlink/python/GOTCHAS.md
-      - Troubleshooting: hostlink/python/TROUBLESHOOTING.md
     - Rust:
       - Getting started: hostlink/rust/GETTING_STARTED.md
       - Usage guide: hostlink/rust/USAGE_GUIDE.md
-      - Supported registers: hostlink/rust/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/rust/PROFILES.md
-      - Device ranges: hostlink/rust/DEVICE_RANGES.md
       - Gotchas: hostlink/rust/GOTCHAS.md
-      - Troubleshooting: hostlink/rust/TROUBLESHOOTING.md
     - Node-RED:
       - Getting started: hostlink/nodered/GETTING_STARTED.md
       - Usage guide: hostlink/nodered/USAGE_GUIDE.md
-      - Supported registers: hostlink/nodered/SUPPORTED_REGISTERS.md
       - Profiles: hostlink/nodered/PROFILES.md
       - Gotchas: hostlink/nodered/GOTCHAS.md
-      - Troubleshooting: hostlink/nodered/TROUBLESHOOTING.md
   - SLMP:
     - Profile Reference:
       - Overview: slmp/profile-reference/index.md
@@ -91,14 +76,8 @@ nav:
     - C++ (Arduino/PlatformIO):
       - Getting started: mcprotocol/cpp/GETTING_STARTED.md
       - Usage guide: mcprotocol/cpp/USAGE_GUIDE.md
-      - Library entrypoints: mcprotocol/cpp/LIBRARY_ENTRYPOINTS.md
-      - PlatformIO: mcprotocol/cpp/PLATFORMIO.md
-      - Wiring guide: mcprotocol/cpp/WIRING_GUIDE.md
-      - Supported registers: mcprotocol/cpp/SUPPORTED_REGISTERS.md
       - Profiles: mcprotocol/cpp/PROFILES.md
       - Gotchas: mcprotocol/cpp/GOTCHAS.md
-      - Latest Communication Verification: mcprotocol/cpp/LATEST_COMMUNICATION_VERIFICATION.md
-      - FAQ: mcprotocol/cpp/FAQ.md
   - PLC Setup Guide:
     - Overview: plc-setup/index.md
     - MELSEC (SLMP):
@@ -116,6 +95,7 @@ nav:
       - LJ71E71-100 (comm unit): plc-setup/slmp/lj71e71-100.md
     - KV Host Link (KEYENCE):
       - Error codes: plc-setup/kv/error-codes.md
+      - Device ranges: plc-setup/kv/device-ranges.md
       - KV-X500: plc-setup/kv/kv-x500.md
       - KV-8000: plc-setup/kv/kv-8000.md
       - KV-7000: plc-setup/kv/kv-7000.md
@@ -123,9 +103,11 @@ nav:
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
     - Computerlink (TOYOPUC):
       - Error codes: plc-setup/computerlink/error-codes.md
+      - Device ranges: plc-setup/computerlink/device-ranges.md
       - TOYOPUC: plc-setup/computerlink/toyopuc.md
     - MC Protocol Serial (MELSEC):
       - Error codes: plc-setup/mcprotocol/error-codes.md
+      - Supported registers: plc-setup/mcprotocol/supported-registers.md
       - Serial modules: plc-setup/mcprotocol/serial.md
 
 plugins:

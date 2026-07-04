@@ -19,6 +19,13 @@ Before chasing one code, confirm these basics:
 | --- | --- | --- |
 | The connection opens, but every request returns an end code. | The selected PLC profile does not match the PLC, or the PLC Ethernet port data-code setting does not match the library request format. | Select the canonical profile for the connected PLC and confirm Binary SLMP is configured on the PLC-side port. |
 | Reads work, but writes fail. | PLC-side RUN-time write permission, remote password state, or profile write policy blocks the write. | Check RUN-time write permission, remote password state, and the selected profile's write policy. |
+| A large read, write, random request, or monitor request fails with `C051`, `C052`, `C053`, or `C054`. | The request exceeds the selected profile's per-request point limit. | Split the request and check the shared profile parameter table for the active PLC. |
+| One write request mixes word devices and bit devices and fails. | Some PLC paths reject mixed word and bit block writes. | Send word writes and bit writes as separate requests. |
+| `X`/`Y` points look shifted, or `DX`/`DY` is rejected on iQ-F. | iQ-F uses octal text for `X`/`Y`, and the iQ-F profile does not support `DX`/`DY`. | Use the iQ-F profile and use `X` / `Y` rather than `DX` / `DY` on iQ-F. |
+| `D50.D` reads bit 13 instead of a 32-bit value. | Dot notation means bit-in-word access; `D` after the dot is hexadecimal bit index 13. | Use the library's typed form such as `D50:D` for unsigned 32-bit data. |
+| `D50.3,8` or a similar bit-in-word count is rejected. | Dot notation selects one bit inside one word and is scalar-only. | Use `D50.3` for one bit, or use a direct bit family such as `M1000:BIT,8` for consecutive bit devices. |
+| `LTN`, `LSTN`, `LCN`, or `LZ` looks truncated or shifted. | These current-value families are 32-bit values. | Use the library's 32-bit form, such as `:D` or `:L` in named addresses. |
+| `LCS` or `LCC` behaves unlike a word value. | Long counter state devices are bit devices. | Read or write them as bit values. |
 | Block commands fail on Q/L profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
 
 ## Common End Codes

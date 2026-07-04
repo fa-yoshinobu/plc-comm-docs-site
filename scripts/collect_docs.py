@@ -113,6 +113,13 @@ Before chasing one code, confirm these basics:
 | --- | --- | --- |
 | The connection opens, but every request returns an end code. | The selected PLC profile does not match the PLC, or the PLC Ethernet port data-code setting does not match the library request format. | Select the canonical profile for the connected PLC and confirm Binary SLMP is configured on the PLC-side port. |
 | Reads work, but writes fail. | PLC-side RUN-time write permission, remote password state, or profile write policy blocks the write. | Check RUN-time write permission, remote password state, and the selected profile's write policy. |
+| A large read, write, random request, or monitor request fails with `C051`, `C052`, `C053`, or `C054`. | The request exceeds the selected profile's per-request point limit. | Split the request and check the shared profile parameter table for the active PLC. |
+| One write request mixes word devices and bit devices and fails. | Some PLC paths reject mixed word and bit block writes. | Send word writes and bit writes as separate requests. |
+| `X`/`Y` points look shifted, or `DX`/`DY` is rejected on iQ-F. | iQ-F uses octal text for `X`/`Y`, and the iQ-F profile does not support `DX`/`DY`. | Use the iQ-F profile and use `X` / `Y` rather than `DX` / `DY` on iQ-F. |
+| `D50.D` reads bit 13 instead of a 32-bit value. | Dot notation means bit-in-word access; `D` after the dot is hexadecimal bit index 13. | Use the library's typed form such as `D50:D` for unsigned 32-bit data. |
+| `D50.3,8` or a similar bit-in-word count is rejected. | Dot notation selects one bit inside one word and is scalar-only. | Use `D50.3` for one bit, or use a direct bit family such as `M1000:BIT,8` for consecutive bit devices. |
+| `LTN`, `LSTN`, `LCN`, or `LZ` looks truncated or shifted. | These current-value families are 32-bit values. | Use the library's 32-bit form, such as `:D` or `:L` in named addresses. |
+| `LCS` or `LCC` behaves unlike a word value. | Long counter state devices are bit devices. | Read or write them as bit values. |
 | Block commands fail on Q/L profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
 
 ## Common End Codes
@@ -167,6 +174,22 @@ This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup gu
 | `E5` | Unit error. | Check the PLC/unit error state. |
 | `E6` | Comment data is not registered. | Check comment registration before using comment reads. |
 
+## Common Symptoms
+
+| Symptom | Likely cause | First check |
+| --- | --- | --- |
+| The connection times out immediately. | KV Host Link normally uses port `8501`, not the SLMP/Computerlink example port `1025`. | Confirm the port in the library options or Node-RED connection node. |
+| A timer or counter preset write returns `E1`. | Host Link preset writes through `WS` / `WSS` are supported on KV-8000/7000-series, not on every KV model. | Do not write timer/counter presets on unsupported models; use timer/counter read helpers for monitoring. |
+| `AT` is rejected or missing on KV-X500. | `AT` is not available in `keyence:kv-x500` or `keyence:kv-x500-xym`. | Check the selected profile before using `AT`. |
+| `X` or `Y` is rejected or points look shifted. | `X` and `Y` use decimal-bank plus hexadecimal-bit notation, for example `X10F`. | Use the correct bank/bit notation and select an `-xym` profile when using XYM aliases. |
+| `R`, `MR`, `LR`, or `CR` is rejected. | These bit-bank families use two-digit bit notation rather than one plain hexadecimal number. | Use forms such as `R200:BIT` or `MR100:BIT`. |
+| `DM100.D` reads a bit instead of a 32-bit value. | Dot notation means bit-in-word access; `D` after the dot is bit 13. | Use the library's typed form such as `DM100:D` for unsigned 32-bit data. |
+| `DM100.3,4` or a similar bit-in-word count is rejected. | Dot notation selects one bit inside one word and is scalar-only. | Use `DM100.3` for one bit, or use a direct bit family such as `R200:BIT,4` for bit arrays. |
+| A write to `DM100:COMMENT` is rejected. | Device comments are read-only through the high-level Host Link helpers. | Use `:COMMENT` only with read helpers. |
+| Expansion unit buffer access fails. | The selected unit number, buffer address, data format, or mounted module may not match the connected PLC hardware. | Verify the expansion unit number and buffer address before using expansion buffer helpers. |
+| `CTH` or `CTC` appears in a catalog but fails as an input address. | `CTH` and `CTC` are catalog metadata rows for supported profiles. | Treat them as catalog metadata only. |
+| A non-canonical profile string is rejected. | The profile catalog accepts exact canonical profile strings only. | Copy the exact profile string from the profile list or setup guide. |
+
 ## First Checks
 
 - Confirm that Host Link / Upper Link communication is enabled on the PLC.
@@ -176,9 +199,176 @@ This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup gu
 """
 
 
+KV_HOSTLINK_DEVICE_RANGES = """# KV Host Link Device Ranges
+
+This page is the shared device-family, address-notation, and range reference for the KV Host Link libraries.
+
+These tables are for profile selection, UI address pickers, model-specific display, and pre-checks in applications that need a range catalog. They are not a guarantee that every address can be read or written on every connected PLC. The actual PLC model, project settings, mounted units, protection settings, and Host Link command support can still reject a request.
+
+## Device Families
+
+### Word device families
+
+| Family | Notation | Example | Notes |
+| --- | --- | --- | --- |
+| `DM` | Decimal | `DM0:U` | General data memory. Start here for first reads. |
+| `EM` | Decimal | `EM0:U` | Extended data memory on profiles that provide EM ranges. |
+| `FM` | Decimal | `FM0:U` | File memory on profiles that provide FM ranges. |
+| `ZF` | Decimal | `ZF0:U` | File register area on profiles that provide ZF ranges. |
+| `W` | Hexadecimal | `W0:U` | Link register word area. |
+| `CM` | Decimal | `CM0:U` | Control memory word area. |
+| `TM` | Decimal | `TM0:U` | Timer-related word area. |
+| `VM` | Decimal | `VM0:U` | Variable memory word area; not available on KV-X500 profiles. |
+| `D` | Decimal | `D0:U` | XYM-style alias for `DM`. |
+| `E` | Decimal | `E0:U` | XYM-style alias for `EM`. |
+| `F` | Decimal | `F0:U` | XYM-style alias for `FM`. |
+| `Z` | Decimal | `Z1:D` | Index registers. KV-X500 profiles expose `Z1` through `Z10`; other profiles expose `Z1` through `Z12`. |
+
+### Bit device families
+
+| Family | Notation | Example | Notes |
+| --- | --- | --- | --- |
+| `R` | Decimal bank plus two decimal bit digits | `R200:BIT` | Relay bits. Low two digits are bit `00` through `15`. |
+| `B` | Hexadecimal | `B0000:BIT` | Link relay bits. |
+| `MR` | Decimal bank plus two decimal bit digits | `MR100:BIT` | Internal relay bits. |
+| `LR` | Decimal bank plus two decimal bit digits | `LR100:BIT` | Latch relay bits. |
+| `CR` | Decimal bank plus two decimal bit digits | `CR100:BIT` | Control relay bits. |
+| `VB` | Hexadecimal | `VB0:BIT` | Variable memory bits; not available on KV-X500 profiles. |
+| `X` | Decimal bank plus hex bit | `X10F:BIT` | Input alias in XYM profiles. |
+| `Y` | Decimal bank plus hex bit | `Y10F:BIT` | Output alias in XYM profiles. |
+| `M` | Decimal | `M0:BIT` | Internal relay alias in XYM profiles. |
+| `L` | Decimal | `L0:BIT` | Latch relay alias in XYM profiles. |
+
+### Timer, counter, and catalog rows
+
+| Family | Category | Example | Notes |
+| --- | --- | --- | --- |
+| `T` | Timer | `T0:D` | Timer preset/current composite in high-level helpers. |
+| `TC` | Timer | `TC0:D` | Timer current/contact family where exposed by the library. |
+| `TS` | Timer | `TS0:BIT` | Timer contact/status family where exposed by the library. |
+| `C` | Counter | `C0:D` | Counter preset/current composite in high-level helpers. |
+| `CC` | Counter | `CC0:D` | Counter current/contact family where exposed by the library. |
+| `CS` | Counter | `CS0:BIT` | Counter contact/status family where exposed by the library. |
+| `AT` | Timer/counter catalog category | `AT0:D` | Digital trimmer. Not available on KV-NANO or KV-X500 profiles. |
+| `CTH` | Catalog metadata | `CTH0` | High-speed counter row on some profiles. Catalog entry only; not accepted by high-level address parsers. |
+| `CTC` | Catalog metadata | `CTC0` | High-speed counter row on some profiles. Catalog entry only; not accepted by high-level address parsers. |
+
+## Type Suffixes
+
+| Form | Example | Meaning |
+| --- | --- | --- |
+| `:U` | `DM100:U` | Unsigned 16-bit word. |
+| `:S` | `DM100:S` | Signed 16-bit word. |
+| `:D` | `DM100:D` | Unsigned 32-bit double word. |
+| `:L` | `DM100:L` | Signed 32-bit double word. |
+| `:F` | `DM100:F` | IEEE 754 32-bit floating-point value. |
+| `:H` | `DM100:H` | Hexadecimal 16-bit word text. |
+| `:BIT` | `R200:BIT` | Direct bit device value. |
+| `:COMMENT` | `DM100:COMMENT` | PLC device comment text. |
+| `.n` | `DM100.A` | Bit `n` inside a word, where `n` is hexadecimal `0` through `F`. |
+
+High-level address text should include the intended type. Use `DM100:U`, not plain `DM100`, when reading an unsigned word.
+
+## Addressing Notes
+
+| Topic | Rule |
+| --- | --- |
+| `X` and `Y` notation | Use decimal bank digits followed by one hexadecimal bit digit, such as `X10F`. Do not treat the whole value as one decimal number. |
+| `R`, `MR`, `LR`, and `CR` notation | Use two decimal bit digits for the low bit position, such as `R200:BIT`, `MR115:BIT`, or `CR7915:BIT`. The low two digits must be `00` through `15`. |
+| `AT` restriction | `AT` exists only on KV-3000, KV-5000, KV-7000, and KV-8000 catalog profiles. High-level write helpers can reject it before sending. |
+| Catalog-only rows | `CTH` and `CTC` appear in some range catalogs but are not accepted as high-level address input. |
+| Default port | KV Host Link commonly uses port `8501` unless the PLC configuration says otherwise. |
+
+## Standard Catalog
+
+| DeviceType | Base | KV-NANO | KV-3000 | KV-5000 | KV-7000 | KV-8000 | KV-X500 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| R | 10 | R00000-R59915 | R00000-R99915 | R00000-R99915 | R00000-R199915 | R00000-R199915 | R00000-R199915 |
+| B | 16 | B0000-B1FFF | B0000-B3FFF | B0000-B3FFF | B0000-B7FFF | B0000-B7FFF | B0000-B7FFF |
+| MR | 10 | MR00000-MR59915 | MR00000-MR99915 | MR00000-MR99915 | MR000000-MR399915 | MR000000-MR399915 | MR000000-MR399915 |
+| LR | 10 | LR00000-LR19915 | LR00000-LR99915 | LR00000-LR99915 | LR00000-LR99915 | LR00000-LR99915 | LR00000-LR99915 |
+| CR | 10 | CR0000-CR8915 | CR0000-CR3915 | CR0000-CR3915 | CR0000-CR7915 | CR0000-CR7915 | CR0000-CR7915 |
+| CM | 10 | CM0000-CM8999 | CM0000-CM5999 | CM0000-CM5999 | CM0000-CM5999 | CM0000-CM7599 | CM0000-CM7599 |
+| T | 10 | T0000-T0511 | T0000-T3999 | T0000-T3999 | T0000-T3999 | T0000-T3999 | T0000-T3999 |
+| C | 10 | C0000-C0255 | C0000-C3999 | C0000-C3999 | C0000-C3999 | C0000-C3999 | C0000-C3999 |
+| DM | 10 | DM00000-DM32767 | DM00000-DM65534 | DM00000-DM65534 | DM00000-DM65534 | DM00000-DM65534 | DM00000-DM65534 |
+| EM | 10 | - | EM00000-EM65534 | EM00000-EM65534 | EM00000-EM65534 | EM00000-EM65534 | EM00000-EM65534 |
+| FM | 10 | - | FM00000-FM32767 | FM00000-FM32767 | FM00000-FM32767 | FM00000-FM32767 | FM00000-FM32767 |
+| ZF | 10 | - | ZF000000-ZF131071 | ZF000000-ZF131071 | ZF000000-ZF524287 | ZF000000-ZF524287 | ZF000000-ZF524287 |
+| W | 16 | W0000-W3FFF | W0000-W3FFF | W0000-W3FFF | W0000-W7FFF | W0000-W7FFF | W0000-W7FFF |
+| TM | 10 | TM000-TM511 | TM000-TM511 | TM000-TM511 | TM000-TM511 | TM000-TM511 | TM000-TM511 |
+| VM | 10 | VM0-9499 | VM0-49999 | VM0-49999 | VM0-63999 | VM0-589823 | - |
+| VB | 16 | VB0-1FFF | VB0-3FFF | VB0-3FFF | VB0-F9FF | VB0-F9FF | - |
+| Z | 10 | Z1-12 | Z1-12 | Z1-12 | Z1-12 | Z1-12 | Z1-10 |
+| CTH | 10 | CTH0-3 | CTH0-1 | CTH0-1 | - | - | - |
+| CTC | 10 | CTC0-7 | CTC0-3 | CTC0-3 | - | - | - |
+| AT | 10 | - | AT0-7 | AT0-7 | AT0-7 | AT0-7 | - |
+
+## XYM Catalog
+
+| DeviceType | Base | KV-NANO(XYM) | KV-3000(XYM) | KV-5000(XYM) | KV-7000(XYM) | KV-8000(XYM) | KV-X500(XYM) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| R | 10 | X0-599F,Y0-599F | X0-999F,Y0-999F | X0-999F,Y0-999F | X0-1999F,Y0-1999F | X0-1999F,Y0-1999F | X0-1999F,Y0-1999F |
+| B | 16 | B0000-B1FFF | B0000-B3FFF | B0000-B3FFF | B0000-B7FFF | B0000-B7FFF | B0000-B7FFF |
+| MR | 10 | M0-9599 | M0-15999 | M0-15999 | M000000-M63999 | M000000-M63999 | M000000-M63999 |
+| LR | 10 | L0-3199 | L0-15999 | L0-15999 | L00000-L15999 | L00000-L15999 | L00000-L15999 |
+| CR | 10 | CR0000-CR8915 | CR0000-CR3915 | CR0000-CR3915 | CR0000-CR7915 | CR0000-CR7915 | CR0000-CR7915 |
+| CM | 10 | CM0000-CM8999 | CM0000-CM5999 | CM0000-CM5999 | CM0000-CM5999 | CM0000-CM7599 | CM0000-CM7599 |
+| T | 10 | T0000-T0511 | T0000-T3999 | T0000-T3999 | T0000-T3999 | T0000-T3999 | T0000-T3999 |
+| C | 10 | C0000-C0255 | C0000-C3999 | C0000-C3999 | C0000-C3999 | C0000-C3999 | C0000-C3999 |
+| DM | 10 | D0-32767 | D0-65534 | D0-65534 | D00000-D65534 | D00000-D65534 | D00000-D65534 |
+| EM | 10 | - | E0-65534 | E0-65534 | E00000-E65534 | E00000-E65534 | E00000-E65534 |
+| FM | 10 | - | F0-32767 | F0-32767 | F00000-F32767 | F00000-F32767 | F00000-F32767 |
+| ZF | 10 | - | ZF000000-ZF131071 | ZF000000-ZF131071 | ZF000000-ZF524287 | ZF000000-ZF524287 | ZF000000-ZF524287 |
+| W | 16 | W0000-W3FFF | W0000-W3FFF | W0000-W3FFF | W0000-W7FFF | W0000-W7FFF | W0000-W7FFF |
+| TM | 10 | TM000-TM511 | TM000-TM511 | TM000-TM511 | TM000-TM511 | TM000-TM511 | TM000-TM511 |
+| VM | 10 | VM0-9499 | VM0-49999 | VM0-49999 | VM0-63999 | VM0-589823 | - |
+| VB | 16 | VB0-1FFF | VB0-3FFF | VB0-3FFF | VB0-F9FF | VB0-F9FF | - |
+| Z | 10 | Z1-12 | Z1-12 | Z1-12 | Z1-12 | Z1-12 | - |
+| CTH | 10 | CTH0-3 | CTH0-3 | CTH0-3 | - | - | - |
+| CTC | 10 | CTC0-7 | CTC0-3 | CTC0-3 | - | - | - |
+| AT | 10 | - | AT0-7 | AT0-7 | AT0-7 | AT0-7 | - |
+"""
+
+
 COMPUTERLINK_ERROR_CODES = """# Computerlink Error Codes
 
 This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.
+
+## First Checks
+
+- Confirm that Computerlink communication is enabled on the PLC side.
+- Confirm the TCP/UDP port and network settings in the [TOYOPUC setup page](toyopuc.md).
+- Confirm that the application selected the exact canonical TOYOPUC profile.
+- For write errors, check PLC run/write permission and protection settings before retrying.
+- For relay access, configure the relay hops explicitly; relay topology is not auto-discovered.
+
+## Connection Checks
+
+| Symptom | First check |
+| --- | --- |
+| Connection timeout | Confirm the PLC host address and the configured Computerlink port. TCP examples use `1025`. |
+| TCP connection refused | Confirm Computerlink is enabled on the target PLC and the TCP port is open. |
+| UDP requests do not return | Confirm the UDP port configured for the target PLC. |
+| Intermittent timeouts | Increase timeout/retry settings, reuse a connection, and avoid reconnecting for every small request. |
+
+## Addressing Checks
+
+| Symptom | First check |
+| --- | --- |
+| Profile rejected before communication | Use one exact canonical profile from the library's PLC Profiles page. |
+| Unknown device area | Confirm that the selected profile supports that family. |
+| Address out of range | Compare the selected profile with the shared [Computerlink Device Ranges](device-ranges.md) page. |
+| Basic address rejected | Use `P1-`, `P2-`, or `P3-` for basic families such as `D`, `M`, `X`, `Y`, `T`, `C`, `L`, `N`, `R`, and `S`. |
+| Dword read returns a bit | Use `:D` for dword access and `.D` only for bit 13 inside a word. |
+
+## Write Checks
+
+| Symptom | First check |
+| --- | --- |
+| A write appears to change the wrong value | Stop and confirm that you are using a test address you control. |
+| FR value does not survive power cycle | Stage the FR write and then commit it when persistence is intended. |
+| Relay write or read does not reach the target PLC | Set the relay hop string explicitly. |
 
 ## Common PLC Error Codes
 
@@ -194,13 +384,126 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 | `0x66`, `0x70`, `0x72` | Relay link module did not answer or could not execute the request. | Check relay hops and the target PLC path. |
 | `0x73` | Relay command collision on the same link module; retry is appropriate. | Retry after a short delay or reduce concurrent relay access. |
 | `0x11` | CPU module hardware failure. | Check the PLC CPU status before continuing. |
+"""
 
-## First Checks
 
-- Confirm that Computerlink communication is enabled on the PLC side.
-- Confirm the TCP/UDP port and network settings in the [TOYOPUC setup page](toyopuc.md).
-- Confirm that the application selected the canonical TOYOPUC profile.
-- For write errors, check PLC run/write permission and protection settings before retrying.
+COMPUTERLINK_DEVICE_RANGES = """# Computerlink Device Ranges
+
+This page is the shared device-family, address-notation, and practical range reference for the TOYOPUC Computerlink libraries.
+
+These tables are for profile selection, UI address pickers, model-specific display, and pre-checks in applications that need a range catalog. They are not a guarantee that every address can be read or written on every connected PLC. The actual PLC model, link route, project settings, and run/write permission can still reject a request.
+
+## Device Families
+
+### Bit device families
+
+| Family | Access | Example | Notes |
+| --- | --- | --- | --- |
+| `P` | Prefixed | `P1-P0000` | Shared relay family; profile ranges may include upper split ranges. |
+| `K` | Prefixed | `P1-K0000` | Keep relay family. |
+| `V` | Prefixed | `P1-V0000` | Profile-dependent split ranges. |
+| `T` | Prefixed | `P1-T0000` | Timer bit family. |
+| `C` | Prefixed | `P1-C0000` | Counter bit family. |
+| `L` | Prefixed | `P1-L0000` | Link relay family; profile ranges may include upper split ranges. |
+| `X` | Prefixed | `P1-X0000` | Input relay family. |
+| `Y` | Prefixed | `P1-Y0000` | Output relay family. |
+| `M` | Prefixed | `P1-M0000` | Internal relay family; profile ranges may include upper split ranges. |
+| `EP` | Direct extension | `EP0000` | Extended P bit family. |
+| `EK` | Direct extension | `EK0000` | Extended K bit family. |
+| `EV` | Direct extension | `EV0000` | Extended V bit family. |
+| `ET` | Direct extension | `ET0000` | Extended T bit family. |
+| `EC` | Direct extension | `EC0000` | Extended C bit family. |
+| `EL` | Direct extension | `EL0000` | Extended L bit family. |
+| `EX` | Direct extension | `EX0000` | Extended X bit family. |
+| `EY` | Direct extension | `EY0000` | Extended Y bit family. |
+| `EM` | Direct extension | `EM0000` | Extended M bit family. |
+| `GM` | Direct extension | `GM0000` | Global M bit family where the selected profile enables it. |
+| `GX` | Direct extension | `GX0000` | Global X bit family where the selected profile enables it. |
+| `GY` | Direct extension | `GY0000` | Global Y bit family where the selected profile enables it. |
+
+### Word device families
+
+| Family | Access | Example | Notes |
+| --- | --- | --- | --- |
+| `S` | Prefixed | `P1-S0000` | Special register family. |
+| `N` | Prefixed | `P1-N0000` | File register word family. |
+| `R` | Prefixed | `P1-R0000` | Register word family. |
+| `D` | Prefixed | `P1-D0000` | Data register family. |
+| `B` | Direct | `B0000` | Direct word area where the selected profile enables it. |
+| `ES` | Direct extension | `ES0000` | Extended special register family. |
+| `EN` | Direct extension | `EN0000` | Extended file register family. |
+| `H` | Direct extension | `H0000` | Extended H word family. |
+| `U` | Direct extension | `U00000` | Profile and addressing options select standard or PC10 routing. |
+| `EB` | Direct extension | `EB00000` | Extended block word family where the selected profile enables it. |
+| `FR` | Direct FR | `FR000000` | File-register flash area with two-phase write semantics. |
+
+## Type Suffixes
+
+| Form | Example | Meaning |
+| --- | --- | --- |
+| No suffix or `:U` | `P1-D0100` | Unsigned 16-bit word. |
+| `:S` | `P1-D0100:S` | Signed 16-bit word. |
+| `:D` | `P1-D0100:D` | Unsigned 32-bit dword from two words. |
+| `:L` | `P1-D0100:L` | Signed 32-bit long from two words. |
+| `:F` | `P1-D0100:F` | IEEE 754 32-bit floating point value from two words. |
+| `.n` | `P1-D0100.3` | Bit `n` inside a word, where `n` is hexadecimal `0` through `F`. |
+| `W` | `P1-M0010W` | 16-bit packed view of a bit family. |
+| `L` / `H` | `P1-M0010L` | Low or high byte view of a bit family. |
+
+## Addressing Rules
+
+| Rule | Correct form |
+| --- | --- |
+| Basic families require a program prefix. | `P1-D0000`, `P2-M0000`, `P3-S0000` |
+| Extension families are direct. | `ES0000`, `EP0000`, `U00000`, `FR000000` |
+| Data type views use a colon. | `P1-D0100:D` |
+| Bit-in-word views use a dot. | `P1-D0100.D` means bit 13. |
+| Packed bit-area views append the packed unit. | `P1-M0010W`, `P1-M0010L`, `P1-M0010H` |
+| FR writes are explicit. | Stage an FR write, then commit when persistence is intended. |
+
+## Practical Writable Ranges
+
+These are writable-range summaries from project evidence, not a complete hardware manual.
+
+### TOYOPUC-Plus CPU with Plus EX2
+
+| Area | Writable range summary |
+| --- | --- |
+| Basic bit | `P0000-P17FF`, `K0000-K02FF`, `V/T/C/M0000-17FF`, `L0000-L2FFF`, `X/Y0000-07FF` |
+| Basic word | `S0000-S13FF`, `N0000-N17FF`, `R0000-R07FF`, `D0000-D0FFF`; `B` is not writable |
+| Prefixed bit | `P1/P2/P3-P000-P1FF`, `K000-K2FF`, `V/T/C000-C1FF`, `L000-L7FF`, `X/Y000-X7FF`, `M000-M7FF` |
+| Prefixed word | `P1/P2/P3-S0000-S03FF`, `N0000-N01FF`, `R0000-R07FF`, `D0000-D0FFF`; `B` is not writable |
+| Extension bit | `EP/EK/EV0000-0FFF`, `ET/EC/EX/EY0000-07FF`, `EL0000-1FFF`, `EM0000-1FFF`, `GX/GY/GM0000-FFFF` |
+| Extension word | `ES/EN/H0000-07FF`, `U00000-U07FFF`; `EB` is not present |
+| FR | Not exposed on this CPU |
+
+### Nano 10GX
+
+| Area | Writable range summary |
+| --- | --- |
+| Basic bit | `P/K/V/T/C/L/X/Y/M` standard ranges |
+| Basic word | `S0000-S13FF`, `N0000-N17FF`, `R0000-R07FF`, `D0000-D2FFF`; `B` is not present |
+| Prefixed bit | `P1/P2/P3` standard ranges |
+| Prefixed word | `S0000-S13FF`, `N0000-N17FF`, `R0000-R07FF`, `D0000-D2FFF`; upper prefixed `1000` series are not implemented |
+| Extension | Standard `EP/EK/EV/ET/EC/EL/EX/EY/EM`, `GX/GY/GM`, `ES/EN/H`; `U00000-U1FFFF` in PC10 mode |
+| FR | `FR000000-FR1FFFFF` when the CPU/configuration exposes FR |
+
+### PC10G-CPU
+
+| Area | Writable range summary |
+| --- | --- |
+| Basic bit | `P0000-P17FF`, `K0000-K02FF`, `V/T/C/M0000-17FF`, `L0000-L2FFF`, `X/Y0000-07FF` |
+| Basic word | `S0000-S13FF`, `N0000-N17FF`, `R0000-R07FF`, `D0000-D2FFF` |
+| Prefixed bit | `P1/P2/P3` standard ranges, including the upper `1000` series on this CPU |
+| Prefixed word | `S0000-S13FF`, `N0000-N17FF`, `R0000-R07FF`, `D0000-D2FFF` |
+| Extension bit | `EP/EK/EV0000-0FFF`, `ET/EC/EX/EY0000-07FF`, `EL0000-1FFF`, `EM0000-1FFF`, `GX/GY/GM0000-FFFF` |
+| Extension word | `ES/EN/H0000-07FF`, `U00000-U1FFFF`, `EB00000-EB3FFFF` |
+| FR | Not exposed on the tested PC10G unit |
+
+## Range Notes
+
+- A profile can make an address syntactically valid while the connected PLC still rejects it because of hardware, mode, project configuration, or route.
+- FR writes are persistent operations. Use dedicated FR helpers only on test addresses you control.
 """
 
 
@@ -251,6 +554,145 @@ The active TODO is to collect live-device evidence for:
 - `3C` / `4C` serial-link `7Fxx` codes from deliberately malformed serial requests.
 
 After those measurements exist, add only observed codes to this page.
+"""
+
+
+MCPROTOCOL_SERIAL_SUPPORTED_REGISTERS = """# MC Protocol Serial Supported Registers
+
+This page lists the current device-family support surface for MELSEC serial MC Protocol targets.
+
+Profile-specific device-number ranges still depend on the PLC model, serial module parameters, route, and user program. The example addresses below show parser syntax; they are not range limits.
+
+## Common Rules
+
+| Rule | Behavior |
+| --- | --- |
+| Plain device strings | The high-level parser accepts plain device strings such as `D100`, `M100`, `X10`, `W100`, and `LZ0`. |
+| Standalone `G` / `HG` | Not plain devices for any profile. Use qualified forms such as `Un\\G` or `Un\\HG` only when the selected profile supports that route. |
+| `S` device | Not supported by this serial MC library. |
+| Link-direct devices | Use dedicated `Jn\\...` link-direct APIs when the selected profile supports them. |
+| Qualified unit access | Use native-qualified `Un\\G` / `Un\\HG` APIs when the selected profile supports that route. The `0601/1601` helper route is profile/target-specific and must not be used as a fallback. |
+
+## Profile Support Summary
+
+### `melsec:iq-r`
+
+| Support class | Device families |
+| --- | --- |
+| Plain bit read/write | `X`, `Y`, `M`, `L`, `SM`, `F`, `V`, `B`, `TS`, `TC`, `STS`, `STC`, `CS`, `CC`, `SB`, `DX`, `DY` |
+| Plain word read/write | `D`, `SD`, `W`, `TN`, `STN`, `CN`, `SW`, `Z`, `R`, `RD`, `ZR` |
+| Long-state helper | `LTS`, `LTC`, `LSTS`, `LSTC`, `LCS`, `LCC` |
+| Native random double-word read/write | `LTN`, `LSTN`, `LCN`, `LZ` |
+| Link-direct read/write | `Jn\\X`, `Jn\\Y`, `Jn\\B`, `Jn\\W`, `Jn\\SB`, `Jn\\SW` |
+| Native-qualified read/write | `Un\\G`, `Un\\HG` |
+| Not supported | `S` |
+
+### `melsec:iq-l`
+
+| Support class | Device families |
+| --- | --- |
+| Plain bit read/write | `X`, `Y`, `M`, `L`, `SM`, `F`, `V`, `B`, `TS`, `TC`, `STS`, `STC`, `CS`, `CC`, `SB`, `DX`, `DY` |
+| Plain word read/write | `D`, `SD`, `W`, `TN`, `STN`, `CN`, `SW`, `Z`, `R`, `ZR` |
+| Native-qualified read/write | `Un\\G` |
+| Not supported | `S`, `LTS`, `LTC`, `LSTS`, `LSTC`, `LCS`, `LCC`, `LTN`, `LSTN`, `LCN`, `LZ`, `RD`, `Un\\HG` |
+| Not confirmed | `Jn\\X`, `Jn\\Y`, `Jn\\B`, `Jn\\W`, `Jn\\SB`, `Jn\\SW` |
+
+### `melsec:iq-f`
+
+| Support class | Device families |
+| --- | --- |
+| Plain bit read/write | `X`, `Y`, `M`, `L`, `SM`, `F`, `B`, `TS`, `TC`, `STS`, `STC`, `CS`, `CC`, `SB` |
+| Plain word read/write | `D`, `SD`, `W`, `TN`, `STN`, `CN`, `SW`, `Z`, `R` |
+| Long counter state read/write | `LCS`, `LCC`; reads use the long-state helper |
+| Native random double-word read/write | `LCN`, `LZ` |
+| Native-qualified read/write | `Un\\G` |
+| Not supported | `S`, `V`, `ZR`, `DX`, `DY`, `LTS`, `LTC`, `LTN`, `LSTS`, `LSTC`, `LSTN`, `Un\\HG`, `Jn\\...`, monitor, host-buffer, and module-buffer helper routes |
+
+### `melsec:qcpu`
+
+| Support class | Device families |
+| --- | --- |
+| Plain bit read/write | `X`, `Y`, `M`, `L`, `SM`, `F`, `V`, `B`, `TS`, `TC`, `STS`, `STC`, `CS`, `CC`, `SB`, `DX`, `DY` |
+| Plain word read/write | `D`, `SD`, `W`, `TN`, `STN`, `CN`, `SW`, `Z`, `R`, `ZR` |
+| Link-direct read/write | `Jn\\X`, `Jn\\Y`, `Jn\\B`, `Jn\\W` |
+| Link-direct read-only | `Jn\\SB`, `Jn\\SW` |
+| Native-qualified read/write | `Un\\G` |
+| Not supported | `S`, `LTS`, `LTC`, `LSTS`, `LSTC`, `LCS`, `LCC`, `LTN`, `LSTN`, `LCN`, `LZ`, `RD`, `Un\\HG` |
+
+Native random read on tested Q targets can be narrower than batch access for some timer/counter status families. Treat random-read rejection as a command route limitation, not as a batch-read exclusion.
+
+### `melsec:lcpu`
+
+| Support class | Device families |
+| --- | --- |
+| Plain bit read/write | `X`, `Y`, `M`, `L`, `SM`, `F`, `V`, `B`, `TS`, `TC`, `STS`, `STC`, `CS`, `CC`, `SB`, `DX`, `DY` |
+| Plain word read/write | `D`, `SD`, `W`, `TN`, `STN`, `CN`, `SW`, `Z`, `R`, `ZR` |
+| Native-qualified read/write | `Un\\G` |
+| Expected but not locally confirmed | `Jn\\X`, `Jn\\Y`, `Jn\\B`, `Jn\\W`, `Jn\\SB`, `Jn\\SW` |
+| Not supported | `S`, `LTS`, `LTC`, `LSTS`, `LSTC`, `LCS`, `LCC`, `LTN`, `LSTN`, `LCN`, `LZ`, `RD`, `Un\\HG` |
+
+Native random read on tested L targets can be narrower than batch access for some timer/counter status families. Treat random-read rejection as a command route limitation, not as a batch-read exclusion.
+
+### `melsec:qna`, `melsec:ana-anu`, and `melsec:a`
+
+These profiles select older command families and are maintained by manual-derived inference and codec-level tests until matching hardware is available. Do not promote a device inventory for these profiles without target evidence.
+
+`melsec:a` is required for A-series extended file-register `ER/EW` paths. `melsec:qna` or `melsec:ana-anu` is required for QnA/AnA/AnU command-family paths such as direct extended file-register access.
+
+## Bit Device Families
+
+| Family | Kind | Example address | Notes |
+| --- | --- | --- | --- |
+| `X` | Input relay | `X10` | Hexadecimal address. |
+| `Y` | Output relay | `Y10` | Hexadecimal address. |
+| `M` | Internal relay | `M100` | Decimal address. |
+| `L` | Latch relay | `L100` | Decimal address. |
+| `SM` | Special relay | `SM100` | Decimal address. |
+| `F` | Annunciator | `F100` | Decimal address. |
+| `V` | Edge relay | `V100` | Decimal address. |
+| `B` | Link relay | `B100` | Hexadecimal address. |
+| `TS`, `TC` | Timer contact / coil | `TS0` | Decimal address. |
+| `STS`, `STC` | Retentive timer contact / coil | `STS0` | Decimal address. |
+| `CS`, `CC` | Counter contact / coil | `CS0` | Decimal address. |
+| `SB` | Link special relay | `SB100` | Hexadecimal address. |
+| `S` | Step relay | `S100` | Not supported by this serial MC library. |
+| `DX`, `DY` | Direct access input/output | `DX10` | Hexadecimal address. |
+| `LTS`, `LTC` | Long timer contact / coil | `LTS0` | Decimal address; profile-specific helper route. |
+| `LSTS`, `LSTC` | Long retentive timer contact / coil | `LSTS0` | Decimal address; profile-specific helper route. |
+| `LCS`, `LCC` | Long counter contact / coil | `LCS0` | Decimal address; profile-specific helper route. |
+
+## Word Device Families
+
+| Family | Kind | Example address | Notes |
+| --- | --- | --- | --- |
+| `D` | Data register | `D100` | Decimal address. |
+| `SD` | Special register | `SD100` | Decimal address. |
+| `W` | Link register | `W100` | Hexadecimal address. |
+| `TN` | Timer current value | `TN0` | Decimal address. |
+| `STN` | Retentive timer current value | `STN0` | Decimal address. |
+| `CN` | Counter current value | `CN0` | Decimal address. |
+| `SW` | Link special register | `SW100` | Hexadecimal address. |
+| `LTN` | Long timer current value | `LTN0` | Decimal address; double-word in native random helpers. |
+| `LSTN` | Long retentive timer current value | `LSTN0` | Decimal address; double-word in native random helpers. |
+| `LCN` | Long counter current value | `LCN0` | Decimal address; double-word in native random helpers. |
+| `LZ` | Long index register | `LZ0` | Decimal address; double-word in native random helpers. |
+| `Z` | Index register | `Z0` | Decimal address. |
+| `R` | File register | `R0` | Decimal address. |
+| `RD` | Module access register | `RD0` | Decimal address. |
+| `ZR` | File register | `ZR0` | Decimal address. |
+
+## Addressing Notes
+
+| Topic | Current behavior |
+| --- | --- |
+| Plain device string | Supported for profile-allowed plain devices. |
+| Hexadecimal address families | `X`, `Y`, `B`, `W`, `SB`, `SW`, `DX`, and `DY` parse their numeric part as hexadecimal. |
+| `:D` / `:F` suffix | Not supported by the current high-level parser. Use typed C++ fields such as `double_word` where available. |
+| `.n` bit-in-word suffix | Not supported by the current high-level parser. |
+| Long timer/counter state reads | Use `read_long_state_bits()` for supported long-state families. |
+| Link-direct access | Use `read_link_direct_*()` / `write_link_direct_*()` helpers for supported `Jn\\...` families. |
+| Qualified unit access | Use `read_native_qualified_words()` / `write_native_qualified_words()` for supported `Un\\G` / `Un\\HG` families. |
+| Trace logging | Set `MCPROTOCOL_SERIAL_TRACE=1` with the synchronous host client to log MC TX/RX frame bytes. |
 """
 
 
@@ -417,8 +859,11 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
     write_generated_page(docs_root / "slmp/profile-reference/index.md", SLMP_PROFILE_REFERENCE_INDEX)
     write_generated_page(docs_root / "plc-setup/slmp/troubleshooting-end-codes.md", SLMP_TROUBLESHOOTING_END_CODES)
     write_generated_page(docs_root / "plc-setup/kv/error-codes.md", KV_HOSTLINK_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/kv/device-ranges.md", KV_HOSTLINK_DEVICE_RANGES)
     write_generated_page(docs_root / "plc-setup/computerlink/error-codes.md", COMPUTERLINK_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/computerlink/device-ranges.md", COMPUTERLINK_DEVICE_RANGES)
     write_generated_page(docs_root / "plc-setup/mcprotocol/error-codes.md", MCPROTOCOL_SERIAL_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/mcprotocol/supported-registers.md", MCPROTOCOL_SERIAL_SUPPORTED_REGISTERS)
 
     remove_unpublished_files(docs_root)
     postprocess_links(docs_root)
