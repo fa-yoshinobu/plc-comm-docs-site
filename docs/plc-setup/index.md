@@ -3,9 +3,9 @@
 Configure the PLC before using any communication library.
 A **power cycle is required** after every parameter change.
 
-For KV Host Link libraries, choose and pass the canonical PLC profile explicitly
-when opening a standard connection. The setup pages below list the profile to
-use for each KV CPU family.
+For every protocol, choose and pass the canonical PLC profile explicitly when
+opening a standard connection — the libraries do not infer it from the PLC.
+The setup pages below list the profile to use for each model.
 
 For MELSEC SLMP profile limits and end-code troubleshooting after the PLC-side
 settings are correct, use the [SLMP profile reference](../slmp/profile-reference/index.md)

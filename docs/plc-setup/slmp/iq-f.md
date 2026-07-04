@@ -81,6 +81,12 @@ Code example:
     Console.WriteLine($"D100={value}");
     ```
 
+The PLC-side settings on this page apply to every language. For
+[Rust](../../slmp/rust/GETTING_STARTED.md),
+[C++ (Arduino/PlatformIO)](../../slmp/cpp/GETTING_STARTED.md), and
+[Node-RED](../../slmp/nodered/GETTING_STARTED.md), start from each
+library's Getting started.
+
 ## Related SLMP docs
 
 - [SLMP profile parameters](../../slmp/profile-reference/parameters.md)

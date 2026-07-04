@@ -74,6 +74,11 @@ Code example:
     Console.WriteLine($"DM0={dm0}");
     ```
 
+The PLC-side settings on this page apply to every language. For
+[Rust](../../hostlink/rust/GETTING_STARTED.md) and
+[Node-RED](../../hostlink/nodered/GETTING_STARTED.md), start from each
+library's Getting started.
+
 ## Screenshots
 
 ![KV-XLE02 unit settings screen for upper-level communication](../images/kv/kv-xle02/screenshot-01.png)
