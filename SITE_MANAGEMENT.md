@@ -52,7 +52,7 @@ README should usually contain only:
 
 - badges
 - title and one-sentence purpose
-- short links to the maintained `PROFILES.md`, `SUPPORTED_REGISTERS.md`, and verification pages
+- short links to the maintained four user pages and shared PLC setup/reference pages
 - installation command
 - one minimal quick example
 - documentation links
@@ -60,8 +60,8 @@ README should usually contain only:
 
 Do not delete detail from README unless the same detail is already present in a
 linked docs page or is moved there in the same change. Large PLC profile tables,
-device-range tables, and live-device verification matrices should live in the
-linked docs pages so README stays stable without becoming an empty signpost.
+device-range tables, wiring guides, common error-code tables, and verification
+matrices should not be duplicated in every library README.
 
 ## How to add a new source repo
 
