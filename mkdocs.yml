@@ -14,22 +14,26 @@ nav:
     - .NET:
       - Getting started: computerlink/dotnet/GETTING_STARTED.md
       - Usage guide: computerlink/dotnet/USAGE_GUIDE.md
+      - API reference: computerlink/dotnet/API_REFERENCE.md
       - Profiles: computerlink/dotnet/PROFILES.md
       - Gotchas: computerlink/dotnet/GOTCHAS.md
     - Python:
       - Getting started: computerlink/python/GETTING_STARTED.md
       - Usage guide: computerlink/python/USAGE_GUIDE.md
+      - API reference: computerlink/python/API_REFERENCE.md
       - Profiles: computerlink/python/PROFILES.md
       - Gotchas: computerlink/python/GOTCHAS.md
   - KV Host Link:
     - .NET:
       - Getting started: hostlink/dotnet/GETTING_STARTED.md
       - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
+      - API reference: hostlink/dotnet/API_REFERENCE.md
       - Profiles: hostlink/dotnet/PROFILES.md
       - Gotchas: hostlink/dotnet/GOTCHAS.md
     - Python:
       - Getting started: hostlink/python/GETTING_STARTED.md
       - Usage guide: hostlink/python/USAGE_GUIDE.md
+      - API reference: hostlink/python/API_REFERENCE.md
       - Profiles: hostlink/python/PROFILES.md
       - Gotchas: hostlink/python/GOTCHAS.md
     - Rust:
@@ -50,11 +54,13 @@ nav:
     - .NET:
       - Getting started: slmp/dotnet/GETTING_STARTED.md
       - Usage guide: slmp/dotnet/USAGE_GUIDE.md
+      - API reference: slmp/dotnet/API_REFERENCE.md
       - Profiles: slmp/dotnet/PROFILES.md
       - Gotchas: slmp/dotnet/GOTCHAS.md
     - Python:
       - Getting started: slmp/python/GETTING_STARTED.md
       - Usage guide: slmp/python/USAGE_GUIDE.md
+      - API reference: slmp/python/API_REFERENCE.md
       - Profiles: slmp/python/PROFILES.md
       - Gotchas: slmp/python/GOTCHAS.md
     - Rust:
@@ -65,6 +71,7 @@ nav:
     - C++ (Arduino/PlatformIO):
       - Getting started: slmp/cpp/GETTING_STARTED.md
       - Usage guide: slmp/cpp/USAGE_GUIDE.md
+      - API reference: slmp/cpp/API_REFERENCE.md
       - Profiles: slmp/cpp/PROFILES.md
       - Gotchas: slmp/cpp/GOTCHAS.md
     - Node-RED:
@@ -76,6 +83,7 @@ nav:
     - C++ (Arduino/PlatformIO):
       - Getting started: mcprotocol/cpp/GETTING_STARTED.md
       - Usage guide: mcprotocol/cpp/USAGE_GUIDE.md
+      - API reference: mcprotocol/cpp/API_REFERENCE.md
       - Profiles: mcprotocol/cpp/PROFILES.md
       - Gotchas: mcprotocol/cpp/GOTCHAS.md
   - PLC Setup Guide:
@@ -112,6 +120,42 @@ nav:
 
 plugins:
   - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            filters:
+              - "!^_"
+            members_order:
+              - __all__
+              - source
+            preload_modules:
+              - hostlink.client
+              - hostlink.device_ranges
+              - hostlink.errors
+              - hostlink.utils
+              - toyopuc.address
+              - toyopuc.async_client
+              - toyopuc.client
+              - toyopuc.errors
+              - toyopuc.high_level
+              - toyopuc.profiles
+              - toyopuc.protocol
+              - toyopuc.relay
+              - toyopuc.utils
+              - slmp.async_client
+              - slmp.client
+              - slmp.constants
+              - slmp.core
+              - slmp.device_ranges
+              - slmp.error_codes
+              - slmp.errors
+              - slmp.utils
+            show_root_full_path: false
+            show_root_heading: true
+            show_source: false
 
 markdown_extensions:
   - tables

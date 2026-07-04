@@ -92,6 +92,28 @@ Device range rules are not send/receive address guards for communication librari
 """
 
 
+PYTHON_API_REFERENCE_PAGES: tuple[tuple[str, str, str, str], ...] = (
+    (
+        "computerlink/python/API_REFERENCE.md",
+        "TOYOPUC Computerlink Python API Reference",
+        "toyopuc",
+        "toyopuc-computerlink",
+    ),
+    (
+        "hostlink/python/API_REFERENCE.md",
+        "KV Host Link Python API Reference",
+        "hostlink",
+        "kv-hostlink",
+    ),
+    (
+        "slmp/python/API_REFERENCE.md",
+        "SLMP Python API Reference",
+        "slmp",
+        "slmp-connect-python",
+    ),
+)
+
+
 SLMP_TROUBLESHOOTING_END_CODES = """# SLMP Troubleshooting & Codes
 
 This page summarizes situations observed during this project's live PLC verification and common SLMP setup issues. It is not the official definition of every SLMP end code. Use the Mitsubishi manuals for formal definitions and complete code tables.
@@ -810,6 +832,19 @@ def write_generated_page(target_file: Path, text: str) -> None:
     target_file.write_text(text, encoding="utf-8")
 
 
+def python_api_reference_page(title: str, module_name: str, package_name: str) -> str:
+    return f"""# {title}
+
+This page is generated during the docs-site build from the installed `{package_name}` PyPI package.
+
+It follows the latest package release installed by the site build. Use the handwritten Getting started and Usage guide pages for task-oriented examples, and this page for the complete public Python API surface.
+
+::: {module_name}
+    options:
+      members: true
+"""
+
+
 def remove_unpublished_files(docs_root: Path) -> None:
     for relative in REMOVE_AFTER_COPY:
         path = docs_root / relative
@@ -867,6 +902,8 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
     write_generated_page(docs_root / "plc-setup/computerlink/device-ranges.md", COMPUTERLINK_DEVICE_RANGES)
     write_generated_page(docs_root / "plc-setup/mcprotocol/troubleshooting-codes.md", MCPROTOCOL_SERIAL_ERROR_CODES)
     write_generated_page(docs_root / "plc-setup/mcprotocol/supported-registers.md", MCPROTOCOL_SERIAL_SUPPORTED_REGISTERS)
+    for relative_path, title, module_name, package_name in PYTHON_API_REFERENCE_PAGES:
+        write_generated_page(docs_root / relative_path, python_api_reference_page(title, module_name, package_name))
 
     remove_unpublished_files(docs_root)
     postprocess_links(docs_root)
