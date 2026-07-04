@@ -55,14 +55,14 @@ SOURCE_FILES: tuple[SourceFile, ...] = (
     SourceFile(
         "plc-comm-slmp-profiles",
         "slmp-profiles",
-        "tables/slmp_profile_comparison.md",
-        "slmp/profile-reference/profile-comparison.md",
+        "tables/slmp_profile_parameters.md",
+        "slmp/profile-reference/parameters.md",
     ),
     SourceFile(
         "plc-comm-slmp-profiles",
         "slmp-profiles",
-        "device-ranges/slmp_device_range_rules.md",
-        "slmp/profile-reference/device-range-rules.md",
+        "tables/slmp_device_ranges.md",
+        "slmp/profile-reference/device-ranges.md",
     ),
 )
 
@@ -79,7 +79,8 @@ For normal library usage, select the PLC profile in the library or Node-RED conn
 
 | Page | Use it for |
 | --- | --- |
-| [Profile comparison](profile-comparison.md) | Compare frame defaults, feature decisions, point limits, write policy, device-range differences, and profile differences. |
+| [Parameters](parameters.md) | Compare frame defaults, feature decisions, point limits, write policy, and device availability across profiles. |
+| [Device ranges](device-ranges.md) | Check SD-derived range rules, fixed ranges, probe markers, and unsupported device families. |
 
 ## Scope
 

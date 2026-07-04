@@ -61,7 +61,8 @@ nav:
   - SLMP:
     - Profile Reference:
       - Overview: slmp/profile-reference/index.md
-      - Profile comparison: slmp/profile-reference/profile-comparison.md
+      - Parameters: slmp/profile-reference/parameters.md
+      - Device ranges: slmp/profile-reference/device-ranges.md
     - .NET:
       - Getting started: slmp/dotnet/GETTING_STARTED.md
       - Usage guide: slmp/dotnet/USAGE_GUIDE.md
