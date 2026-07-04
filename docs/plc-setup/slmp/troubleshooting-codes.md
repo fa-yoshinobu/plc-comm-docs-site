@@ -44,7 +44,6 @@ Before chasing one code, confirm these basics:
 | `C05C` | A request fails after changing bit/word mode or count. | Request content is invalid for that command, such as a bit-unit mismatch. | Check the command variant, device family type, address unit, and count. |
 | `C05F` | The command is syntactically valid but still refused. | The target CPU cannot execute that request in the current state or route. | Check CPU mode, route, command support, and profile setting. |
 | `C061` | A raw-frame or low-level request fails with a length/count error. | Request data length and data count disagree. | Recalculate count fields and payload length, or use a high-level helper. |
-| `C0B5` | A file-register or special data request is refused by the CPU. | The CPU cannot handle that data specification. | Check whether the selected profile and PLC model support the requested family or data area. |
 | `C200`, `C201`, `C204` | Access is refused after the network path is established. | Remote password state prevents the operation. | Release the remote password and check whether another device owns the unlock state. |
 | `4030`, `4031` | The PLC reports a CPU-side device name or device number error. | Invalid device family, invalid device number, or nonexistent routed path. | Re-check the device notation and PLC configuration. Treat other 4000-series CPU errors as manual lookup items. |
 
