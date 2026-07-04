@@ -9,14 +9,6 @@ Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) · [FA Labo](https
 For license terms, commercial support, sponsorship, and donations, see
 [License & Support](support.md).
 
-## 日本語で読む最初の案内
-
-このサイトは、PLC 通信用ライブラリ群の導入・使い方・PLC 側設定をまとめたドキュメントです。
-
-- まず各言語の Getting started から、接続と最初の読出しを確認してください。
-- PLC 側の設定は [PLC Setup Guide](plc-setup/index.md) を見てください。
-- 接続できない、エラーコードが返る、アドレスが合わない場合は各プロトコルの Troubleshooting & Codes を見てください。
-
 ## Which protocol do I need?
 
 | Your PLC | Connection | Use |
