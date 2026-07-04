@@ -1,4 +1,4 @@
-# MC Protocol Serial Error Codes
+# MC Protocol Serial Troubleshooting & Codes
 
 This page is a practical guide for errors returned by MELSEC serial MC Protocol targets. It is not a complete Mitsubishi error-code table. Use the PLC and serial-module manuals for formal definitions.
 
@@ -21,7 +21,7 @@ Serial MC Protocol uses more than one error-code family. Do not interpret every 
 
 | Code family | Where it appears | How to handle it |
 | --- | --- | --- |
-| CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP end-code guide](../slmp/troubleshooting-end-codes.md) for practical checks. |
+| CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP Troubleshooting & Codes guide](../slmp/troubleshooting-codes.md) for practical checks. |
 | `7Fxx` serial-module responses | Serial-module rejection before or around CPU forwarding. | Treat as target/module dependent. Check frame mode, profile, device family, route, and module settings. |
 | `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Not yet published as a user table. Record the raw response and target settings; deliberately malformed-request measurements are still a TODO. |
 | No response | The module ignores the request or cannot answer in the selected mode. | Treat as a transport/configuration problem first, not as an error code. |

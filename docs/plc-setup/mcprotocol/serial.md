@@ -75,4 +75,4 @@ Pass the canonical profile explicitly. Standard connection helpers do not infer 
 ## Related Pages
 
 - [MC Protocol Serial supported registers](supported-registers.md)
-- [MC Protocol Serial error codes](error-codes.md)
+- [MC Protocol Serial Troubleshooting & Codes](troubleshooting-codes.md)

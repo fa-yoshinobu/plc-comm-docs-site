@@ -80,4 +80,4 @@ Code example:
 *KV-XLE02 unit settings screen for upper-level communication.*
 ## Troubleshooting
 
-- [KV Host Link error codes](error-codes.md)
+- [KV Host Link Troubleshooting & Codes](troubleshooting-codes.md)

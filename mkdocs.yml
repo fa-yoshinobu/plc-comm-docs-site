@@ -81,7 +81,7 @@ nav:
   - PLC Setup Guide:
     - Overview: plc-setup/index.md
     - MELSEC (SLMP):
-      - Troubleshooting & end codes: plc-setup/slmp/troubleshooting-end-codes.md
+      - Troubleshooting & Codes: plc-setup/slmp/troubleshooting-codes.md
       - iQ-R (built-in Ethernet): plc-setup/slmp/iq-r.md
       - iQ-F (built-in Ethernet): plc-setup/slmp/iq-f.md
       - iQ-L (built-in Ethernet): plc-setup/slmp/iq-l.md
@@ -94,7 +94,7 @@ nav:
       - QJ71E71-100 (comm unit): plc-setup/slmp/qj71e71-100.md
       - LJ71E71-100 (comm unit): plc-setup/slmp/lj71e71-100.md
     - KV Host Link (KEYENCE):
-      - Error codes: plc-setup/kv/error-codes.md
+      - Troubleshooting & Codes: plc-setup/kv/troubleshooting-codes.md
       - Device ranges: plc-setup/kv/device-ranges.md
       - KV-X500: plc-setup/kv/kv-x500.md
       - KV-8000: plc-setup/kv/kv-8000.md
@@ -102,11 +102,11 @@ nav:
       - KV-5000: plc-setup/kv/kv-5000.md
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
     - Computerlink (TOYOPUC):
-      - Error codes: plc-setup/computerlink/error-codes.md
+      - Troubleshooting & Codes: plc-setup/computerlink/troubleshooting-codes.md
       - Device ranges: plc-setup/computerlink/device-ranges.md
       - TOYOPUC: plc-setup/computerlink/toyopuc.md
     - MC Protocol Serial (MELSEC):
-      - Error codes: plc-setup/mcprotocol/error-codes.md
+      - Troubleshooting & Codes: plc-setup/mcprotocol/troubleshooting-codes.md
       - Supported registers: plc-setup/mcprotocol/supported-registers.md
       - Serial modules: plc-setup/mcprotocol/serial.md
 

@@ -32,4 +32,4 @@ infer it from the PLC.
 
 ## Troubleshooting
 
-- [Computerlink error codes](error-codes.md)
+- [Computerlink Troubleshooting & Codes](troubleshooting-codes.md)

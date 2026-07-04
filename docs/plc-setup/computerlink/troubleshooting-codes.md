@@ -1,4 +1,4 @@
-# Computerlink Error Codes
+# Computerlink Troubleshooting & Codes
 
 This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.
 
@@ -37,7 +37,7 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 | FR value does not survive power cycle | Stage the FR write and then commit it when persistence is intended. |
 | Relay write or read does not reach the target PLC | Set the relay hop string explicitly. |
 
-## Common PLC Error Codes
+## Common PLC Codes
 
 | Code | Typical cause | First check |
 | --- | --- | --- |

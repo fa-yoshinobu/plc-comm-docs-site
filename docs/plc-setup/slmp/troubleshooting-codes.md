@@ -1,4 +1,4 @@
-# SLMP Troubleshooting & End Codes
+# SLMP Troubleshooting & Codes
 
 This page summarizes situations observed during this project's live PLC verification and common SLMP setup issues. It is not the official definition of every SLMP end code. Use the Mitsubishi manuals for formal definitions and complete code tables.
 

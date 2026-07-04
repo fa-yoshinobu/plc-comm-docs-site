@@ -92,7 +92,7 @@ Device range rules are not send/receive address guards for communication librari
 """
 
 
-SLMP_TROUBLESHOOTING_END_CODES = """# SLMP Troubleshooting & End Codes
+SLMP_TROUBLESHOOTING_END_CODES = """# SLMP Troubleshooting & Codes
 
 This page summarizes situations observed during this project's live PLC verification and common SLMP setup issues. It is not the official definition of every SLMP end code. Use the Mitsubishi manuals for formal definitions and complete code tables.
 
@@ -159,11 +159,11 @@ Use this only for troubleshooting or compatibility investigation. Normal applica
 """
 
 
-KV_HOSTLINK_ERROR_CODES = """# KV Host Link Error Codes
+KV_HOSTLINK_ERROR_CODES = """# KV Host Link Troubleshooting & Codes
 
 This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup guide. It is not a complete manufacturer code table; use the KEYENCE manuals for formal definitions.
 
-## PLC Error Codes
+## PLC Codes
 
 | Code | Typical cause | First check |
 | --- | --- | --- |
@@ -331,7 +331,7 @@ High-level address text should include the intended type. Use `DM100:U`, not pla
 """
 
 
-COMPUTERLINK_ERROR_CODES = """# Computerlink Error Codes
+COMPUTERLINK_ERROR_CODES = """# Computerlink Troubleshooting & Codes
 
 This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.
 
@@ -370,7 +370,7 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 | FR value does not survive power cycle | Stage the FR write and then commit it when persistence is intended. |
 | Relay write or read does not reach the target PLC | Set the relay hop string explicitly. |
 
-## Common PLC Error Codes
+## Common PLC Codes
 
 | Code | Typical cause | First check |
 | --- | --- | --- |
@@ -507,7 +507,7 @@ These are writable-range summaries from project evidence, not a complete hardwar
 """
 
 
-MCPROTOCOL_SERIAL_ERROR_CODES = """# MC Protocol Serial Error Codes
+MCPROTOCOL_SERIAL_ERROR_CODES = """# MC Protocol Serial Troubleshooting & Codes
 
 This page is a practical guide for errors returned by MELSEC serial MC Protocol targets. It is not a complete Mitsubishi error-code table. Use the PLC and serial-module manuals for formal definitions.
 
@@ -530,7 +530,7 @@ Serial MC Protocol uses more than one error-code family. Do not interpret every 
 
 | Code family | Where it appears | How to handle it |
 | --- | --- | --- |
-| CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP end-code guide](../slmp/troubleshooting-end-codes.md) for practical checks. |
+| CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP Troubleshooting & Codes guide](../slmp/troubleshooting-codes.md) for practical checks. |
 | `7Fxx` serial-module responses | Serial-module rejection before or around CPU forwarding. | Treat as target/module dependent. Check frame mode, profile, device family, route, and module settings. |
 | `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Not yet published as a user table. Record the raw response and target settings; deliberately malformed-request measurements are still a TODO. |
 | No response | The module ignores the request or cannot answer in the selected mode. | Treat as a transport/configuration problem first, not as an error code. |
@@ -700,6 +700,10 @@ REMOVE_AFTER_COPY: tuple[str, ...] = (
     "slmp/profile-reference/device-range-rules.md",
     "slmp/profile-reference/profile-comparison.md",
     "slmp/profile-reference/troubleshooting-end-codes.md",
+    "plc-setup/slmp/troubleshooting-end-codes.md",
+    "plc-setup/kv/error-codes.md",
+    "plc-setup/computerlink/error-codes.md",
+    "plc-setup/mcprotocol/error-codes.md",
     "mcprotocol/cpp/README.md",
     "hostlink/rust/DEVELOPMENT_HISTORY.md",
     "hostlink/rust/KV5000_LIVE_VALIDATION_2026-05-03.md",
@@ -857,12 +861,12 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
         print(f"collected {source.repo_name}: {source_file} -> {target_file}")
 
     write_generated_page(docs_root / "slmp/profile-reference/index.md", SLMP_PROFILE_REFERENCE_INDEX)
-    write_generated_page(docs_root / "plc-setup/slmp/troubleshooting-end-codes.md", SLMP_TROUBLESHOOTING_END_CODES)
-    write_generated_page(docs_root / "plc-setup/kv/error-codes.md", KV_HOSTLINK_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/slmp/troubleshooting-codes.md", SLMP_TROUBLESHOOTING_END_CODES)
+    write_generated_page(docs_root / "plc-setup/kv/troubleshooting-codes.md", KV_HOSTLINK_ERROR_CODES)
     write_generated_page(docs_root / "plc-setup/kv/device-ranges.md", KV_HOSTLINK_DEVICE_RANGES)
-    write_generated_page(docs_root / "plc-setup/computerlink/error-codes.md", COMPUTERLINK_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/computerlink/troubleshooting-codes.md", COMPUTERLINK_ERROR_CODES)
     write_generated_page(docs_root / "plc-setup/computerlink/device-ranges.md", COMPUTERLINK_DEVICE_RANGES)
-    write_generated_page(docs_root / "plc-setup/mcprotocol/error-codes.md", MCPROTOCOL_SERIAL_ERROR_CODES)
+    write_generated_page(docs_root / "plc-setup/mcprotocol/troubleshooting-codes.md", MCPROTOCOL_SERIAL_ERROR_CODES)
     write_generated_page(docs_root / "plc-setup/mcprotocol/supported-registers.md", MCPROTOCOL_SERIAL_SUPPORTED_REGISTERS)
 
     remove_unpublished_files(docs_root)
