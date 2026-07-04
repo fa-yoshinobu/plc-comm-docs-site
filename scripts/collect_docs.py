@@ -53,6 +53,30 @@ SOURCES: tuple[SourceDocs, ...] = (
 
 SOURCE_FILES: tuple[SourceFile, ...] = (
     SourceFile(
+        "plc-comm-computerlink-profiles",
+        "computerlink-profiles",
+        "tables/toyopuc_profile_parameters.md",
+        "computerlink/profile-reference/parameters.md",
+    ),
+    SourceFile(
+        "plc-comm-computerlink-profiles",
+        "computerlink-profiles",
+        "tables/toyopuc_area_ranges.md",
+        "computerlink/profile-reference/area-ranges.md",
+    ),
+    SourceFile(
+        "plc-comm-hostlink-profiles",
+        "hostlink-profiles",
+        "tables/kv_profile_parameters.md",
+        "hostlink/profile-reference/parameters.md",
+    ),
+    SourceFile(
+        "plc-comm-hostlink-profiles",
+        "hostlink-profiles",
+        "tables/kv_device_ranges.md",
+        "hostlink/profile-reference/device-ranges.md",
+    ),
+    SourceFile(
         "plc-comm-slmp-profiles",
         "slmp-profiles",
         "tables/slmp_profile_parameters.md",
@@ -65,6 +89,48 @@ SOURCE_FILES: tuple[SourceFile, ...] = (
         "slmp/profile-reference/device-ranges.md",
     ),
 )
+
+
+COMPUTERLINK_PROFILE_REFERENCE_INDEX = """# TOYOPUC Computer Link Profile Reference
+
+This section is built from the canonical `plc-comm-computerlink-profiles` data repository during the documentation build.
+
+Use it when you need to compare TOYOPUC Computer Link profile options and area ranges across supported profiles.
+
+For normal library usage, select the PLC profile in the .NET or Python library settings and follow that library's getting started guide.
+
+## Pages
+
+| Page | Use it for |
+| --- | --- |
+| [Parameters](parameters.md) | Compare display names, profile IDs, area counts, and addressing option flags. |
+| [Area ranges](area-ranges.md) | Compare direct and prefixed TOYOPUC area ranges across profiles. |
+
+## Scope
+
+Ranges are catalog data for profile selection, UI address pickers, and application-layer checks. The actual PLC model, link route, project settings, and run/write permission can still reject a request.
+"""
+
+
+HOSTLINK_PROFILE_REFERENCE_INDEX = """# KEYENCE KV Host Link Profile Reference
+
+This section is built from the canonical `plc-comm-hostlink-profiles` data repository during the documentation build.
+
+Use it when you need to compare KEYENCE KV Host Link profile IDs, display names, XYM notation variants, and device range rows.
+
+For normal library usage, select the PLC profile in the library or Node-RED connection settings and follow that library's getting started guide.
+
+## Pages
+
+| Page | Use it for |
+| --- | --- |
+| [Parameters](parameters.md) | Compare canonical IDs, display names, and native/XYM relationships. |
+| [Device ranges](device-ranges.md) | Compare device ranges across the supported KEYENCE KV profiles. |
+
+## Scope
+
+Ranges are catalog data for profile selection, UI address pickers, and application-layer checks. They are not a production guarantee that every address can be read or written on a connected PLC.
+"""
 
 
 SLMP_PROFILE_REFERENCE_INDEX = """# SLMP Profile Reference
@@ -894,6 +960,8 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
         copy_file(source_file, target_file)
         print(f"collected {source.repo_name}: {source_file} -> {target_file}")
 
+    write_generated_page(docs_root / "computerlink/profile-reference/index.md", COMPUTERLINK_PROFILE_REFERENCE_INDEX)
+    write_generated_page(docs_root / "hostlink/profile-reference/index.md", HOSTLINK_PROFILE_REFERENCE_INDEX)
     write_generated_page(docs_root / "slmp/profile-reference/index.md", SLMP_PROFILE_REFERENCE_INDEX)
     write_generated_page(docs_root / "plc-setup/slmp/troubleshooting-codes.md", SLMP_TROUBLESHOOTING_END_CODES)
     write_generated_page(docs_root / "plc-setup/kv/troubleshooting-codes.md", KV_HOSTLINK_ERROR_CODES)

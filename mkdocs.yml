@@ -30,6 +30,10 @@ nav:
   - Home: index.md
   - License & Support: support.md
   - Computerlink:
+    - Profile Reference:
+      - Overview: computerlink/profile-reference/index.md
+      - Parameters: computerlink/profile-reference/parameters.md
+      - Area ranges: computerlink/profile-reference/area-ranges.md
     - .NET:
       - Getting started: computerlink/dotnet/GETTING_STARTED.md
       - Usage guide: computerlink/dotnet/USAGE_GUIDE.md
@@ -43,6 +47,10 @@ nav:
       - Profiles: computerlink/python/PROFILES.md
       - Gotchas: computerlink/python/GOTCHAS.md
   - KV Host Link:
+    - Profile Reference:
+      - Overview: hostlink/profile-reference/index.md
+      - Parameters: hostlink/profile-reference/parameters.md
+      - Device ranges: hostlink/profile-reference/device-ranges.md
     - .NET:
       - Getting started: hostlink/dotnet/GETTING_STARTED.md
       - Usage guide: hostlink/dotnet/USAGE_GUIDE.md
