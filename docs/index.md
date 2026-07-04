@@ -17,6 +17,20 @@ For license terms, commercial support, sponsorship, and donations, see
 - PLC 側の設定は [PLC Setup Guide](plc-setup/index.md) を見てください。
 - 接続できない、エラーコードが返る、アドレスが合わない場合は各プロトコルの Troubleshooting & Codes を見てください。
 
+## Which protocol do I need?
+
+| Your PLC | Connection | Use |
+|----------|-----------|-----|
+| MELSEC (iQ-R/F/L, MX-R/F, Q, L) | Ethernet (TCP/UDP) | **SLMP** |
+| MELSEC (iQ-R/L, Q, A) | RS-232C/RS-485 serial module | **MC Protocol Serial** |
+| KEYENCE KV series | Ethernet (TCP/UDP) | **KV Host Link** |
+| JTEKT TOYOPUC | Ethernet (TCP/UDP) | **Computerlink** |
+
+For MELSEC PLCs, prefer **SLMP over Ethernet** whenever an Ethernet port or
+communication unit is available — it is faster and easier to wire. Choose
+**MC Protocol Serial** when only a serial communication module (RS-232C/RS-485)
+is available, such as on legacy Q/A installations.
+
 ## Computerlink (JTEKT TOYOPUC)
 
 | Language | Docs | Samples | GitHub | Registry |
@@ -57,8 +71,8 @@ Step-by-step PLC-side configuration for each supported hardware model.
 |----------|---------------|
 | MELSEC SLMP | iQ-R, iQ-F, iQ-L, MX-R, MX-F, QnUDV, QnU, LCPU, RJ71EN71, QJ71E71-100, LJ71E71-100 |
 | KV Host Link | KV-X500, KV-8000, KV-7000, KV-5000, KV-XLE02 |
-| Computerlink | *(coming soon)* |
-| MC Protocol Serial | *(coming soon)* |
+| Computerlink | TOYOPUC (minimum checklist; full guide in preparation) |
+| MC Protocol Serial | MELSEC serial modules (iQ-R/L, Q, A) |
 
 → [Open PLC Setup Guide](plc-setup/index.md)
 

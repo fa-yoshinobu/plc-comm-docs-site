@@ -3,8 +3,27 @@ site_url: https://fa-yoshinobu.github.io/plc-comm-docs-site/
 theme:
   name: material
   language: en
+  favicon: assets/favicon.png
+  logo: assets/favicon.png
+  features:
+    - content.code.copy
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
   palette:
-    primary: indigo
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   custom_dir: overrides
 
 nav:
