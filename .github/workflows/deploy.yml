@@ -33,10 +33,12 @@ jobs:
           mkdir -p _src
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet.git _src/computerlink-dotnet
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-python.git _src/computerlink-python
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-profiles.git _src/computerlink-profiles
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet.git _src/hostlink-dotnet
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-python.git _src/hostlink-python
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-rust.git _src/hostlink-rust
           git clone --depth 1 https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink.git _src/hostlink-nodered
+          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-profiles.git _src/hostlink-profiles
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet.git _src/slmp-dotnet
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-python.git _src/slmp-python
           git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-rust.git _src/slmp-rust
