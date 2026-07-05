@@ -26,7 +26,7 @@ Before chasing one code, confirm these basics:
 | `D50.3,8` or a similar bit-in-word count is rejected. | Dot notation selects one bit inside one word and is scalar-only. | Use `D50.3` for one bit, or use a direct bit family such as `M1000:BIT,8` for consecutive bit devices. |
 | `LTN`, `LSTN`, `LCN`, or `LZ` looks truncated or shifted. | These current-value families are 32-bit values. | Use the library's 32-bit form, such as `:D` or `:L` in named addresses. |
 | `LCS` or `LCC` behaves unlike a word value. | Long counter state devices are bit devices. | Read or write them as bit values. |
-| Block commands fail on Q/L profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
+| Block commands fail on Q/L built-in profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
 
 ## Common End Codes
 

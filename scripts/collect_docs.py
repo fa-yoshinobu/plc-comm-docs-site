@@ -137,7 +137,7 @@ SLMP_PROFILE_REFERENCE_INDEX = """# SLMP Profile Reference
 
 This section is built from the canonical `plc-comm-slmp-profiles` data repository during the documentation build.
 
-Use it when you need to compare MELSEC SLMP profiles across the supported built-in Ethernet profiles.
+Use it when you need to compare MELSEC SLMP profiles across the supported built-in Ethernet and Ethernet unit profiles.
 
 For normal library usage, select the PLC profile in the library or Node-RED connection settings and follow that library's getting started guide.
 
@@ -152,7 +152,7 @@ For PLC-side Binary data code, port/open settings, and RUN-time write permission
 
 ## Scope
 
-The profile data targets CPU built-in Ethernet ports. Extension Ethernet modules may support additional commands, but the built-in Ethernet profiles remain the conservative baseline.
+The profile data covers CPU built-in Ethernet ports and verified Ethernet unit routes. Base profiles can be used internally for inherited address and device-range behavior even when they are not selectable connection profiles.
 
 Device range rules are not send/receive address guards for communication libraries. They are for applications that need to discover or display the valid device range of a selected PLC profile.
 """
@@ -208,7 +208,7 @@ Before chasing one code, confirm these basics:
 | `D50.3,8` or a similar bit-in-word count is rejected. | Dot notation selects one bit inside one word and is scalar-only. | Use `D50.3` for one bit, or use a direct bit family such as `M1000:BIT,8` for consecutive bit devices. |
 | `LTN`, `LSTN`, `LCN`, or `LZ` looks truncated or shifted. | These current-value families are 32-bit values. | Use the library's 32-bit form, such as `:D` or `:L` in named addresses. |
 | `LCS` or `LCC` behaves unlike a word value. | Long counter state devices are bit devices. | Read or write them as bit values. |
-| Block commands fail on Q/L profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
+| Block commands fail on Q/L built-in profiles. | Some Q/L built-in Ethernet profiles do not use block commands for normal high-level access. | Use normal direct/random read and write helpers. Disable strict profile only for deliberate compatibility investigation. |
 
 ## Common End Codes
 
