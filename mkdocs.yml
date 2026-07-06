@@ -78,6 +78,7 @@ nav:
       - Overview: slmp/profile-reference/index.md
       - Parameters: slmp/profile-reference/parameters.md
       - Device ranges: slmp/profile-reference/device-ranges.md
+    - API parity: slmp/api-parity.md
     - .NET:
       - Getting started: slmp/dotnet/GETTING_STARTED.md
       - Usage guide: slmp/dotnet/USAGE_GUIDE.md
@@ -93,6 +94,7 @@ nav:
     - Rust:
       - Getting started: slmp/rust/GETTING_STARTED.md
       - Usage guide: slmp/rust/USAGE_GUIDE.md
+      - API reference: slmp/rust/API_REFERENCE.md
       - Profiles: slmp/rust/PROFILES.md
       - Gotchas: slmp/rust/GOTCHAS.md
     - C++ (Arduino/PlatformIO):
@@ -104,6 +106,7 @@ nav:
     - Node-RED:
       - Getting started: slmp/nodered/GETTING_STARTED.md
       - Usage guide: slmp/nodered/USAGE_GUIDE.md
+      - API reference: slmp/nodered/API_REFERENCE.md
       - Profiles: slmp/nodered/PROFILES.md
       - Gotchas: slmp/nodered/GOTCHAS.md
   - MC Protocol Serial:

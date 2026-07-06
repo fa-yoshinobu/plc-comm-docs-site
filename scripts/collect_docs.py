@@ -158,6 +158,46 @@ Device range rules are not send/receive address guards for communication librari
 """
 
 
+SLMP_API_PARITY = """# SLMP API Parity
+
+This page summarizes the user-facing SLMP operation surface across the maintained implementations. It is a navigation aid, not a live verification record.
+
+Legend:
+
+- `yes`: implemented in the public low-level/client library surface.
+- `gap`: intentionally not implemented in that library today; the note explains the current boundary.
+- `n/a`: not a normal target for that implementation's scope.
+
+## Five-Implementation Snapshot
+
+Snapshot date: 2026-07-06.
+
+| Operation family | Python | .NET | C++ minimal | Rust | Node-RED |
+| --- | --- | --- | --- | --- | --- |
+| Direct word/bit read/write | yes: `read_devices` / `write_devices` | yes: `ReadWordsRawAsync` / `WriteWordsAsync` / bit variants | yes: `readWords` / `writeWords` / bit variants | yes: `read_words_raw` / `write_words` / bit variants | yes: `readDevices` / `writeDevices` |
+| Dword / float32 helpers | yes | yes | yes | yes | gap: use word/dword random and typed high-level helpers |
+| Extended direct word/bit read/write | yes: `read_devices_ext` / `write_devices_ext` | yes: `ReadWordsExtendedAsync` / `WriteWordsExtendedAsync` / bit variants | yes: module-buffer and link-direct helpers | yes: `read_words_extended` / `write_words_extended` / bit variants | gap: low-level surface currently exposes extended random only |
+| Random read | yes: `read_random` | yes: `ReadRandomAsync` | yes: `readRandom` | yes: `read_random` | yes: `readRandom` |
+| Extended random read | yes: `read_random_ext` | yes: `ReadRandomExtAsync` | yes: `readRandomExt` | yes: `read_random_ext` | yes: `readRandomExt` |
+| Random word/dword write | yes: `write_random_words` | yes: `WriteRandomWordsAsync` | yes: `writeRandomWords` | yes: `write_random_words` | yes: `writeRandomWords` |
+| Extended random word/dword write | yes: `write_random_words_ext` | yes: `WriteRandomWordsExtAsync` | yes: `writeRandomWordsExt` | yes: `write_random_words_ext` | yes: `writeRandomWordsExt` |
+| Random bit write | yes: `write_random_bits` | yes: `WriteRandomBitsAsync` | yes: `writeRandomBits` | yes: `write_random_bits` | yes: `writeRandomBits` |
+| Extended random bit write | yes: `write_random_bits_ext` | yes: `WriteRandomBitsExtAsync` | yes: `writeRandomBitsExt` | yes: `write_random_bits_ext` | yes: `writeRandomBitsExt` |
+| Block read/write | yes: `read_block` / `write_block` | yes: `ReadBlockAsync` / `WriteBlockAsync` | yes: `readBlock` / `writeBlock` | yes: `read_block` / `write_block` | yes: `readBlock` / `writeBlock` |
+| Type name | yes: `read_type_name` | yes: `ReadTypeNameAsync` | yes: `readTypeName` | yes: `read_type_name` | yes: `readTypeName` |
+| Monitor register/cycle | yes | yes | yes | gap: typed monitor API is backlog | gap: low-level client has no monitor-register API yet |
+| Memory read/write words | yes | yes | gap: minimal client does not expose memory commands | yes | yes |
+| Extend-unit read/write words | yes | yes | gap: minimal client uses extended-device helpers instead | yes | yes |
+| CPU-buffer convenience helpers | yes | yes | gap: use module-buffer helpers | gap: use extended-device `HG` access where supported | gap: use lower-level primitives where available |
+| Label array read/write | yes | yes | yes | yes | yes |
+| Label random read/write | yes | yes | yes | yes | yes |
+| Remote CPU control | yes | yes | yes | yes | yes |
+| Remote password lock/unlock | yes | yes | yes | yes | yes |
+
+Rust and Node-RED both expose the extended random APIs added in the 2026-07-06 parity pass. Node-RED editor nodes do not need to surface every low-level JavaScript API; this table tracks the JavaScript client surface used by the nodes.
+"""
+
+
 PYTHON_API_REFERENCE_PAGES: tuple[tuple[str, str, str, str], ...] = (
     (
         "computerlink/python/API_REFERENCE.md",
@@ -178,6 +218,57 @@ PYTHON_API_REFERENCE_PAGES: tuple[tuple[str, str, str, str], ...] = (
         "slmp-connect-python",
     ),
 )
+
+
+SLMP_PYTHON_API_OPERATION_INDEX = """## Operation Index
+
+The sync `SlmpClient` and async `AsyncSlmpClient` expose the same low-level
+operation names unless noted otherwise.
+
+### Direct And Random Device Operations
+
+| Operation | Public API |
+| --- | --- |
+| Direct device read/write | `read_devices`, `write_devices` |
+| 32-bit values | `read_dword`, `write_dword`, `read_dwords`, `write_dwords` |
+| Float32 values | `read_float32`, `write_float32`, `read_float32s`, `write_float32s` |
+| Extended direct device read/write | `read_devices_ext`, `write_devices_ext` |
+| Random read | `read_random` |
+| Extended random read | `read_random_ext` |
+| Random word/dword write | `write_random_words` |
+| Extended random word/dword write | `write_random_words_ext` |
+| Random bit write | `write_random_bits` |
+| Extended random bit write | `write_random_bits_ext` |
+| Block read/write | `read_block`, `write_block` |
+| Type name | `read_type_name` |
+
+Extended random APIs use the 008x subcommands. Use qualified device notation
+such as `U1\\G0`, `U3E0\\HG0`, or `J2\\SW10` where the route requires it.
+
+### Specialized Operations
+
+| Operation | Public API |
+| --- | --- |
+| Monitor registration/cycle | `register_monitor_devices`, `register_monitor_devices_ext`, `run_monitor_cycle` |
+| Memory command words | `memory_read_words`, `memory_write_words` |
+| Extend-unit command words | `extend_unit_read_words`, `extend_unit_write_words` |
+| CPU-buffer convenience words | `cpu_buffer_read_words`, `cpu_buffer_write_words` |
+| Label array access | `read_array_labels`, `write_array_labels` |
+| Label random access | `read_random_labels`, `write_random_labels` |
+| Remote CPU control | `remote_run`, `remote_stop`, `remote_pause`, `remote_latch_clear`, `remote_reset` |
+| Remote password | `remote_password_unlock`, `remote_password_lock` |
+
+### High-Level Helpers
+
+| Operation | Public API |
+| --- | --- |
+| Connection helper | `open_and_connect`, `open_and_connect_sync`, `QueuedAsyncSlmpClient` |
+| Typed values | `read_typed`, `write_typed` |
+| Named mixed snapshots | `read_named`, `write_named`, `poll` |
+| Chunked word/dword reads | `read_words_single_request`, `read_words_chunked`, `read_dwords_single_request`, `read_dwords_chunked` |
+| Address handling | `normalize_address`, `parse_address`, `try_parse_address`, `format_address` |
+| Bit-in-word write | `write_bit_in_word` |
+"""
 
 
 SLMP_TROUBLESHOOTING_END_CODES = """# SLMP Troubleshooting & Codes
@@ -899,11 +990,17 @@ def write_generated_page(target_file: Path, text: str) -> None:
 
 
 def python_api_reference_page(title: str, module_name: str, package_name: str) -> str:
+    operation_index = ""
+    if module_name == "slmp":
+        operation_index = f"\n{SLMP_PYTHON_API_OPERATION_INDEX}\n"
+
     return f"""# {title}
 
 This page is generated during the docs-site build from the installed `{package_name}` PyPI package.
 
 It follows the latest package release installed by the site build. Use the handwritten Getting started and Usage guide pages for task-oriented examples, and this page for the complete public Python API surface.
+{operation_index}
+## Generated API Details
 
 ::: {module_name}
     options:
@@ -963,6 +1060,7 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
     write_generated_page(docs_root / "computerlink/profile-reference/index.md", COMPUTERLINK_PROFILE_REFERENCE_INDEX)
     write_generated_page(docs_root / "hostlink/profile-reference/index.md", HOSTLINK_PROFILE_REFERENCE_INDEX)
     write_generated_page(docs_root / "slmp/profile-reference/index.md", SLMP_PROFILE_REFERENCE_INDEX)
+    write_generated_page(docs_root / "slmp/api-parity.md", SLMP_API_PARITY)
     write_generated_page(docs_root / "plc-setup/slmp/troubleshooting-codes.md", SLMP_TROUBLESHOOTING_END_CODES)
     write_generated_page(docs_root / "plc-setup/kv/troubleshooting-codes.md", KV_HOSTLINK_ERROR_CODES)
     write_generated_page(docs_root / "plc-setup/kv/device-ranges.md", KV_HOSTLINK_DEVICE_RANGES)
