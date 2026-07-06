@@ -47,6 +47,23 @@ Before chasing one code, confirm these basics:
 | `C200`, `C201`, `C204` | Access is refused after the network path is established. | Remote password state prevents the operation. | Release the remote password and check whether another device owns the unlock state. |
 | `4030`, `4031` | The PLC reports a CPU-side device name or device number error. | Invalid device family, invalid device number, or nonexistent routed path. | Re-check the device notation and PLC configuration. Treat other 4000-series CPU errors as manual lookup items. |
 
+## Node-Function End Codes
+
+The codes below are SLMP node-function responses from the Mitsubishi manuals.
+They are included here so operators can recognize them, but the maintained
+libraries do not implement the `0x0E3x` node-function command family. For that
+scope decision, see [SLMP API Parity](../../slmp/api-parity.md#out-of-scope-node-functions).
+
+| End code | Meaning | Practical check |
+| --- | --- | --- |
+| `CEE0` | Node-function command is already executing. | Wait for the current node-function operation to finish before retrying from a tool that supports that command family. |
+| `CEE1` | Node-function request data size is invalid. | Check the command's required request length in the Mitsubishi manual. |
+| `CEE2` | Node-function response data size is invalid. | Check whether the requester expected the correct response length for that command. |
+| `CF10` | Server number does not exist. | Check the target server number before using node-function tooling. |
+| `CF20` | Communication settings cannot be changed. | Do not attempt communication-setting changes from these libraries; use supported engineering tools and controlled setup procedures. |
+| `CF30` | Parameter ID does not exist. | Check the parameter ID against the Mitsubishi manual for the target. |
+| `CF31` | Parameter cannot be set. | Check whether the parameter is read-only, target-dependent, or restricted by the current configuration. |
+
 ## Profile Limit Codes
 
 `C051` through `C054` are normally prevented by the library profile checks when using the high-level API. If they appear in normal usage, check for one of these first:
