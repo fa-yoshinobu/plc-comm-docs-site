@@ -216,19 +216,19 @@ PYTHON_API_REFERENCE_PAGES: tuple[tuple[str, str, str, str], ...] = (
         "computerlink/python/API_REFERENCE.md",
         "TOYOPUC Computerlink Python API Reference",
         "toyopuc",
-        "toyopuc-computerlink",
+        "plc-comm-toyopuc",
     ),
     (
         "hostlink/python/API_REFERENCE.md",
         "KV Host Link Python API Reference",
         "hostlink",
-        "kv-hostlink",
+        "plc-comm-kv-hostlink",
     ),
     (
         "slmp/python/API_REFERENCE.md",
         "SLMP Python API Reference",
         "slmp",
-        "slmp-connect-python",
+        "plc-comm-slmp",
     ),
 )
 
