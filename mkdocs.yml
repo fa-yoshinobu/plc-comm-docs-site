@@ -66,11 +66,13 @@ nav:
     - Rust:
       - Getting started: hostlink/rust/GETTING_STARTED.md
       - Usage guide: hostlink/rust/USAGE_GUIDE.md
+      - API reference: hostlink/rust/API_REFERENCE.md
       - Profiles: hostlink/rust/PROFILES.md
       - Gotchas: hostlink/rust/GOTCHAS.md
     - Node-RED:
       - Getting started: hostlink/nodered/GETTING_STARTED.md
       - Usage guide: hostlink/nodered/USAGE_GUIDE.md
+      - API reference: hostlink/nodered/API_REFERENCE.md
       - Profiles: hostlink/nodered/PROFILES.md
       - Gotchas: hostlink/nodered/GOTCHAS.md
   - SLMP:
