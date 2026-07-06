@@ -195,6 +195,19 @@ Snapshot date: 2026-07-06.
 | Remote password lock/unlock | yes | yes | yes | yes | yes |
 
 Rust and Node-RED both expose the extended random APIs added in the 2026-07-06 parity pass. Node-RED editor nodes do not need to surface every low-level JavaScript API; this table tracks the JavaScript client surface used by the nodes.
+
+## Out-of-Scope Node Functions
+
+SLMP node-function commands in the `0x0E3x` family, including NodeSearch,
+IPAddressSet, ParameterGet/Set, StatusRead, and CommunicationSettingGet, are
+outside the maintained library surfaces. These libraries target MELSEC CPU
+SLMP server communication for PLC data access and setup-compatible operation;
+they do not implement a node-function server-management surface. NodeSearch
+and IPAddressSet are also send-prohibited by project policy because they can
+discover or alter network identity outside normal PLC data access workflows.
+
+See the [SLMP Troubleshooting & Codes guide](../plc-setup/slmp/troubleshooting-codes.md#node-function-end-codes)
+for the related node-function end-code category.
 """
 
 
@@ -319,6 +332,23 @@ Before chasing one code, confirm these basics:
 | `C061` | A raw-frame or low-level request fails with a length/count error. | Request data length and data count disagree. | Recalculate count fields and payload length, or use a high-level helper. |
 | `C200`, `C201`, `C204` | Access is refused after the network path is established. | Remote password state prevents the operation. | Release the remote password and check whether another device owns the unlock state. |
 | `4030`, `4031` | The PLC reports a CPU-side device name or device number error. | Invalid device family, invalid device number, or nonexistent routed path. | Re-check the device notation and PLC configuration. Treat other 4000-series CPU errors as manual lookup items. |
+
+## Node-Function End Codes
+
+The codes below are SLMP node-function responses from the Mitsubishi manuals.
+They are included here so operators can recognize them, but the maintained
+libraries do not implement the `0x0E3x` node-function command family. For that
+scope decision, see [SLMP API Parity](../../slmp/api-parity.md#out-of-scope-node-functions).
+
+| End code | Meaning | Practical check |
+| --- | --- | --- |
+| `CEE0` | Node-function command is already executing. | Wait for the current node-function operation to finish before retrying from a tool that supports that command family. |
+| `CEE1` | Node-function request data size is invalid. | Check the command's required request length in the Mitsubishi manual. |
+| `CEE2` | Node-function response data size is invalid. | Check whether the requester expected the correct response length for that command. |
+| `CF10` | Server number does not exist. | Check the target server number before using node-function tooling. |
+| `CF20` | Communication settings cannot be changed. | Do not attempt communication-setting changes from these libraries; use supported engineering tools and controlled setup procedures. |
+| `CF30` | Parameter ID does not exist. | Check the parameter ID against the Mitsubishi manual for the target. |
+| `CF31` | Parameter cannot be set. | Check whether the parameter is read-only, target-dependent, or restricted by the current configuration. |
 
 ## Profile Limit Codes
 
