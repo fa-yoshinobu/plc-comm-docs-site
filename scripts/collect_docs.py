@@ -103,8 +103,8 @@ For normal library usage, select the PLC profile in the .NET or Python library s
 
 | Page | Use it for |
 | --- | --- |
-| [Parameters](parameters.md) | Compare display names, profile IDs, area counts, and addressing option flags. |
-| [Area ranges](area-ranges.md) | Compare direct and prefixed TOYOPUC area ranges across profiles. |
+| [Parameters](parameters.md) | Compare display names, profile IDs, area counts, addressing options, and verified-model status. |
+| [Area ranges](area-ranges.md) | Compare direct, prefixed, packed, width, and step attributes across TOYOPUC profiles. |
 
 ## Scope
 
@@ -124,8 +124,8 @@ For normal library usage, select the PLC profile in the library or Node-RED conn
 
 | Page | Use it for |
 | --- | --- |
-| [Parameters](parameters.md) | Compare canonical IDs, display names, and native/XYM relationships. |
-| [Device ranges](device-ranges.md) | Compare device ranges across the supported KEYENCE KV profiles. |
+| [Parameters](parameters.md) | Compare canonical IDs, display names, native/XYM relationships, and verified-model status. |
+| [Device ranges](device-ranges.md) | Compare device definitions and ranges across the supported KEYENCE KV profiles. |
 
 ## Scope
 
