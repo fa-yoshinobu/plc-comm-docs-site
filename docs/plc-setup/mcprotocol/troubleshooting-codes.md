@@ -23,12 +23,12 @@ Serial MC Protocol uses more than one error-code family. Do not interpret every 
 | --- | --- | --- |
 | CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP Troubleshooting & Codes guide](../slmp/troubleshooting-codes.md) for practical checks. |
 | `7Fxx` serial-module responses | Serial-module rejection before or around CPU forwarding. | Treat as target/module dependent. Check frame mode, profile, device family, route, and module settings. |
-| `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Not yet published as a user table. Record the raw response and target settings; deliberately malformed-request measurements are still a TODO. |
+| `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Not expanded as a user table here. Use the PLC and serial-module manuals for formal meanings when diagnosing a specific NAK. |
 | No response | The module ignores the request or cannot answer in the selected mode. | Treat as a transport/configuration problem first, not as an error code. |
 
 ## Observed Codes
 
-Only project-observed cases are listed here. If you see a code not listed here, record the raw response, frame kind, ASCII/binary mode, station, sum-check setting, PLC model, serial module, and selected PLC profile.
+Only project-observed cases are listed here.
 
 | Code | Observed situation | Practical check |
 | --- | --- | --- |
@@ -37,11 +37,4 @@ Only project-observed cases are listed here. If you see a code not listed here, 
 
 ## Codes Intentionally Not Expanded Yet
 
-The decoder preserves error codes such as two-digit `1C` NAK codes and four-digit QnA serial responses, but this page does not assign meanings to unmeasured codes.
-
-The active TODO is to collect live-device evidence for:
-
-- `1C` NAK codes from deliberately malformed but transmitted requests.
-- `3C` / `4C` serial-link `7Fxx` codes from deliberately malformed serial requests.
-
-After those measurements exist, add only observed codes to this page.
+The decoder preserves error codes such as two-digit `1C` NAK codes and four-digit QnA serial responses, but this page does not assign meanings to unmeasured codes. Use the PLC and serial-module manuals for formal definitions.
