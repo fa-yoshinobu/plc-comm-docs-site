@@ -1,5 +1,5 @@
 mkdocs-material
 mkdocstrings[python]
-kv-hostlink
-toyopuc-computerlink
-slmp-connect-python
+plc-comm-kv-hostlink
+plc-comm-toyopuc
+plc-comm-slmp

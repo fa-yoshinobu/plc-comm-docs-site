@@ -168,6 +168,7 @@ plugins:
               - hostlink.client
               - hostlink.device_ranges
               - hostlink.errors
+              - hostlink.plc_profiles
               - hostlink.utils
               - toyopuc.address
               - toyopuc.async_client

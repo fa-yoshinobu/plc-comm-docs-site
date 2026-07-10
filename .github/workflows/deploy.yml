@@ -58,6 +58,9 @@ jobs:
       - name: Install documentation dependencies
         run: pip install -r requirements-docs.txt
 
+      - name: Verify Python API package versions and symbols
+        run: python scripts/check_python_api_packages.py --source-root _src
+
       - name: Build
         run: mkdocs build --strict
 
