@@ -83,6 +83,20 @@ The PLC-side settings on this page apply to every language. For
 [Node-RED](../../slmp/nodered/GETTING_STARTED.md), start from each
 library's Getting started.
 
+## Multi-CPU CPU-buffer target
+
+`U3E0\HG...` through `U3E3\HG...` are qualified iQ-R CPU-buffer device
+routes. The qualified device and the SLMP request destination are independent
+fields. Cross-CPU reads can therefore be intentional and must not be rejected
+merely because those fields name different CPUs.
+
+When a write must be reflected in CPU No. `n`, explicitly select both
+`U3En\HG...` and request-target module I/O `0x03En`. A write sent to another
+CPU or Own Station can return a normal end code without changing the intended
+CPU buffer. The libraries do not infer or change the request target from the
+qualified device, retry another CPU, perform an automatic readback, or resend
+when a value does not appear. Target selection remains an application decision.
+
 ## Related SLMP docs
 
 - [SLMP profile parameters](../../slmp/profile-reference/parameters.md)
