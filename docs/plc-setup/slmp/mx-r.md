@@ -20,9 +20,6 @@ MELSEC MX-R — built-in Ethernet port (CPU module).
 
 MX-R uses its own canonical library profile (`melsec:mx-r`) while keeping iQ-R-compatible SLMP connection settings.
 
-!!! note "Connection reports wanted"
-    This project has not yet received live connection reports for the `melsec:mx-r` profile. If you use this profile, please report both successful and failed connection examples, including the PLC model, port setting, selected profile, and first SLMP end code when a connection fails.
-
 ### Screen: Unit parameters
 
 | Parameter | Setting |
@@ -93,11 +90,11 @@ library's Getting started.
 
 ## Screenshots
 
-![Unit parameters screen for the built-in Ethernet port](../images/slmp/mx-r/screenshot-01.png)
-*Unit parameters screen for the built-in Ethernet port.*
+![MXR300-32 IP address settings for the built-in Ethernet port](../images/slmp/mx-r/screenshot-01.png)
+*MXR300-32 IP address settings for the built-in Ethernet port.*
 
-![Connection settings screen for the first SLMP entry](../images/slmp/mx-r/screenshot-02.png)
-*Connection settings screen for the first SLMP entry.*
+![MXR300-32 basic settings and external device configuration](../images/slmp/mx-r/screenshot-02.png)
+*MXR300-32 basic settings and external device configuration.*
 
-![Connection settings screen for the second SLMP entry](../images/slmp/mx-r/screenshot-03.png)
-*Connection settings screen for the second SLMP entry.*
+![Built-in Ethernet configuration with TCP and UDP SLMP entries](../images/slmp/mx-r/screenshot-03.png)
+*Built-in Ethernet configuration with TCP port 1025 and UDP port 1035 SLMP entries.*
