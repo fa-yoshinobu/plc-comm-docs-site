@@ -137,19 +137,24 @@ foreach ($repo in $repos) {
 
 ## Local preview
 
-From this repo, collect docs from sibling source repositories first:
+Use an isolated environment. A global or editable installation can satisfy an unpinned requirement
+while still exposing an older package version, which makes the API/version check depend on local
+machine history.
 
 ```powershell
-python scripts/collect_docs.py --source-root ..
+$docsVenv = Join-Path $env:TEMP "plc-comm-docs-preview"
+if (Test-Path $docsVenv) { Remove-Item -LiteralPath $docsVenv -Recurse -Force }
+python -m venv $docsVenv
+& (Join-Path $docsVenv "Scripts\python.exe") -m pip install --upgrade pip
+& (Join-Path $docsVenv "Scripts\python.exe") -m pip install --upgrade --force-reinstall -r requirements-docs.txt
+& (Join-Path $docsVenv "Scripts\python.exe") scripts/collect_docs.py --source-root ..
+& (Join-Path $docsVenv "Scripts\python.exe") scripts/check_python_api_packages.py --source-root ..
+& (Join-Path $docsVenv "Scripts\python.exe") -m mkdocs build --strict
+& (Join-Path $docsVenv "Scripts\python.exe") -m mkdocs serve
 ```
 
-Then serve the site:
-
-```powershell
-pip install -r requirements-docs.txt
-python scripts/check_python_api_packages.py --source-root ..
-mkdocs serve
-```
+Delete the temporary environment when the preview is no longer needed. Do not replace the strict
+build with a global `mkdocs` invocation.
 
 In GitHub Actions, the same script runs against the `_src` directory populated
 by the checkout step:
