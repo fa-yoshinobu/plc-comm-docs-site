@@ -1,6 +1,8 @@
 # TOYOPUC Computerlink — PLC-side settings
 
-This setup page is under preparation.
+This page provides the vendor-neutral minimum PLC-side checklist used by the
+Computerlink libraries. Exact menu labels vary by TOYOPUC model and engineering
+tool version; use the matching manufacturer manual for model-specific screens.
 
 Before using the Computerlink libraries, configure the PLC side so that
 Computerlink communication is enabled and the Ethernet port matches the library
@@ -16,7 +18,8 @@ connection settings.
 | Network settings | Align IP address, subnet mask, and default gateway with your network |
 | After parameter changes | Power cycle the PLC if the PLC/tool requires it |
 
-Detailed model-specific screenshots and setting names will be added later.
+Model-specific screenshots are intentionally outside this minimum guide. Add
+them only when a verified model/tool-version contribution is available.
 
 ## Connecting with this library
 

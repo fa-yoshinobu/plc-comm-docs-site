@@ -2,10 +2,14 @@
 
 Current active docs-site TODOs only.
 
-## Pending
+## Current Status
 
-- [ ] Expand PLC setup guide content for Computerlink (TOYOPUC) when model-specific screenshots and setting names are ready
-- [ ] Expand PLC setup guide content for MC Protocol Serial when model-specific screenshots and setting names are ready
+No active TODOs are currently tracked.
+
+The former open-ended model-specific screenshot requests were closed on
+2026-07-18. The setup pages intentionally provide a vendor-neutral minimum
+checklist. Verified model-specific assets may still be accepted as a future,
+concrete contribution; their possible availability is not an active obligation.
 
 ## How to add a new source repo
 
