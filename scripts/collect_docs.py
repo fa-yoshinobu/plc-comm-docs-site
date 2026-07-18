@@ -765,7 +765,7 @@ Serial MC Protocol uses more than one error-code family. Do not interpret every 
 | --- | --- | --- |
 | CPU-side `4000`-series and related PLC end codes | QnA extended `3C` / `4C` routes when the request reaches the CPU. | Use the [SLMP Troubleshooting & Codes guide](../slmp/troubleshooting-codes.md) for practical checks. |
 | `7Fxx` serial-module responses | Serial-module rejection before or around CPU forwarding. | Treat as target/module dependent. Check frame mode, profile, device family, route, and module settings. |
-| `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Not yet published as a user table. Record the raw response and target settings; deliberately malformed-request measurements are still a TODO. |
+| `1C` NAK codes | Legacy `1C` A-compatible / QnA-compatible frames. | Representative project-observed codes are listed below. Record the raw response and exact target settings before applying a meaning to another setup. |
 | No response | The module ignores the request or cannot answer in the selected mode. | Treat as a transport/configuration problem first, not as an error code. |
 
 ## Observed Codes
@@ -776,17 +776,20 @@ Only project-observed cases are listed here. If you see a code not listed here, 
 | --- | --- | --- |
 | `0x4031` | CPU-side device or route rejection observed on serial paths, for example unsupported link-direct access on a target setup. | Check the selected profile, route notation, mounted module, and whether the requested device family exists on that PLC. |
 | `0x7F22` | Serial-module rejection observed for unsupported serial-MC device/command shapes, such as `S` device probes on a C24 path before CPU forwarding. | Do not treat unsupported device families as valid access paths. Recheck the profile support table and the serial-module MC protocol format. |
+| `1C` NAK `0x02` | Intentionally bad sum-check on a transmitted `WR0` read. | Verify that sum-check is enabled consistently and recalculate the transmitted sum. |
+| `1C` NAK `0x03` | Nonexistent `1C` command. | Check the command mnemonic and selected `1C` format. |
+| `1C` NAK `0x06` | `WR0` read with a zero point count. | Send a valid nonzero point count within the command limit. |
+| `1C` NAK `0x07` | `WR0` read with an invalid device code. | Check the device family and its encoding for the selected profile. |
+| `1C` NAK `0x10` | Format 4 `WR0` read with a mismatched PC field on the tested iQ-F / FX5 bench. | Check the station and PC header fields against the serial-module settings. |
+| `0x7E40` | Invalid `C4` command/subcommand and an unregistered monitor-read shape on the tested bench. | Check the command, subcommand, and whether a required registration step exists for the selected route. |
+| `0x7F21` | `C4` read/write using `DX0`, which was unavailable on the tested setup. | Recheck the selected profile, device family, and route; do not generalize one setup to every PLC. |
+| `0x7F24` | Intentionally bad sum-check on a transmitted `C4` read. | Verify the sum-check setting and recalculate the transmitted sum. |
 
-## Codes Intentionally Not Expanded Yet
+## Evidence Scope
 
 The decoder preserves error codes such as two-digit `1C` NAK codes and four-digit QnA serial responses, but this page does not assign meanings to unmeasured codes.
 
-The active TODO is to collect live-device evidence for:
-
-- `1C` NAK codes from deliberately malformed but transmitted requests.
-- `3C` / `4C` serial-link `7Fxx` codes from deliberately malformed serial requests.
-
-After those measurements exist, add only observed codes to this page.
+Representative `1C` NAK and `C4`/serial `7Fxx` measurements are complete; there is no active generic error-code collection TODO. Future measurements should start only from a specific diagnostic need and must record the exact frame, target, module settings, and observed response. Add only observed codes to this page.
 """
 
 

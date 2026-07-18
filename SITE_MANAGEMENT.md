@@ -176,3 +176,28 @@ python scripts/collect_docs.py --source-root _src
 | `README.md` | Short repository overview |
 | `SITE_MANAGEMENT.md` | Maintainer guide for this repo |
 | `TODO.md` | Pending manual setup tasks |
+
+## DOC-SCOPE-CLOSE-20260718-01: Open-ended collection closure
+
+Implementation scope: TOYOPUC and MC Protocol Serial PLC-setup pages, MC Serial
+troubleshooting-code evidence, and the active docs-site TODO list.
+
+Target contract: setup pages provide a maintained vendor-neutral minimum. A
+possible future model/tool-version screenshot is not an active obligation until
+a concrete, verified contribution exists. Existing representative MC Serial
+`1C` NAK and `C4`/serial `7Fxx` observations satisfy the generic error-code
+collection request; any future live measurement must begin with a specific
+diagnostic need and an exact, explicitly approved batch.
+
+Compatibility impact: none. Published URLs, navigation, runtime APIs, and
+profile behavior are unchanged.
+
+Acceptance criteria:
+
+- [x] The setup pages no longer promise unspecified future screenshots.
+- [x] The docs-site TODO list contains no targetless collection task.
+- [x] The generated MC Serial troubleshooting page lists the retained observed
+      codes and no longer calls their representative collection pending.
+- [x] Unobserved error meanings and unverified model-specific screens are not
+      presented as project evidence.
+- [x] No live PLC communication was performed for this closure.
