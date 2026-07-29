@@ -28,6 +28,7 @@ theme:
 
 nav:
   - Home: index.md
+  - Project Vision: project-vision.md
   - Package Matrix: package-matrix.md
   - License & Support: support.md
   - Computerlink:

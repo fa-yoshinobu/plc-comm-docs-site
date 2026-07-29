@@ -12,6 +12,12 @@ For license terms, commercial support, sponsorship, and donations, see
 For package names and install commands across the plc-comm family, see the
 [Package Matrix](package-matrix.md).
 
+## Why this project exists
+
+This project is built around continuous validation on physical PLC hardware,
+careful specification research, and ongoing improvement as PLCs evolve.
+[Read the maintainer's message](project-vision.md).
+
 ## Which protocol do I need?
 
 | Your PLC | Connection | Use |
