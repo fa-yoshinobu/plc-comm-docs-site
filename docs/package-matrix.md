@@ -15,6 +15,6 @@ Python package names changed in v2.0.0, but import names stay the same: `slmp`, 
 | SLMP | .NET | [plc-comm-slmp-dotnet](https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet) | NuGet: `PlcComm.Slmp` | `dotnet add package PlcComm.Slmp` |
 | SLMP | Python | [plc-comm-slmp-python](https://github.com/fa-yoshinobu/plc-comm-slmp-python) | PyPI: `plc-comm-slmp` | `pip install plc-comm-slmp` |
 | SLMP | Rust | [plc-comm-slmp-rust](https://github.com/fa-yoshinobu/plc-comm-slmp-rust) | crates.io: `plc-comm-slmp` | `cargo add plc-comm-slmp` |
-| SLMP | C++ (Arduino/PlatformIO) | [plc-comm-slmp-cpp-minimal](https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal) | PlatformIO: `fa-yoshinobu/slmp-connect-cpp-minimal` | `fa-yoshinobu/slmp-connect-cpp-minimal@^4.0.0` |
+| SLMP | C++ (Arduino/PlatformIO) | [plc-comm-slmp-cpp-minimal](https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal) | PlatformIO: `fa-yoshinobu/slmp-connect-cpp-minimal` | `fa-yoshinobu/slmp-connect-cpp-minimal@^4.0.1` |
 | SLMP | Node-RED | [node-red-contrib-plc-comm-slmp](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp) | npm: `@fa_yoshinobu/node-red-contrib-plc-comm-slmp` | `npm install @fa_yoshinobu/node-red-contrib-plc-comm-slmp` |
-| MC Protocol Serial | C++ (Arduino/PlatformIO) | [plc-comm-mcprotocol-serial-cpp](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp) | PlatformIO: `fa-yoshinobu/mcprotocol-serial-cpp` | `fa-yoshinobu/mcprotocol-serial-cpp@^3.2.0` |
+| MC Protocol Serial | C++ (Arduino/PlatformIO) | [plc-comm-mcprotocol-serial-cpp](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp) | PlatformIO: `fa-yoshinobu/mcprotocol-serial-cpp` | `fa-yoshinobu/mcprotocol-serial-cpp@^3.2.1` |
