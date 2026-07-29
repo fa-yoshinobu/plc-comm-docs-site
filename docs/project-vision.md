@@ -8,6 +8,13 @@ PLC通信ライブラリは、多くの先人たちの努力によって発展�
 
 私は複数のPLC実機を所有しています。
 
+所有し、問題報告に対して検証可能な機材は、プロトコル別の一覧で公開しています。
+
+- [MELSEC SLMP](https://github.com/fa-yoshinobu/plc-comm-slmp-profiles#verified-hardware-available-for-validation)
+- [KEYENCE KV Host Link](https://github.com/fa-yoshinobu/plc-comm-hostlink-profiles#verified-hardware-available-for-validation)
+- [TOYOPUC Computer Link](https://github.com/fa-yoshinobu/plc-comm-computerlink-profiles#verified-hardware-available-for-validation)
+- [MC Protocol Serial](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/docsrc/user/PROFILES.md#verified-hardware-available-for-validation)
+
 この環境があるからこそ、新しい機種への対応や、不具合報告の再現・検証を継続的に行い、その結果をライブラリとドキュメントへ反映できます。実機を活かして品質を積み重ねられることが、このプロジェクトの最大の強みだと考えています。
 
 AIも積極的に活用しています。しかし、AIはあくまで開発を支援する道具です。品質を決めるのは、実機による検証、PLCへの理解、仕様の調査、設計の見直し、そして継続的な改善です。
@@ -27,6 +34,14 @@ PLC communication libraries have advanced through the efforts of many people who
 At the same time, new PLC CPUs, Ethernet units, and communication features continue to appear. Keeping open-source software up to date with them is not easy, and maintaining continuous validation on real hardware is an even greater burden.
 
 I own multiple physical PLCs.
+
+The hardware I own and can use to investigate reported problems is listed by
+protocol:
+
+- [MELSEC SLMP](https://github.com/fa-yoshinobu/plc-comm-slmp-profiles#verified-hardware-available-for-validation)
+- [KEYENCE KV Host Link](https://github.com/fa-yoshinobu/plc-comm-hostlink-profiles#verified-hardware-available-for-validation)
+- [TOYOPUC Computer Link](https://github.com/fa-yoshinobu/plc-comm-computerlink-profiles#verified-hardware-available-for-validation)
+- [MC Protocol Serial](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/docsrc/user/PROFILES.md#verified-hardware-available-for-validation)
 
 This environment enables me to continually support new models, reproduce and investigate bug reports, and feed the results back into the libraries and documentation. I believe the ability to build quality over time by putting real hardware to use is this project's greatest strength.
 
