@@ -55,6 +55,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Verify version-pinned release displays
+        run: python scripts/check_release_display.py --source-root _src
+
       - name: Install documentation dependencies
         run: pip install -r requirements-docs.txt
 
