@@ -1,3 +1,7 @@
+---
+description: "Common TOYOPUC Computerlink response errors, their likely causes, and how to resolve them."
+---
+
 # Computerlink Troubleshooting & Codes
 
 This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.

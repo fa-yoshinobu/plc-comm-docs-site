@@ -1,3 +1,7 @@
+---
+description: "Device families, address notation, and range reference for KEYENCE KV Host Link communication."
+---
+
 # KV Host Link Device Ranges
 
 This page is the shared device-family, address-notation, and range reference for the KV Host Link libraries.

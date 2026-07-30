@@ -1,3 +1,7 @@
+---
+description: "PLC-side setup checklist for JTEKT TOYOPUC controllers communicating over Computerlink."
+---
+
 # TOYOPUC Computerlink — PLC-side settings
 
 This page provides the vendor-neutral minimum PLC-side checklist used by the

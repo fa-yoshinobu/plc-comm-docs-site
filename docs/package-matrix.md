@@ -1,3 +1,7 @@
+---
+description: "Registry package names and install commands for every plc-comm library on NuGet, PyPI, crates.io, npm, and PlatformIO."
+---
+
 # plc-comm Package Matrix
 
 This page maps each maintained plc-comm library to its registry package and install command. Install the latest available release. Version numbers are intentionally omitted from the commands.

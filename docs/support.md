@@ -1,3 +1,7 @@
+---
+description: "License terms, commercial support, sponsorship, and donation options for the plc-comm PLC communication libraries."
+---
+
 # License, Commercial Support, and Sponsorship
 
 This page explains the license model for the PLC communication libraries and

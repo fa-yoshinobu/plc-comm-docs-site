@@ -1,3 +1,7 @@
+---
+description: "Device families, address notation, and practical range reference for TOYOPUC Computerlink communication."
+---
+
 # Computerlink Device Ranges
 
 This page is the shared device-family, address-notation, and practical range reference for the TOYOPUC Computerlink libraries.

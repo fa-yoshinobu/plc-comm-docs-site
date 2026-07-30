@@ -309,7 +309,11 @@ SLMP_PARITY_SURFACE_MARKERS: tuple[tuple[str, str, str, tuple[str, ...]], ...] =
 )
 
 
-SLMP_TROUBLESHOOTING_END_CODES = """# SLMP Troubleshooting & Codes
+SLMP_TROUBLESHOOTING_END_CODES = """---
+description: "Common SLMP setup issues and error codes observed during live MELSEC PLC verification."
+---
+
+# SLMP Troubleshooting & Codes
 
 This page summarizes situations observed during this project's live PLC verification and common SLMP setup issues. It is not the official definition of every SLMP end code. Use the Mitsubishi manuals for formal definitions and complete code tables.
 
@@ -392,7 +396,11 @@ Use this only for troubleshooting or compatibility investigation. Normal applica
 """
 
 
-KV_HOSTLINK_ERROR_CODES = """# KV Host Link Troubleshooting & Codes
+KV_HOSTLINK_ERROR_CODES = """---
+description: "Common KEYENCE KV Host Link errors seen during PLC setup, with practical checks for each."
+---
+
+# KV Host Link Troubleshooting & Codes
 
 This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup guide. It is not a complete manufacturer code table; use the KEYENCE manuals for formal definitions.
 
@@ -432,7 +440,11 @@ This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup gu
 """
 
 
-KV_HOSTLINK_DEVICE_RANGES = """# KV Host Link Device Ranges
+KV_HOSTLINK_DEVICE_RANGES = """---
+description: "Device families, address notation, and range reference for KEYENCE KV Host Link communication."
+---
+
+# KV Host Link Device Ranges
 
 This page is the shared device-family, address-notation, and range reference for the KV Host Link libraries.
 
@@ -564,7 +576,11 @@ High-level address text should include the intended type. Use `DM100:U`, not pla
 """
 
 
-COMPUTERLINK_ERROR_CODES = """# Computerlink Troubleshooting & Codes
+COMPUTERLINK_ERROR_CODES = """---
+description: "Common TOYOPUC Computerlink response errors, their likely causes, and how to resolve them."
+---
+
+# Computerlink Troubleshooting & Codes
 
 This page summarizes TOYOPUC Computerlink response errors that users commonly see. It is not a complete manufacturer code table; use the JTEKT TOYOPUC manuals for formal definitions.
 
@@ -620,7 +636,11 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 """
 
 
-COMPUTERLINK_DEVICE_RANGES = """# Computerlink Device Ranges
+COMPUTERLINK_DEVICE_RANGES = """---
+description: "Device families, address notation, and practical range reference for TOYOPUC Computerlink communication."
+---
+
+# Computerlink Device Ranges
 
 This page is the shared device-family, address-notation, and practical range reference for the TOYOPUC Computerlink libraries.
 
@@ -740,7 +760,11 @@ These are writable-range summaries from project evidence, not a complete hardwar
 """
 
 
-MCPROTOCOL_SERIAL_ERROR_CODES = """# MC Protocol Serial Troubleshooting & Codes
+MCPROTOCOL_SERIAL_ERROR_CODES = """---
+description: "Practical guide to the errors returned by MELSEC serial MC Protocol targets and how to diagnose them."
+---
+
+# MC Protocol Serial Troubleshooting & Codes
 
 This page is a practical guide for errors returned by MELSEC serial MC Protocol targets. It is not a complete Mitsubishi error-code table. Use the PLC and serial-module manuals for formal definitions.
 
@@ -793,7 +817,11 @@ Representative `1C` NAK and `C4`/serial `7Fxx` measurements are complete; there 
 """
 
 
-MCPROTOCOL_SERIAL_SUPPORTED_REGISTERS = """# MC Protocol Serial Supported Registers
+MCPROTOCOL_SERIAL_SUPPORTED_REGISTERS = """---
+description: "Device families supported by the MC Protocol Serial libraries on MELSEC serial targets."
+---
+
+# MC Protocol Serial Supported Registers
 
 This page lists the current device-family support surface for MELSEC serial MC Protocol targets.
 

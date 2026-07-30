@@ -1,3 +1,7 @@
+---
+description: "PLC-side Ethernet settings for the MELSEC Q series QnU built-in port used with SLMP."
+---
+
 # MELSEC QnU — PLC-side settings
 
 MELSEC QnU — built-in Ethernet port (CPU module, Q series).

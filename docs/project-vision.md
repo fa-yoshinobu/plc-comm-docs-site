@@ -1,3 +1,7 @@
+---
+description: "The maintainer's message on why these hardware-verified PLC communication libraries exist and how they are developed."
+---
+
 # なぜ、このプロジェクトを始めたのか / Why I Started This Project
 
 ## 日本語

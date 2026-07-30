@@ -1,3 +1,7 @@
+---
+description: "Practical guide to the errors returned by MELSEC serial MC Protocol targets and how to diagnose them."
+---
+
 # MC Protocol Serial Troubleshooting & Codes
 
 This page is a practical guide for errors returned by MELSEC serial MC Protocol targets. It is not a complete Mitsubishi error-code table. Use the PLC and serial-module manuals for formal definitions.

@@ -1,3 +1,7 @@
+---
+description: "Device families supported by the MC Protocol Serial libraries on MELSEC serial targets."
+---
+
 # MC Protocol Serial Supported Registers
 
 This page lists the current device-family support surface for MELSEC serial MC Protocol targets.

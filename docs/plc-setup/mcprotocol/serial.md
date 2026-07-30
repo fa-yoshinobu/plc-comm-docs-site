@@ -1,3 +1,7 @@
+---
+description: "PLC-side serial module setup and wiring checks for MELSEC MC Protocol Serial communication."
+---
+
 # MELSEC MC Protocol Serial Setup
 
 This page covers PLC-side serial-module setup and physical wiring checks for MELSEC MC Protocol Serial libraries.

@@ -1,3 +1,7 @@
+---
+description: "PLC-side Ethernet settings for the MELSEC L series LCPU built-in port used with SLMP."
+---
+
 # MELSEC LCPU — PLC-side settings
 
 MELSEC LCPU — built-in Ethernet port (CPU module, L series).

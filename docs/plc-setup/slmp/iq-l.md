@@ -1,3 +1,7 @@
+---
+description: "PLC-side Ethernet settings for the MELSEC iQ-L built-in CPU port used with SLMP."
+---
+
 # MELSEC iQ-L — PLC-side settings
 
 MELSEC iQ-L — built-in Ethernet port (CPU module).

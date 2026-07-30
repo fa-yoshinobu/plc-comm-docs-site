@@ -1,3 +1,7 @@
+---
+description: "Step-by-step PLC-side configuration guides for MELSEC, KEYENCE KV, and TOYOPUC controllers, to complete before using any plc-comm library."
+---
+
 # PLC setup guide
 
 Configure the PLC before using any communication library.

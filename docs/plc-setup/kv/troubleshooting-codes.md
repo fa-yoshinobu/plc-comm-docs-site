@@ -1,3 +1,7 @@
+---
+description: "Common KEYENCE KV Host Link errors seen during PLC setup, with practical checks for each."
+---
+
 # KV Host Link Troubleshooting & Codes
 
 This page summarizes common KEYENCE KV Host Link PLC errors for the PLC setup guide. It is not a complete manufacturer code table; use the KEYENCE manuals for formal definitions.

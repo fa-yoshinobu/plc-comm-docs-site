@@ -1,3 +1,7 @@
+---
+description: "PLC-side Ethernet settings for the MELSEC MX-R built-in CPU port used with SLMP."
+---
+
 # MELSEC MX-R — PLC-side settings
 
 MELSEC MX-R — built-in Ethernet port (CPU module).

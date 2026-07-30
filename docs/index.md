@@ -1,3 +1,7 @@
+---
+description: "Open-source PLC communication libraries for MELSEC SLMP, KEYENCE KV Host Link, TOYOPUC Computerlink, and MC Protocol Serial, with .NET, Python, Rust, C++, and Node-RED implementations."
+---
+
 # PLC Communication Libraries
 
 **Talk to MELSEC, KEYENCE KV, and TOYOPUC PLCs from .NET, Python, Rust, C++, and
@@ -163,4 +167,5 @@ Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) ·
 [FA Labo](https://fa-yoshinobu.github.io/FA_Labo/index.html)
 
 For license terms, commercial support, sponsorship, and donations, see
-[License & Support](support.md).
+[License & Support](support.md). To follow ongoing development, see
+[Release Notes](release-notes.md).

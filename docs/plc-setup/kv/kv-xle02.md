@@ -1,3 +1,7 @@
+---
+description: "PLC-side settings for the KEYENCE KV-XLE02 Ethernet communication unit used with KV Host Link."
+---
+
 # KEYENCE KV-XLE02 — PLC-side settings
 
 KEYENCE KV-XLE02 — Ethernet communication unit.

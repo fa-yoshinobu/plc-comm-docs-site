@@ -1,5 +1,11 @@
 site_name: PLC Communication Libraries
 site_url: https://fa-yoshinobu.github.io/plc-comm-docs-site/
+site_description: >-
+  Open-source PLC communication libraries for MELSEC SLMP, KEYENCE KV Host Link,
+  TOYOPUC Computerlink, and MC Protocol Serial, with .NET, Python, Rust, C++, and
+  Node-RED implementations plus per-model PLC setup guides.
+repo_url: https://github.com/fa-yoshinobu/plc-comm-docs-site
+repo_name: fa-yoshinobu/plc-comm-docs-site
 theme:
   name: material
   language: en
@@ -9,6 +15,9 @@ theme:
     - content.code.copy
     - navigation.tabs
     - navigation.top
+    - navigation.instant
+    - navigation.indexes
+    - toc.follow
     - search.suggest
     - search.highlight
   palette:
@@ -30,6 +39,7 @@ nav:
   - Home: index.md
   - Project Vision: project-vision.md
   - Package Matrix: package-matrix.md
+  - Release Notes: release-notes.md
   - License & Support: support.md
   - Computerlink:
     - Profile Reference:

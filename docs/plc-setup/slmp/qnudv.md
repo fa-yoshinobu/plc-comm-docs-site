@@ -1,3 +1,7 @@
+---
+description: "PLC-side Ethernet settings for the MELSEC Q series QnUDV built-in port used with SLMP."
+---
+
 # MELSEC QnUDV — PLC-side settings
 
 MELSEC QnUDV — built-in Ethernet port (CPU module, Q series).
