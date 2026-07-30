@@ -118,6 +118,13 @@ run it, enter the connection settings, and watch live device values. It speaks
 the three Ethernet protocols — SLMP, KV Host Link, and TOYOPUC Computer Link —
 with the same PLC profiles used by the libraries.
 
+PLC Scope implements no protocol of its own: it is built on the .NET libraries
+documented here, so it doubles as a way to check the library itself. A session
+that connects and reads correctly has already proven the library, your
+connection settings, the PLC profile, and the PLC-side configuration — and the
+same protocol, host, port, profile, and address strings carry straight over into
+your own code.
+
 !!! warning "Start with monitoring, not writing"
 
     PLC Scope can also write device values and issue CPU RUN/STOP commands.

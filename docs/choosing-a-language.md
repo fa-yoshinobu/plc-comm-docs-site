@@ -81,7 +81,10 @@ PLC values to automation you already run in Node-RED.
 Node-RED is the no-code option when you want a flow you keep and extend. For a
 one-off check — is the PLC reachable, is `D100` really what I think it is —
 [PLC Scope](index.md#try-it-without-writing-code) is a Windows desktop tool you
-download and run, with no project and no install step.
+download and run, with no project and no install step. It is built on the .NET
+libraries, so it is also the quickest way to confirm that the library, your
+connection settings, and the PLC-side configuration are correct before the first
+line of code.
 
 ## Protocol coverage differs by language
 
