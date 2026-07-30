@@ -1,14 +1,15 @@
 ---
-description: "Measured SLMP latency and throughput from a physical MELSEC iQ-R, with the full test conditions for the .NET and Rust clients over TCP and UDP."
+description: "Measured SLMP latency and throughput from a physical MELSEC iQ-R, plus a five-hour continuous soak of every protocol and client language against real PLC hardware, with the full test conditions for both."
 ---
 
 # Performance
 
 This project measures its libraries against real PLC hardware, not only against
-simulators. The figures on this page come from a benchmark session run on
-2026-06-24 against a physical MELSEC iQ-R, and they are published so you can
-judge for yourself whether these libraries are quick enough for your
-application.
+simulators. Two sessions are published here: a latency and throughput benchmark
+run on 2026-06-24 against a physical MELSEC iQ-R, and a five-hour continuous
+soak run on 2026-07-19 and 2026-07-20 covering every protocol and client
+language. They are published so you can judge for yourself whether these
+libraries are quick enough — and steady enough — for your application.
 
 Read them as one data point, not as a specification. Response time on a PLC
 network is dominated by the PLC itself: CPU model, scan time, communication
@@ -87,13 +88,77 @@ runner process, while the Rust value is a separate small client process started
 per case. CPU stayed far below 1% in every combination, so it did not separate
 the two either.
 
+## Reliability: 5-hour continuous soak on real hardware
+
+Latency answers how quickly one request returns. The other half of the question
+is whether a client stays healthy when it is simply left running. On 2026-07-19
+and 2026-07-20, every protocol and client language in this project was put
+through a five-hour continuous soak against physical PLC hardware at one cycle
+per second, and each run's raw summary was kept as the evidence behind the
+table below.
+
+This was a separate session on a different host from the benchmark above, so
+the latency columns in this section are not comparable with the benchmark
+figures earlier on the page. Read each session within its own conditions.
+
+### Soak conditions
+
+| Item | Value |
+|------|-------|
+| Dates measured | 2026-07-19 to 2026-07-20 |
+| Duration per run | 5 hours (18,000 seconds) |
+| Cycle rate | 1 cycle per second, requests issued sequentially |
+| Per cycle | One typed word read over a single connection held open for the whole run |
+| Runs | 7, one per protocol and client language |
+| Runner host | A Linux host with 2 logical processors, one runner process per run |
+| PLCs | MELSEC iQ-R (SLMP, TCP), KEYENCE KV-X500 (KV Host Link, TCP), JTEKT TOYOPUC (Computerlink, TCP), MELSEC QCPU (MC Protocol, serial) |
+| Pass thresholds | Error rate 0.1%, P99 200 ms, mismatches 0, reconnect recovery 30 s, memory slope 1 MB/h, CPU 90% |
+
+### Soak results
+
+| Protocol | Client | Profile | Cycles | Errors | Mismatches | Reconnects | P50 ms | P99 ms | Memory slope MB/h | Status |
+|----------|--------|---------|-------:|-------:|-----------:|-----------:|-------:|-------:|------------------:|--------|
+| SLMP | .NET | `melsec:iq-r` | 17,999 | 0 | 0 | 0 | 3.24 | 5.21 | 0.312 | completed |
+| SLMP | C++ | `melsec:iq-r` | 17,951 | 0 | 0 | 0 | 2.67 | 4.68 | 0.030 | completed |
+| SLMP | Rust | `melsec:iq-r` | 17,953 | 0 | 0 | 0 | 3.13 | 5.18 | 0.074 | completed |
+| KV Host Link | .NET | `keyence:kv-x500` | 17,996 | 0 | 0 | 0 | 0.81 | 1.88 | 0.362 | completed |
+| KV Host Link | Rust | `keyence:kv-x500` | 17,953 | 0 | 0 | 0 | 0.85 | 1.05 | 0.076 | completed |
+| Computerlink | .NET | `toyopuc:nano-10gx:compatible` | 18,002 | 0 | 0 | 0 | 7.67 | 10.27 | 0.407 | completed |
+| MC Protocol Serial | C++ | `melsec:qcpu` | 17,313 | 0 | 0 | 0 | 32.51 | 33.06 | 0.032 | completed |
+
+Every run ended because its five hours elapsed, not because anything failed:
+errors, mismatches, and reconnects were **0 in all seven runs**. The memory
+slope — a least-squares regression over sampled process memory, with the
+initial warm-up window discarded — stayed **below 1 MB/h in all seven runs**,
+the highest being 0.407 MB/h. Cycle counts differ slightly between rows because
+each runner drives its own one-second interval; the fixed quantity is the
+18,000-second run length, not the cycle total.
+
+### How to read the soak numbers
+
+Seven implementations ran for five hours each without a single communication
+error, mismatch, or dropped-and-reopened connection, and none of them showed a
+memory growth trend over the run. That is the property this session was after:
+long unattended operation with no slow leak and no accumulating failure.
+
+The rows are not comparable with each other as client measurements — each one
+talks to a different PLC over a different protocol and transport, so the latency
+spread is a property of the link, not of the client. MC Protocol Serial sits
+near 32.5 ms at P50 because moving a frame over a serial line at its configured
+baud rate takes that long; KV Host Link reads land under 1 ms because
+that is how quickly the KV-X500 turns a request around; the Ethernet SLMP and
+Computerlink rows fall between the two. As with the benchmark session, treat
+these as one data point under one set of conditions and measure your own
+installation before designing a control loop around a specific value.
+
 ## What is not on this page
 
 - **No comparisons against other vendors' libraries.** Cross-library benchmarks
   age quickly and depend on tuning choices this project cannot make fairly on
   someone else's behalf, so only its own measurements are published here.
-- **No long-duration soak results yet.** A long-run stability measurement is in
-  preparation and will be added once its evidence is complete, in the same
-  conditions-first format.
+- **No ranking of one implementation against another.** The soak table records
+  one run per protocol and client language, each against a different PLC and
+  transport. It documents that every implementation ran clean for five hours,
+  not which one you should prefer — choose the language that fits your stack.
 - **No estimated or simulated figures.** Everything above was recorded against
-  physical hardware in a single session; nothing is extrapolated.
+  physical hardware in the two sessions described; nothing is extrapolated.
