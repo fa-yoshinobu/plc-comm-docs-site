@@ -15,6 +15,16 @@ For MELSEC SLMP profile limits and end-code troubleshooting after the PLC-side
 settings are correct, use the [SLMP profile reference](../slmp/profile-reference/index.md)
 and [SLMP Troubleshooting & Codes](slmp/troubleshooting-codes.md).
 
+## Checking the connection after setup
+
+You can confirm the settings before writing any code. For the three Ethernet
+protocols, [PLC Scope](../index.md#try-it-without-writing-code) is a Windows
+desktop tool that connects and shows live device values; keep the first check
+read-only, because it can also write devices and issue CPU RUN/STOP. For MC
+Protocol Serial, use the read-only bring-up scripts in
+[`examples/linux_cli`](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/tree/main/examples/linux_cli)
+of the MC Protocol Serial C++ library.
+
 ## Supported models
 
 | Protocol | Model | Connection type | Port |

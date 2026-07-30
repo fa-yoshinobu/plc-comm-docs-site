@@ -9,8 +9,6 @@ on:
       - mkdocs.yml
       - requirements-docs.txt
       - .github/workflows/deploy.yml
-  repository_dispatch:
-    types: [source-updated]
   workflow_dispatch:
 
 permissions:

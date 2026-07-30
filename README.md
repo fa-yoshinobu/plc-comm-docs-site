@@ -42,11 +42,13 @@ PyPI release packages during the site build.
 
 ## Deployment Flow
 
-1. A source repo pushes to `main`
-2. Its CI sends a `repository_dispatch` event to this repo
-3. `deploy.yml` collects `.md` files from all 12 source repos
-4. MkDocs builds the site
-5. HTML is published to the `gh-pages` branch
+Publishing is manual: after source-repo docs change, a maintainer runs
+Actions -> Deploy docs -> Run workflow in this repo.
+
+1. A maintainer runs the `Deploy docs` workflow (or pushes a change to this repo)
+2. `deploy.yml` collects `.md` files from all 12 source repos
+3. MkDocs builds the site
+4. HTML is published to the `gh-pages` branch
 
 ## For maintainers
 

@@ -10,15 +10,23 @@ site build. `scripts/check_python_api_packages.py` fails the build unless each
 installed package version matches its source repository and exposes the current
 required profile API symbols.
 
+Publishing is a manual step. A source repo push does not rebuild this site.
+
 ```text
 Source repo (docsrc/user/*.md or docs/*.md)
   -> push to main
-  -> triggers repository_dispatch to plc-comm-docs-site
+  -> maintainer runs Actions -> Deploy docs -> Run workflow in this repo
   -> deploy.yml runs
   -> collects all current Markdown files from all 12 repos
   -> mkdocs build with mkdocstrings over installed Python release packages
   -> publishes to GitHub Pages (gh-pages branch)
 ```
+
+Automatic rebuilds, in which each source repo's CI sent a `repository_dispatch`
+event to this repo on every push to `main`, were retired on 2026-07-30: a full
+site rebuild collects and builds all 12 repos, so triggering one per source push
+cost more build time and queueing than on-demand publishing is worth. This note
+is kept so the history is clear if automatic rebuilds are ever reconsidered.
 
 ## Source repos and their doc locations
 
@@ -37,15 +45,26 @@ Source repo (docsrc/user/*.md or docs/*.md)
 | node-red-contrib-plc-comm-slmp | docsrc/user/ | docs/slmp/nodered/ |
 | plc-comm-mcprotocol-serial-cpp | docsrc/user/ | docs/mcprotocol/cpp/ |
 
-## How to trigger a rebuild manually
+## How to publish
 
-Go to Actions -> Deploy docs -> Run workflow.
+This is the normal, and only, way the public site is updated:
+
+1. Push the source-repo change (`docsrc/user/` or `docs/`) and any `mkdocs.yml`
+   change in this repo.
+2. Go to Actions -> Deploy docs -> Run workflow in this repo, on `main`.
+3. Wait for the run to finish, then check the published page.
+
+Run it once after the last change of a batch rather than after each repo; the
+build always collects the current `main` of all 12 source repos, so a single run
+picks up everything that has been pushed.
 
 ## How to add a new page to the site
 
 1. Add the Markdown file to the source repo under `docsrc/user/` or `docs/` for Rust repos.
 2. Add the page to `nav:` in `mkdocs.yml` in this repo.
-3. Push both changes. The CI will rebuild the site after the source repo dispatches the event.
+3. Push both changes.
+4. Run Actions -> Deploy docs -> Run workflow to publish. Nothing is published
+   until this run completes.
 
 Python API reference pages are the exception: keep them generated in
 `scripts/collect_docs.py` so they track the installed PyPI release packages
@@ -81,27 +100,24 @@ matrices should not be duplicated in every library README.
 1. Add a `git clone` line for the new repo in `deploy.yml`.
 2. Add a `SourceDocs(...)` entry for the new repo in `scripts/collect_docs.py`.
 3. Add the new repo's pages to `nav:` in `mkdocs.yml`.
-4. Add the `repository_dispatch` trigger job to the new repo's CI.
-5. Register `DOCS_REPO_TOKEN` as a secret in the new repo.
+4. Run Actions -> Deploy docs -> Run workflow to publish.
+
+Nothing has to be configured in the new source repo itself. It needs no
+workflow job and no secret in order to appear on the site; this repo pulls from
+it at build time.
 
 ## Required secrets
 
-| Secret | Where to set | Purpose |
-|--------|-------------|---------|
-| `DOCS_REPO_TOKEN` | Each of the 12 source repos | Allows source repos to trigger this repo's CI |
+None. This repo's own `GITHUB_TOKEN` is sufficient to publish to `gh-pages`.
 
-Token type: GitHub fine-grained personal access token.
-Required permission: `Contents: write` on `plc-comm-docs-site`.
+### Retired: `DOCS_REPO_TOKEN` (historical)
 
-The source workflows skip the dispatch step when `DOCS_REPO_TOKEN` is not set, so normal CI can stay green before the manual secret setup is complete.
-
-## Registering `DOCS_REPO_TOKEN`
-
-Use a fine-grained personal access token that is limited to `plc-comm-docs-site`
-with `Contents: write`. Avoid reusing a broad `repo` token unless you accept that
-larger blast radius.
-
-After creating the token, set it in every source repo:
+`DOCS_REPO_TOKEN` was a fine-grained personal access token, registered as an
+Actions secret in each of the 12 source repos, that let a source repo's CI
+trigger this repo's build. It belongs to the retired automatic-rebuild setup
+described under Architecture and is no longer required or used. To list the
+source repos that still carry the leftover secret, so it can be removed with
+`gh secret delete DOCS_REPO_TOKEN --repo ...`:
 
 ```powershell
 $repos = @(
@@ -119,17 +135,6 @@ $repos = @(
   "plc-comm-mcprotocol-serial-cpp"
 )
 
-foreach ($repo in $repos) {
-  gh secret set DOCS_REPO_TOKEN --repo "fa-yoshinobu/$repo"
-}
-```
-
-When prompted by `gh`, paste the token value. The token is stored as an Actions
-secret in each source repo and is not committed to git.
-
-To verify registration:
-
-```powershell
 foreach ($repo in $repos) {
   gh secret list --repo "fa-yoshinobu/$repo" | Select-String "^DOCS_REPO_TOKEN\s"
 }
