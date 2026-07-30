@@ -1,22 +1,106 @@
 # PLC Communication Libraries
 
-A set of libraries for communicating with industrial PLCs over TCP/UDP and RS-232C/RS-485 serial.
+**Talk to MELSEC, KEYENCE KV, and TOYOPUC PLCs from .NET, Python, Rust, C++, and
+Node-RED — one consistent design, continuously validated on real hardware.**
 
 ![PLC Communication Libraries](assets/plc-communication-libraries.png)
 
-Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) · [FA Labo](https://fa-yoshinobu.github.io/FA_Labo/index.html)
+## Your first read in minutes
 
-For license terms, commercial support, sponsorship, and donations, see
-[License & Support](support.md).
+Every implementation follows the same model: pick a connection option set, pick
+your PLC profile, read a device by name. This is a real SLMP read of `D100`
+from a MELSEC iQ-R:
 
-For package names and install commands across the plc-comm family, see the
-[Package Matrix](package-matrix.md).
+=== "Python"
 
-## Why this project exists
+    ```bash
+    pip install plc-comm-slmp
+    ```
 
-This project is built around continuous validation on physical PLC hardware,
-careful specification research, and ongoing improvement as PLCs evolve.
-[Read the maintainer's message](project-vision.md).
+    ```python
+    import asyncio
+    from slmp import SlmpConnectionOptions, SlmpTarget, open_and_connect, read_typed
+
+
+    async def main() -> None:
+        options = SlmpConnectionOptions(
+            host="192.168.250.100", port=1025, transport="tcp",
+            plc_profile="melsec:iq-r",
+            default_target=SlmpTarget(network=0, station=0xFF, module_io=0x03FF, multidrop=0),
+        )
+        async with await open_and_connect(options) as client:
+            value = await read_typed(client, "D100", "U")
+            print(f"D100={value}")
+
+
+    asyncio.run(main())
+    ```
+
+    [Getting started →](slmp/python/GETTING_STARTED.md)
+
+=== ".NET"
+
+    ```bash
+    dotnet add package PlcComm.Slmp
+    ```
+
+    ```csharp
+    using System;
+    using PlcComm.Slmp;
+
+    var options = new SlmpConnectionOptions(
+        "192.168.250.100", SlmpPlcProfile.IqR, 1025,
+        SlmpTransportMode.Tcp, SlmpTargetAddress.OwnStation);
+
+    await using var client = await SlmpClientFactory.OpenAndConnectAsync(options);
+    var value = await client.ReadTypedAsync("D100", "U");
+    Console.WriteLine($"D100 = {value}");
+    ```
+
+    [Getting started →](slmp/dotnet/GETTING_STARTED.md)
+
+=== "Rust"
+
+    ```bash
+    cargo add plc-comm-slmp
+    ```
+
+    ```rust
+    use plc_comm_slmp::{
+        read_typed, SlmpAddress, SlmpClient, SlmpConnectionOptions, SlmpPlcProfile,
+    };
+
+    #[tokio::main]
+    async fn main() -> Result<(), Box<dyn std::error::Error>> {
+        let options = SlmpConnectionOptions::new(
+            "192.168.250.100", 1025,
+            plc_comm_slmp::SlmpTransportMode::Tcp,
+            plc_comm_slmp::SlmpTargetAddress::default(),
+            SlmpPlcProfile::IqR,
+        )?;
+
+        let client = SlmpClient::connect(options).await?;
+        let value = read_typed(&client, SlmpAddress::parse("D100", SlmpPlcProfile::IqR)?, "U").await?;
+        println!("{:?}", value);
+        client.close().await?;
+
+        Ok(())
+    }
+    ```
+
+    [Getting started →](slmp/rust/GETTING_STARTED.md)
+
+=== "Node-RED"
+
+    No code required. Install
+    `@fa_yoshinobu/node-red-contrib-plc-comm-slmp` from Manage palette, create
+    an `slmp-connection` config node with your PLC profile, then read `D100`
+    with an `slmp-read` node.
+
+    [Getting started →](slmp/nodered/GETTING_STARTED.md)
+
+The same pattern works for every protocol below — each language has its own
+Getting started, Usage guide, API reference, and Gotchas page.
 
 ## Which protocol do I need?
 
@@ -32,41 +116,37 @@ communication unit is available — it is faster and easier to wire. Choose
 **MC Protocol Serial** when only a serial communication module (RS-232C/RS-485)
 is available, such as on legacy Q/A installations.
 
-## Computerlink (JTEKT TOYOPUC)
+## Pick your language
 
-| Language | Docs | Samples | GitHub | Registry |
-|----------|------|---------|--------|----------|
-| .NET | [Getting started](computerlink/dotnet/GETTING_STARTED.md) | [Examples](https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet/tree/main/examples) | [plc-comm-computerlink-dotnet](https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet) | [NuGet](https://www.nuget.org/packages/PlcComm.Toyopuc/) |
-| Python | [Getting started](computerlink/python/GETTING_STARTED.md) | [Samples](https://github.com/fa-yoshinobu/plc-comm-computerlink-python/tree/main/samples) | [plc-comm-computerlink-python](https://github.com/fa-yoshinobu/plc-comm-computerlink-python) | [PyPI](https://pypi.org/project/plc-comm-toyopuc/) |
+| Protocol | Getting started |
+|----------|----------------|
+| **SLMP** (MELSEC, Ethernet) | [.NET](slmp/dotnet/GETTING_STARTED.md) · [Python](slmp/python/GETTING_STARTED.md) · [Rust](slmp/rust/GETTING_STARTED.md) · [C++ Arduino/PlatformIO](slmp/cpp/GETTING_STARTED.md) · [Node-RED](slmp/nodered/GETTING_STARTED.md) |
+| **MC Protocol Serial** (MELSEC, serial) | [C++ Arduino/PlatformIO](mcprotocol/cpp/GETTING_STARTED.md) |
+| **KV Host Link** (KEYENCE KV) | [.NET](hostlink/dotnet/GETTING_STARTED.md) · [Python](hostlink/python/GETTING_STARTED.md) · [Rust](hostlink/rust/GETTING_STARTED.md) · [Node-RED](hostlink/nodered/GETTING_STARTED.md) |
+| **Computerlink** (JTEKT TOYOPUC) | [.NET](computerlink/dotnet/GETTING_STARTED.md) · [Python](computerlink/python/GETTING_STARTED.md) |
 
-## KV Host Link (KEYENCE KV series)
+Package names, registries, sample code, and source repositories for every
+pairing are collected in the [Package Matrix](package-matrix.md).
 
-| Language | Docs | Samples | GitHub | Registry |
-|----------|------|---------|--------|----------|
-| .NET | [Getting started](hostlink/dotnet/GETTING_STARTED.md) | [Samples](https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet/tree/main/samples) | [plc-comm-hostlink-dotnet](https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet) | [NuGet](https://www.nuget.org/packages/PlcComm.KvHostLink/) |
-| Python | [Getting started](hostlink/python/GETTING_STARTED.md) | [Samples](https://github.com/fa-yoshinobu/plc-comm-hostlink-python/tree/main/samples) | [plc-comm-hostlink-python](https://github.com/fa-yoshinobu/plc-comm-hostlink-python) | [PyPI](https://pypi.org/project/plc-comm-kv-hostlink/) |
-| Rust | [Getting started](hostlink/rust/GETTING_STARTED.md) | [Examples](https://github.com/fa-yoshinobu/plc-comm-hostlink-rust/tree/main/examples) | [plc-comm-hostlink-rust](https://github.com/fa-yoshinobu/plc-comm-hostlink-rust) | [crates.io](https://crates.io/crates/plc-comm-kv-hostlink) / [docs.rs](https://docs.rs/plc-comm-kv-hostlink/) |
-| Node-RED | [Getting started](hostlink/nodered/GETTING_STARTED.md) | [Flows](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink/tree/main/examples/flows) | [node-red-contrib-plc-comm-kvhostlink](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-kvhostlink) |
+## Why choose these libraries?
 
-## SLMP (MELSEC iQ-R/F/L, MX-R/F, Q, L)
-
-| Language | Docs | Samples | GitHub | Registry |
-|----------|------|---------|--------|----------|
-| .NET | [Getting started](slmp/dotnet/GETTING_STARTED.md) | [Samples](https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet/tree/main/samples) | [plc-comm-slmp-dotnet](https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet) | [NuGet](https://www.nuget.org/packages/PlcComm.Slmp/) |
-| Python | [Getting started](slmp/python/GETTING_STARTED.md) | [Samples](https://github.com/fa-yoshinobu/plc-comm-slmp-python/tree/main/samples) | [plc-comm-slmp-python](https://github.com/fa-yoshinobu/plc-comm-slmp-python) | [PyPI](https://pypi.org/project/plc-comm-slmp/) |
-| Rust | [Getting started](slmp/rust/GETTING_STARTED.md) | [Examples](https://github.com/fa-yoshinobu/plc-comm-slmp-rust/tree/main/examples) | [plc-comm-slmp-rust](https://github.com/fa-yoshinobu/plc-comm-slmp-rust) | [crates.io](https://crates.io/crates/plc-comm-slmp) / [docs.rs](https://docs.rs/plc-comm-slmp/) |
-| C++ (Arduino/PlatformIO) | [Getting started](slmp/cpp/GETTING_STARTED.md) | [Examples](https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal/tree/main/examples) | [plc-comm-slmp-cpp-minimal](https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal) | [PlatformIO](https://registry.platformio.org/libraries/fa-yoshinobu/slmp-connect-cpp-minimal) |
-| Node-RED | [Getting started](slmp/nodered/GETTING_STARTED.md) | [Flows](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp/tree/main/examples/flows) | [node-red-contrib-plc-comm-slmp](https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp) | [npm](https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-slmp) |
-
-## MC Protocol Serial (MELSEC iQ-R/L, Q, A)
-
-| Language | Docs | Samples | GitHub | Registry |
-|----------|------|---------|--------|----------|
-| C++ (Arduino/PlatformIO) | [Getting started](mcprotocol/cpp/GETTING_STARTED.md) | [Examples](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/tree/main/examples) | [plc-comm-mcprotocol-serial-cpp](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp) | [PlatformIO](https://registry.platformio.org/libraries/fa-yoshinobu/mcprotocol-serial-cpp) |
+- **Continuously validated on physical PLCs.** Device profiles and protocol
+  behavior are exercised against real hardware and re-checked as PLCs evolve —
+  not only against simulators. [Read the maintainer's message](project-vision.md).
+- **One design across five languages.** Prototype in Node-RED or Python, ship
+  in .NET, Rust, or C++ — the same options/profile/typed-read vocabulary
+  everywhere, so knowledge transfers between projects and teams.
+- **PLC model profiles built in.** Select a profile such as `melsec:iq-r` and
+  the correct frame type, address grammar, and per-model device ranges are
+  applied for you.
+- **Documentation that tells you the sharp edges.** Every implementation ships
+  a Getting started, Usage guide, API reference, and a candid Gotchas page.
 
 ## PLC Setup Guide
 
-Step-by-step PLC-side configuration for each supported hardware model.
+The library is only half of a working connection. These step-by-step guides
+cover the PLC-side configuration for each supported hardware model, down to
+the parameter screens.
 
 | Protocol | Models covered |
 |----------|---------------|
@@ -77,10 +157,10 @@ Step-by-step PLC-side configuration for each supported hardware model.
 
 → [Open PLC Setup Guide](plc-setup/index.md)
 
-## Connection settings used in TCP/UDP examples
+## License & support
 
-| Protocol | Host | TCP port | UDP port |
-|----------|------|----------|----------|
-| SLMP | 192.168.250.100 | 1025 | 1035 |
-| Computerlink | 192.168.250.100 | 1025 | 1035 |
-| KV Host Link | 192.168.250.100 | 8501 | 8501 |
+Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) ·
+[FA Labo](https://fa-yoshinobu.github.io/FA_Labo/index.html)
+
+For license terms, commercial support, sponsorship, and donations, see
+[License & Support](support.md).
