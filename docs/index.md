@@ -136,7 +136,8 @@ pairing are collected in the [Package Matrix](package-matrix.md).
 
 - **Continuously validated on physical PLCs.** Device profiles and protocol
   behavior are exercised against real hardware and re-checked as PLCs evolve —
-  not only against simulators. [Read the maintainer's message](project-vision.md).
+  not only against simulators. [See the measured latency and throughput](performance.md)
+  · [Read the maintainer's message](project-vision.md).
 - **One design across five languages.** Prototype in Node-RED or Python, ship
   in .NET, Rust, or C++ — the same options/profile/typed-read vocabulary
   everywhere, so knowledge transfers between projects and teams.
