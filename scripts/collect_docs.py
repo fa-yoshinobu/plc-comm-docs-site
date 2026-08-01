@@ -278,26 +278,13 @@ such as `U1\\G0`, `U3E0\\HG0`, or `J2\\SW10` where the route requires it.
 
 | Operation | Public API |
 | --- | --- |
-| Connection helper | `open_and_connect`, `open_and_connect_sync`, `QueuedAsyncSlmpClient` |
+| Connection helper | `open_and_connect`, `open_and_connect_sync` |
 | Typed values | `read_typed`, `write_typed` |
 | Named mixed snapshots | `read_named`, `write_named`, `poll` |
 | Single-request word/dword reads | `read_words_single_request`, `read_dwords_single_request` |
 | Address handling | `normalize_address`, `parse_address`, `try_parse_address`, `format_address` |
 | Bit-in-word write | `write_bit_in_word` |
 """
-
-
-SLMP_PYTHON_API_INDEX_METHODS: tuple[str, ...] = (
-    "read_devices", "write_devices", "read_dword", "write_dword", "read_dwords", "write_dwords",
-    "read_float32", "write_float32", "read_float32s", "write_float32s", "read_devices_ext", "write_devices_ext",
-    "read_random", "read_random_ext", "write_random_words", "write_random_words_ext", "write_random_bits",
-    "write_random_bits_ext", "read_block", "write_block", "read_type_name", "register_monitor_devices",
-    "register_monitor_devices_ext", "run_monitor_cycle", "memory_read_words", "memory_write_words",
-    "extend_unit_read_words", "extend_unit_write_words", "read_array_labels", "write_array_labels",
-    "read_random_labels", "write_random_labels", "remote_run", "remote_stop", "remote_pause", "remote_latch_clear",
-    "remote_reset", "remote_password_unlock", "remote_password_lock", "self_test_loopback", "clear_error",
-    "read_words_single_request", "read_dwords_single_request", "write_bit_in_word",
-)
 
 
 SLMP_PARITY_SURFACE_MARKERS: tuple[tuple[str, str, str, tuple[str, ...]], ...] = (
@@ -1060,6 +1047,30 @@ def resolve_repo_file(source_root: Path, repo_name: str, ci_dir: str, relative_p
     )
 
 
+def public_api_table_symbols(markdown: str) -> set[str]:
+    """Return every code-formatted symbol in a Markdown Public API table cell."""
+    symbols: set[str] = set()
+    for line in markdown.splitlines():
+        if not line.startswith("|") or re.match(r"^\|\s*-", line):
+            continue
+        columns = line.split("|")
+        if len(columns) < 4 or columns[1].strip() == "Operation":
+            continue
+        symbols.update(re.findall(r"`([^`]+)`", columns[2]))
+    return symbols
+
+
+def validate_operation_index(operation_index: str, source_reference: str) -> None:
+    indexed = public_api_table_symbols(operation_index)
+    public = public_api_table_symbols(source_reference)
+    stale = sorted(indexed - public)
+    if stale:
+        raise RuntimeError(
+            "SLMP Python operation index names symbols absent from source Public API tables: "
+            + ", ".join(stale)
+        )
+
+
 def validate_slmp_api_indexes(source_root: Path) -> None:
     python_reference = resolve_repo_file(
         source_root,
@@ -1067,12 +1078,7 @@ def validate_slmp_api_indexes(source_root: Path) -> None:
         "slmp-python",
         "docsrc/user/API_REFERENCE.md",
     ).read_text(encoding="utf-8")
-    missing_methods = [name for name in SLMP_PYTHON_API_INDEX_METHODS if f"`{name}`" not in python_reference]
-    if missing_methods:
-        raise RuntimeError(
-            "SLMP Python operation index names methods absent from the source API reference: "
-            + ", ".join(missing_methods)
-        )
+    validate_operation_index(SLMP_PYTHON_API_OPERATION_INDEX, python_reference)
 
     for repo_name, ci_dir, relative_path, markers in SLMP_PARITY_SURFACE_MARKERS:
         reference = resolve_repo_file(source_root, repo_name, ci_dir, relative_path).read_text(encoding="utf-8")
