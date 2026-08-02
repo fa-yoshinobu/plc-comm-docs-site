@@ -50,7 +50,7 @@ Publishing is manual: after source-repo docs change, a maintainer runs
 Actions -> Deploy docs -> Run workflow in this repo.
 
 1. A maintainer runs the `Deploy docs` workflow (or pushes a change to this repo)
-2. `deploy.yml` collects `.md` files from all 12 source repos
+2. `deploy.yml` collects full documentation from 12 library repos and generated tables from 3 profile repos
 3. MkDocs builds the site
 4. HTML is published to the `gh-pages` branch
 

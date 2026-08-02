@@ -57,11 +57,17 @@ Code example:
     ```python
     import asyncio
 
-    from slmp import SlmpConnectionOptions, open_and_connect, read_typed
+    from slmp import SlmpConnectionOptions, SlmpTarget, open_and_connect, read_typed
 
 
     async def main() -> None:
-        options = SlmpConnectionOptions(host="192.168.250.100", port=1025, plc_profile="melsec:mx-r")
+        options = SlmpConnectionOptions(
+            host="192.168.250.100",
+            port=1025,
+            transport="tcp",
+            plc_profile="melsec:mx-r",
+            default_target=SlmpTarget(network=0, station=0xFF, module_io=0x03FF, multidrop=0),
+        )
         async with await open_and_connect(options) as client:
             value = await read_typed(client, "D100", "U")
             print(f"D100={value}")
@@ -75,7 +81,9 @@ Code example:
     ```csharp
     using PlcComm.Slmp;
 
-    var options = new SlmpConnectionOptions("192.168.250.100", SlmpPlcProfile.MxR) { Port = 1025 };
+    var options = new SlmpConnectionOptions(
+        "192.168.250.100", SlmpPlcProfile.MxR, 1025,
+        SlmpTransportMode.Tcp, SlmpTargetAddress.OwnStation);
     await using var client = await SlmpClientFactory.OpenAndConnectAsync(options);
     var value = await client.ReadTypedAsync("D100", "U");
     Console.WriteLine($"D100={value}");

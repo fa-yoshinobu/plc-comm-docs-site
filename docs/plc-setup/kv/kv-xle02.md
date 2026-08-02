@@ -58,6 +58,7 @@ Code example:
             host="192.168.250.100",
             plc_profile="keyence:kv-x500",
             port=8501,
+            transport="tcp",
         )
         async with await open_and_connect(options) as client:
             dm0 = await read_typed(client, "DM0", "U")
@@ -72,7 +73,8 @@ Code example:
     ```csharp
     using PlcComm.KvHostLink;
 
-    var options = new KvHostLinkConnectionOptions("192.168.250.100", "keyence:kv-x500", 8501);
+    var options = new KvHostLinkConnectionOptions(
+        "192.168.250.100", 8501, HostLinkTransportMode.Tcp, "keyence:kv-x500");
     await using var client = await KvHostLinkClientFactory.OpenAndConnectAsync(options);
     var dm0 = await client.ReadTypedAsync("DM0", "U");
     Console.WriteLine($"DM0={dm0}");

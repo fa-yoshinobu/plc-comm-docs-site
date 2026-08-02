@@ -49,6 +49,11 @@ jobs:
       - name: Collect docs
         run: python scripts/collect_docs.py --source-root _src
 
+      - name: Set up .NET SDK for documentation examples
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
       - name: Test documentation generators
         run: python -m unittest discover -s scripts -p "test_*.py"
 
