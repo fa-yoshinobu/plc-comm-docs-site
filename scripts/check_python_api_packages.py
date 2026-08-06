@@ -30,21 +30,26 @@ CHECKS: tuple[PackageCheck, ...] = (
         "computerlink-python",
         "plc-comm-toyopuc",
         "toyopuc",
-        ("ToyopucConnectionOptions", "open_and_connect"),
+        ("ToyopucConnectionOptions", "open_and_connect", "write_bit_in_word"),
     ),
     PackageCheck(
         "plc-comm-hostlink-python",
         "hostlink-python",
         "plc-comm-kv-hostlink",
         "hostlink",
-        ("KvHostLinkPlcProfile", "available_plc_profiles"),
+        (
+            "KvHostLinkPlcProfile",
+            "available_plc_profiles",
+            "write_bit_in_word",
+            "write_bit_in_expansion_unit_buffer",
+        ),
     ),
     PackageCheck(
         "plc-comm-slmp-python",
         "slmp-python",
         "plc-comm-slmp",
         "slmp",
-        ("plc_profile_canonical_name", "device_range_model_label"),
+        ("plc_profile_canonical_name", "device_range_model_label", "write_bit_in_word"),
     ),
 )
 
