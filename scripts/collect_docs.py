@@ -245,7 +245,7 @@ operation names unless noted otherwise.
 
 | Operation | Public API |
 | --- | --- |
-| Direct `DeviceAddress` parsing | `DeviceRef`, `parse_device`, `str(ref)` |
+| Direct `DeviceAddress` parsing | `DeviceRef(code, number, plc_profile)`, `parse_device(value, plc_profile=...)`, `str(ref)` |
 | Typed `AddressSpec` parsing | `SlmpAddress`, `parse_address`, `try_parse_address`, `format_address`, `normalize_address` |
 | Direct device read/write | `read_devices`, `write_devices` |
 | 32-bit values | `read_dword`, `write_dword`, `read_dwords`, `write_dwords` |
