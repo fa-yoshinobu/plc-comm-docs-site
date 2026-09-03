@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - docs/**
+      - overrides/**
       - scripts/**
       - mkdocs.yml
       - requirements-docs.txt
