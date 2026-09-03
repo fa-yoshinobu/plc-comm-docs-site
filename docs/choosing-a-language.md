@@ -12,16 +12,15 @@ rather than a question about which one talks to a PLC better.
 
 ## Latency is not the deciding factor
 
-In the published benchmark session, the .NET and Rust clients landed 0.01 ms to
-0.02 ms apart on the per-iteration average against the same physical MELSEC
-iQ-R. Response time on a PLC network is dominated by the PLC itself: CPU model,
-scan time, communication settings, cabling, and how many other clients are
-attached move these numbers far more than the client language does.
+In the published benchmark, the five clients for a given protocol land within
+about 1 ms of each other on the median round-trip against the same physical PLC.
+Response time on a PLC network is dominated by the PLC itself: CPU model, scan
+time, communication settings, cabling, and how many other clients are attached
+move these numbers far more than the client language does.
 
-The measured figures, the full test conditions, and a five-hour soak of every
-implementation are on the [Performance](performance.md) page. Read them as one
-data point and measure your own installation before designing a control loop
-around a specific value.
+The measured figures and the full test conditions are on the
+[Performance](performance.md) page. Read them as one data point and measure your
+own installation before designing a control loop around a specific value.
 
 ## The five implementations
 
@@ -54,12 +53,11 @@ the same typed-read vocabulary.
 No managed runtime to install on the target and no garbage collector, which
 makes it the choice for equipment you deploy once and leave running: embedded
 Linux boxes, AGVs, edge gateways, and other long-lived resident processes. In
-the benchmark session the Rust client process was recorded at 6.4 MB of process
-memory against 57.8 MB for the .NET benchmark runner — read
-[how to read these numbers](performance.md#how-to-read-these-numbers) before
-quoting that pair, because the two values cover differently shaped processes and
-are a reference figure rather than a like-for-like comparison. Rust covers SLMP
-and KV Host Link.
+the [2026-09-03 benchmark](performance.md) the Rust clients ended their one-hour
+runs at roughly 4–5 MB of process memory, against about 63 MB for the .NET
+clients and 100 MB for Node-RED — a reference figure, not a like-for-like
+comparison, since the runtimes host very differently shaped processes. Rust
+covers SLMP and KV Host Link.
 
 ### C++ (Arduino/PlatformIO)
 
