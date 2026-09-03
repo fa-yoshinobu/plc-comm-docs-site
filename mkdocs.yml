@@ -1,5 +1,5 @@
 site_name: PLC Communication Libraries
-site_url: https://fa-yoshinobu.github.io/plc-comm-docs-site/
+site_url: https://plc-comm-docs-site.fa-labo.com/
 site_description: >-
   Open-source PLC communication libraries for MELSEC SLMP, KEYENCE KV Host Link,
   TOYOPUC Computerlink, and MC Protocol Serial, with .NET, Python, Rust, C++, and

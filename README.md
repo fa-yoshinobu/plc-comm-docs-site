@@ -2,7 +2,7 @@
 
 Documentation hub for the PLC communication libraries.
 
-[Open the documentation site](https://fa-yoshinobu.github.io/plc-comm-docs-site/)
+[Open the documentation site](https://plc-comm-docs-site.fa-labo.com/)
 
 ![PLC Communication Libraries](docs/assets/plc-communication-libraries.png)
 

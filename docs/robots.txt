@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fa-yoshinobu.github.io/plc-comm-docs-site/sitemap.xml
+Sitemap: https://plc-comm-docs-site.fa-labo.com/sitemap.xml
