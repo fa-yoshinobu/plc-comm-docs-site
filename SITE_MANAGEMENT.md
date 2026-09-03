@@ -176,6 +176,12 @@ python -m venv $docsVenv
 Delete the temporary environment when the preview is no longer needed. Do not replace the strict
 build with a global `mkdocs` invocation.
 
+The Material `social` plugin renders per-page Open Graph card images only when the `CI`
+environment variable is set (`cards: !ENV [CI, false]` in `mkdocs.yml`), so a local preview
+skips them. To render them locally, install the image libraries the plugin needs and build with
+`CI=1` (`$env:CI = "1"` in PowerShell). GitHub Actions sets `CI` automatically and installs the
+libraries in the `Install image libraries for social cards` step.
+
 In GitHub Actions, the same script runs against the `_src` directory populated
 by the checkout step:
 

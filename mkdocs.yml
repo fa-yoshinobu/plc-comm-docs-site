@@ -167,6 +167,8 @@ nav:
 
 plugins:
   - search
+  - social:
+      cards: !ENV [CI, false]
   - mkdocstrings:
       default_handler: python
       handlers:

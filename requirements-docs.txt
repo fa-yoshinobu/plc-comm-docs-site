@@ -1,4 +1,4 @@
-mkdocs-material
+mkdocs-material[imaging]
 mkdocstrings[python]
 plc-comm-kv-hostlink
 plc-comm-toyopuc
