@@ -1,3 +1,7 @@
+---
+description: "How to write a PLC bit safely: pick a typed bit write, a native bit device, or the read-modify-write bit-in-word helper, and pass a real Boolean — across .NET, Python, Rust, C++, and Node-RED."
+---
+
 # Bit Write Safety
 
 PLC communication libraries expose two different kinds of bit write. Choose the operation by the PLC data model, not by the wire representation.
