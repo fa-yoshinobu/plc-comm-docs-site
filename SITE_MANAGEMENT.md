@@ -65,7 +65,7 @@ Manual dispatch is the normal publication path after source-library changes:
 3. Wait for the run to finish, then check the published page.
 
 A push to this documentation repository's `main` branch also deploys automatically when it changes
-the workflow's configured documentation, script, evidence, MkDocs, or requirements paths. A push to
+the workflow's configured documentation, script, MkDocs, or requirements paths. A push to
 one of the 15 source repositories does not deploy this site.
 
 Run it once after the last change of a batch rather than after each repo; the

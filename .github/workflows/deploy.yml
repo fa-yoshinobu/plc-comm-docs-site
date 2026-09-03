@@ -6,7 +6,6 @@ on:
     paths:
       - docs/**
       - scripts/**
-      - evidence/validation-results/**
       - mkdocs.yml
       - requirements-docs.txt
       - .github/workflows/deploy.yml
@@ -56,9 +55,6 @@ jobs:
 
       - name: Test documentation generators
         run: python -m unittest discover -s scripts -p "test_*.py"
-
-      - name: Generate real-hardware validation page
-        run: python scripts/generate_validation_results.py
 
       - name: Set up Python
         uses: actions/setup-python@v5

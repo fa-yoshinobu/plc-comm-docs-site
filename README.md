@@ -21,7 +21,6 @@ protocols and finding the right package.
 | PLC setup | Practical connection settings for supported PLC families and modules |
 | Library docs | Getting started guides, usage notes, API references, supported profiles, and samples |
 | Communication verification | Current live-device verification summaries and limitations |
-| Reliability validation | Generated results for exact library artifacts tested on real PLC hardware |
 | Release navigation | Links to package registries, source repositories, and published docs |
 
 ## Source Libraries
@@ -40,9 +39,6 @@ This repository builds the public site with
 content is collected from the source library repositories during deployment.
 Python API reference pages are generated with mkdocstrings from the installed
 PyPI release packages during the site build.
-Real-hardware reliability results are generated from the hashed public evidence
-under `evidence/validation-results`; current package versions are not copied into
-the page by hand.
 
 ## Deployment Flow
 
