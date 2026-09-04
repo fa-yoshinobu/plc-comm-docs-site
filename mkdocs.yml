@@ -159,7 +159,7 @@ nav:
     - Computerlink (TOYOPUC):
       - Choose a setup guide: plc-setup/computerlink/toyopuc.md
       - PCwin settings: plc-setup/computerlink/pcwin.md
-      - PCwin2 settings (TOYOPUC Nano): plc-setup/computerlink/pcwin2.md
+      - PCwin2 settings: plc-setup/computerlink/pcwin2.md
       - Troubleshooting & Codes: plc-setup/computerlink/troubleshooting-codes.md
       - Device ranges: plc-setup/computerlink/device-ranges.md
     - MC Protocol Serial (MELSEC):

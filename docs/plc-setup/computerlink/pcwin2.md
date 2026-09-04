@@ -2,7 +2,7 @@
 description: "PCwin2 link-parameter settings for TOYOPUC Nano Computerlink over TCP and UDP."
 ---
 
-# TOYOPUC Nano Computerlink — PCwin2 settings
+# TOYOPUC Computerlink — PCwin2 settings
 
 Use this guide for the following TOYOPUC Nano hardware configured with PCwin2.
 
