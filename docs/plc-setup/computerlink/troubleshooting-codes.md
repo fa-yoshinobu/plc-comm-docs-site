@@ -10,6 +10,7 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 
 - Confirm that Computerlink communication is enabled on the PLC side.
 - Confirm the TCP/UDP port and network settings in the [TOYOPUC setup page](toyopuc.md).
+- For UDP, confirm that the PC local UDP port matches the port in the PLC Other Node Table.
 - Confirm that the application selected the exact canonical TOYOPUC profile.
 - For write errors, check PLC run/write permission and protection settings before retrying.
 - For relay access, configure the relay hops explicitly; relay topology is not auto-discovered.
@@ -20,7 +21,7 @@ This page summarizes TOYOPUC Computerlink response errors that users commonly se
 | --- | --- |
 | Connection timeout | Confirm the PLC host address and the configured Computerlink port. TCP examples use `1025`. |
 | TCP connection refused | Confirm Computerlink is enabled on the target PLC and the TCP port is open. |
-| UDP requests do not return | Confirm the UDP port configured for the target PLC. |
+| UDP requests do not return | Confirm the PLC UDP port and bind the PC local UDP port to the value configured in the PLC Other Node Table. |
 | Intermittent timeouts | Increase timeout/retry settings, reuse a connection, and avoid reconnecting for every small request. |
 
 ## Addressing Checks

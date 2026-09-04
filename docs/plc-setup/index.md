@@ -45,7 +45,8 @@ of the MC Protocol Serial C++ library.
 | KV Host Link | KV-7000 | Built-in Ethernet | 8501 |
 | KV Host Link | KV-5000 | Built-in Ethernet | 8501 |
 | KV Host Link | KV-XLE02 | Communication unit | 8501 |
-| Computerlink | [TOYOPUC](computerlink/toyopuc.md) | Ethernet | 1025 |
+| Computerlink | [TOYOPUC Plus / PC10G / PC3J (PCwin)](computerlink/pcwin.md) | Ethernet | 1025 |
+| Computerlink | [TOYOPUC Nano (PCwin2)](computerlink/pcwin2.md) | Ethernet | 1025 |
 | MC Protocol Serial | [MELSEC serial modules](mcprotocol/serial.md) | Serial module | *(serial)* |
 
 ## Protocol troubleshooting pages
@@ -66,6 +67,8 @@ These pages are shared by all language implementations for the same protocol.
 | GX Works3 | MELSEC iQ-R, iQ-F, iQ-L, MX-R, MX-F, RJ71EN71 |
 | GX Works2 | MELSEC Q series (QnUDV, QnU, QJ71E71-100), L series (LCPU, LJ71E71-100) |
 | KV Studio | KEYENCE KV-X500, KV-8000, KV-7000, KV-5000, KV-XLE02 |
+| PCwin | TOYOPUC Plus, PC10G, PC3J |
+| PCwin2 | TOYOPUC Nano |
 
 ## Simulator connection notes
 

@@ -157,9 +157,11 @@ nav:
       - KV-5000: plc-setup/kv/kv-5000.md
       - KV-XLE02 (comm unit): plc-setup/kv/kv-xle02.md
     - Computerlink (TOYOPUC):
+      - Choose a setup guide: plc-setup/computerlink/toyopuc.md
+      - PCwin settings: plc-setup/computerlink/pcwin.md
+      - PCwin2 settings (TOYOPUC Nano): plc-setup/computerlink/pcwin2.md
       - Troubleshooting & Codes: plc-setup/computerlink/troubleshooting-codes.md
       - Device ranges: plc-setup/computerlink/device-ranges.md
-      - TOYOPUC: plc-setup/computerlink/toyopuc.md
     - MC Protocol Serial (MELSEC):
       - Troubleshooting & Codes: plc-setup/mcprotocol/troubleshooting-codes.md
       - Supported registers: plc-setup/mcprotocol/supported-registers.md
