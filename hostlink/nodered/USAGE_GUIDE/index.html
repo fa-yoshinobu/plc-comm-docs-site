@@ -1,0 +1,6303 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Task-oriented KV Host Link guide for Node-RED: reading and writing devices by name, typed values, and connection handling against a KEYENCE KV PLC.">
+      
+      
+      
+        <link rel="canonical" href="https://plc-comm-docs-site.fa-labo.com/hostlink/nodered/USAGE_GUIDE/">
+      
+      
+        <link rel="prev" href="../GETTING_STARTED/">
+      
+      
+        <link rel="next" href="../API_REFERENCE/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>KV Host Link for Node-RED — Usage guide - PLC Communication Libraries</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <meta property="og:site_name" content="PLC Communication Libraries">
+  <meta property="og:locale" content="en_US">
+
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="KV Host Link for Node-RED — Usage guide - PLC Communication Libraries" />
+<meta property="og:description" content="Task-oriented KV Host Link guide for Node-RED: reading and writing devices by name, typed values, and connection handling against a KEYENCE KV PLC." />
+<meta property="og:image" content="https://plc-comm-docs-site.fa-labo.com/assets/images/social/hostlink/nodered/USAGE_GUIDE.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://plc-comm-docs-site.fa-labo.com/hostlink/nodered/USAGE_GUIDE/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="KV Host Link for Node-RED — Usage guide - PLC Communication Libraries" />
+<meta property="twitter:description" content="Task-oriented KV Host Link guide for Node-RED: reading and writing devices by name, typed values, and connection handling against a KEYENCE KV PLC." />
+<meta property="twitter:image" content="https://plc-comm-docs-site.fa-labo.com/assets/images/social/hostlink/nodered/USAGE_GUIDE.png" />
+</head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#usage-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="PLC Communication Libraries" class="md-header__button md-logo" aria-label="PLC Communication Libraries" data-md-component="logo">
+      
+  <img src="../../../assets/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PLC Communication Libraries
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              KV Host Link for Node-RED — Usage guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/fa-yoshinobu/plc-comm-docs-site" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fa-yoshinobu/plc-comm-docs-site
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PLC Communication Libraries" class="md-nav__button md-logo" aria-label="PLC Communication Libraries" data-md-component="logo">
+      
+  <img src="../../../assets/favicon.png" alt="logo">
+
+    </a>
+    PLC Communication Libraries
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/fa-yoshinobu/plc-comm-docs-site" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    fa-yoshinobu/plc-comm-docs-site
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project-vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../package-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Package Matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bit-write-safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bit Write Safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../choosing-a-language/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing a Language
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License & Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../computerlink/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computerlink
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Computerlink
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../computerlink/profile-reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10_2" id="__nav_10_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Profile Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/profile-reference/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/profile-reference/area-ranges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Area ranges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_3" id="__nav_10_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    .NET
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    .NET
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/dotnet/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/dotnet/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/dotnet/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/dotnet/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/dotnet/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_4" id="__nav_10_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/python/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/python/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/python/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/python/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computerlink/python/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV Host Link
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KV Host Link
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../profile-reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11_2" id="__nav_11_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Profile Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../profile-reference/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../profile-reference/device-ranges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device ranges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_3" id="__nav_11_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    .NET
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    .NET
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dotnet/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_4" id="__nav_11_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_11_5" id="__nav_11_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rust
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rust
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11_6" id="__nav_11_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-RED
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Node-RED
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#available-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available nodes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvhostlink-connection-config-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-connection config node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-reuse-and-concurrent-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection reuse and concurrent requests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvhostlink-read-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-read node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kvhostlink-read node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rdc-comment-bytes-and-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RDC comment bytes and text
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvhostlink-write-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-write node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#address-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Address syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timer-and-counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer and counter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#low-level-monitor-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-level monitor words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-status-and-diagnosis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Node status and diagnosis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-control-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection control messages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational-recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operational recipes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#traffic-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traffic statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        This library
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../slmp/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLMP
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SLMP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../slmp/profile-reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profile Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12_2" id="__nav_12_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Profile Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/profile-reference/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/profile-reference/device-ranges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device ranges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/api-parity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API parity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_4" id="__nav_12_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    .NET
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    .NET
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/dotnet/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/dotnet/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/dotnet/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/dotnet/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/dotnet/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_5" id="__nav_12_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/python/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/python/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/python/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/python/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/python/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_6" id="__nav_12_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rust
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rust
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/rust/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/rust/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/rust/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/rust/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/rust/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_7" id="__nav_12_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++ (Arduino/PlatformIO)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++ (Arduino/PlatformIO)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/cpp/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/cpp/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/cpp/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/cpp/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/cpp/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_8" id="__nav_12_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-RED
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Node-RED
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/nodered/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/nodered/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/nodered/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/nodered/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../slmp/nodered/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../mcprotocol/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MC Protocol Serial
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MC Protocol Serial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_2" id="__nav_13_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++ (Arduino/PlatformIO)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++ (Arduino/PlatformIO)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mcprotocol/cpp/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mcprotocol/cpp/USAGE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mcprotocol/cpp/API_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mcprotocol/cpp/PROFILES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mcprotocol/cpp/GOTCHAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gotchas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../plc-setup/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PLC Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PLC Setup Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../plc-setup/slmp/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MELSEC (SLMP)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14_2" id="__nav_14_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MELSEC (SLMP)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/troubleshooting-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting & Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/iq-r/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    iQ-R (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/iq-f/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    iQ-F (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/iq-l/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    iQ-L (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/mx-r/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MX-R (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/mx-f/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MX-F (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/qnudv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QnUDV (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/qnu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QnU (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/lcpu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LCPU (built-in Ethernet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/rj71en71/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RJ71EN71 (comm unit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/qj71e71-100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QJ71E71-100 (comm unit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/slmp/lj71e71-100/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LJ71E71-100 (comm unit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../plc-setup/kv/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV Host Link (KEYENCE)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14_3" id="__nav_14_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KV Host Link (KEYENCE)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/troubleshooting-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting & Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/device-ranges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device ranges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/kv-x500/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV-X500
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/kv-8000/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV-8000
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/kv-7000/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV-7000
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/kv-5000/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV-5000
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/kv/kv-xle02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KV-XLE02 (comm unit)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../plc-setup/computerlink/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computerlink (TOYOPUC)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14_4" id="__nav_14_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Computerlink (TOYOPUC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/computerlink/toyopuc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choose a setup guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/computerlink/pcwin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PCwin settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/computerlink/pcwin2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PCwin2 settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/computerlink/troubleshooting-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting & Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/computerlink/device-ranges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Device ranges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../plc-setup/mcprotocol/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MC Protocol Serial (MELSEC)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14_5" id="__nav_14_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MC Protocol Serial (MELSEC)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/mcprotocol/troubleshooting-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting & Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/mcprotocol/supported-registers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supported registers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../plc-setup/mcprotocol/serial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serial modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#available-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available nodes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvhostlink-connection-config-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-connection config node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-reuse-and-concurrent-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection reuse and concurrent requests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvhostlink-read-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-read node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kvhostlink-read node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rdc-comment-bytes-and-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RDC comment bytes and text
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kvhostlink-write-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-write node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#address-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Address syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timer-and-counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer and counter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#low-level-monitor-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-level monitor words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#node-status-and-diagnosis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Node status and diagnosis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-control-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection control messages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational-recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operational recipes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#traffic-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traffic statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        This library
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="usage-guide">Usage guide</h1>
+<h2 id="available-nodes">Available nodes</h2>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kvhostlink-connection</code></td>
+<td>Shared KEYENCE KV Host Link TCP/UDP connection config.</td>
+</tr>
+<tr>
+<td><code>kvhostlink-read</code></td>
+<td>Reads one or more high-level addresses into <code>msg.payload</code>.</td>
+</tr>
+<tr>
+<td><code>kvhostlink-write</code></td>
+<td>Writes one or more high-level address/value updates.</td>
+</tr>
+</tbody>
+</table>
+<p>Programmatic callers use <code>readBitsSingleRequest</code> and
+<code>writeBitsSingleRequest</code> for contiguous direct-bit Boolean values, and
+<code>readWordsSingleRequest</code> and <code>writeWordsSingleRequest</code> for contiguous unsigned
+words. Each helper sends exactly one PLC request or rejects the complete input
+before send. Bit and Word requests accept 1 through 1,000 points subject to the
+device range. <code>readWords</code> is a deprecated compatibility alias; migrate to
+<code>readWordsSingleRequest</code>. Node names and editor labels are unchanged.</p>
+<h2 id="kvhostlink-connection-config-node">kvhostlink-connection config node</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>No</td>
+<td>Empty</td>
+<td>Display-only label. Empty/whitespace/non-string values mean no custom label; duplicates are allowed and never identify a connection or PLC route.</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>Yes</td>
+<td>Empty</td>
+<td>IPv4 PLC address, or a host name that resolves to IPv4. IPv6 is unsupported.</td>
+</tr>
+<tr>
+<td>Port</td>
+<td>Yes</td>
+<td><code>8501</code></td>
+<td>TCP or UDP port.</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>Yes</td>
+<td><code>tcp</code></td>
+<td><code>tcp</code> or <code>udp</code>.</td>
+</tr>
+<tr>
+<td>Timeout ms</td>
+<td>Yes</td>
+<td><code>3000</code></td>
+<td>One absolute active connection/request deadline in milliseconds.</td>
+</tr>
+<tr>
+<td>PLC Profile</td>
+<td>Yes</td>
+<td><code>keyence:kv-x500</code></td>
+<td>Canonical lowercase profile value.</td>
+</tr>
+</tbody>
+</table>
+<p>Accepted profile values are listed in <a href="../PROFILES/">PLC profiles</a>.
+The values shown in a newly created editor node are initial form values. A
+saved flow must retain explicit port and transport fields; the runtime does not
+repair missing values.
+Port and timeout must be decimal integer text within their documented range.
+The connection node converts that form text once at the Node-RED boundary;
+direct <code>HostLinkClient</code> construction requires actual safe JavaScript integers
+and never coerces numeric strings.
+The profile must equal one canonical lowercase identifier exactly; aliases,
+case changes, surrounding whitespace, and object/string coercion are rejected.
+IPv6 literals and host names without an IPv4 result are rejected. When a host
+name has several IPv4 results, the first resolver result is used.
+Bracketed IPv4 input such as <code>[127.0.0.1]</code> is invalid and is rejected during
+client construction before DNS or socket work. Remove the brackets and pass
+<code>127.0.0.1</code>; host strings are not URI authority syntax.</p>
+<p>The direct client's maintainer <code>sendRaw</code> API represents exactly one non-empty
+ASCII command. A body containing CR, LF, or CRLF would represent more than one
+frame and is therefore a protocol input error. The body is limited to 65,506
+ASCII bytes, producing at most a 65,507-byte frame after the library appends its
+single terminating CR. Empty, newline-containing, and oversized bodies are
+rejected before FIFO admission, connection-state checks, DNS, socket creation,
+connect, or send. Migrate bracketed IPv4 by removing the brackets; split a
+multi-command raw string into separate <code>sendRaw</code> calls; and split an oversized
+operation according to the PLC command's smaller command-specific limit rather
+than bypassing this absolute frame boundary.</p>
+<h2 id="performance-notes">Performance notes</h2>
+<p>For stable local networks, UDP usually has the lowest latency. TCP is the safer
+default for remote or less predictable networks because the OS handles
+retransmission.</p>
+<p>Reuse one <code>kvhostlink-connection</code> config node for repeated reads and writes.
+Prefer reading one address list or one array address over many separate
+single-address messages when one application result set can be read together.</p>
+<h2 id="connection-reuse-and-concurrent-requests">Connection reuse and concurrent requests</h2>
+<p>Share one <code>kvhostlink-connection</code> config node between read and write nodes that
+talk to the same PLC endpoint. The ordinary client places concurrent calls in a
+strict FIFO, snapshots all effective inputs at admission, and holds a compound
+read for one complete queue turn. Different connection clients progress
+independently. A waiting call does not start its timeout until it becomes active.</p>
+<p>Use the connection control messages <code>connect</code>, <code>disconnect</code>, and <code>reinitialize</code>
+for deliberate connection control. Create separate connection config nodes only
+when you intentionally want separate PLC sessions.</p>
+<p>Once active, one monotonic timeout covers sending, response framing/receive, and
+decoding. Partial writes, trickled response bytes, and phase changes do not
+restart it. Most JavaScript client/helper calls accept a final <code>{ signal }</code>
+option. Canceling a waiting call removes it without sending; canceling active
+I/O retires that connection generation. <code>close()</code> rejects active and waiting
+work immediately, and callers must explicitly reconnect and submit new work.</p>
+<p>Each TCP request exclusively owns one non-empty response line. Stale partial
+data, an unsolicited line, or an additional line invalidates that socket rather
+than becoming a later request's response. UDP reuses a successful socket and
+local endpoint. Timeout, cancellation, malformed/additional response data,
+unowned datagrams, close, or socket failure retire it; later work creates a
+replacement from the already resolved IPv4 address and never resends the failed
+request. Malformed decoder
+output and mode responses other than exact <code>0</code> or <code>1</code> also invalidate the
+supplying generation. PLC command errors <code>E0</code> through <code>E9</code> remain reusable.</p>
+<p>Host Link TCP responses contain no request identifier. The client checks for
+already visible input before sending, but a non-conforming peer can still
+deliver an unrelated line after that check and before the current response; the
+library cannot prove that such a line belongs to another request. Opening and
+closing TCP for every healthy request would not add an identifier, but would
+repeat connection setup and teardown latency. The supported contract therefore
+reuses a healthy TCP stream, serializes requests, and retires it immediately
+when stale, additional, malformed, timed-out, cancelled, or failed input becomes
+observable.</p>
+<h2 id="kvhostlink-read-node">kvhostlink-read node</h2>
+<table>
+<thead>
+<tr>
+<th>Config field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Optional display-only label; it is not sent, emitted as metadata, or used as the connection identity.</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td><code>kvhostlink-connection</code> config node.</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Literal text, <code>msg</code>, <code>flow</code>, <code>global</code>, or <code>env</code>.</td>
+</tr>
+<tr>
+<td>Addresses</td>
+<td>Literal address list when Source is <code>str</code>.</td>
+</tr>
+<tr>
+<td>Output</td>
+<td><code>object</code> always returns an address-keyed object, <code>array</code> always returns an array, and <code>value</code> requires exactly one address.</td>
+</tr>
+<tr>
+<td>RDC comment</td>
+<td>Required when the resolved plan contains <code>:COMMENT</code>: select decoded <code>text</code> or raw <code>buffer</code>.</td>
+</tr>
+<tr>
+<td>Encoding</td>
+<td>Required only for text comments: exact <code>utf8</code> or <code>cp932</code>.</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td><code>full</code>, <code>minimal</code>, or <code>off</code>.</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>throw</code>, <code>msg.error</code>, or second output.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Input msg field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>msg.addresses</code></td>
+<td>When present, a non-empty string or an array containing only non-empty address strings. Invalid input fails and never falls back to the configured source.</td>
+</tr>
+<tr>
+<td><code>msg.topic</code></td>
+<td><code>connect</code>, <code>disconnect</code>, or <code>reinitialize</code> for connection control.</td>
+</tr>
+<tr>
+<td><code>msg.connect</code></td>
+<td>Set to <code>true</code> to connect.</td>
+</tr>
+<tr>
+<td><code>msg.disconnect</code></td>
+<td>Set to <code>true</code> to disconnect.</td>
+</tr>
+<tr>
+<td><code>msg.reinitialize</code></td>
+<td>Set to <code>true</code> to close and reconnect.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Output msg field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>msg.payload</code></td>
+<td>Read result as an object, array, or scalar value.</td>
+</tr>
+<tr>
+<td><code>msg.kvhostlink</code></td>
+<td>Metadata when enabled.</td>
+</tr>
+<tr>
+<td><code>msg.error</code></td>
+<td>Error object when Errors is <code>msg.error</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>The configured Source type is required. If a <code>msg</code>, <code>flow</code>, <code>global</code>, or <code>env</code>
+reference cannot be evaluated, the operation fails before connecting; the
+reference name is never treated as a literal PLC address or update.</p>
+<p>A multi-entry read is completely prevalidated before its one aggregate FIFO
+turn. Compatible device groups run by first input appearance; addresses inside
+each group are sorted ascending, contiguous ranges are merged, and only protocol
+limits split a range. Result keys and values retain input order even though wire
+order is optimized. A scalar, dword, float, array, or other declared entry is
+never torn between requests. The operation stops on first failure and returns no
+partial object. Multiple requests are not an atomic/coherent PLC snapshot
+because the PLC may change between them. Use one protocol request or a PLC-side
+sequence/handshake when values must describe one instant. Polling compiles this
+plan once, holds one FIFO turn per complete cycle, and waits the interval after
+releasing that turn.</p>
+<h3 id="rdc-comment-bytes-and-text">RDC comment bytes and text</h3>
+<p>Every RDC response is first an exact byte body without CR/LF. Raw <code>buffer</code>
+output returns those bytes unchanged, including trailing ASCII padding spaces.
+The KEYENCE Host Link manual does not specify the <code>RDC</code> character encoding, and
+there is no PLC-project encoding setting. The library does not infer a codec
+from a profile or model name; inspect raw <code>buffer</code> output when the exact payload
+must be examined before choosing how to decode it.
+Text output requires the exact saved encoding <code>utf8</code> or <code>cp932</code>; <code>cp932</code> is the
+Windows-31J-compatible mapping commonly described by KEYENCE as Shift_JIS.
+There is no separate strict Shift_JIS selection and aliases such as <code>utf-8</code>,
+<code>shift_jis</code>, <code>windows-31j</code>, or <code>auto</code> are invalid public settings.</p>
+<p>The node preflights the complete resolved address plan. Missing text encoding,
+an encoding combined with raw Buffer output, or any unsupported value fails
+before connection or send. Decoding is fatal: malformed bytes raise a protocol
+error, invalidate the connection generation that supplied them, and never fall
+back to another codec or insert replacement characters. Ambiguous bytes are
+decoded only by the selected codec.
+A leading UTF-8 BOM is payload data and decodes to <code>U+FEFF</code>; it is not silently
+removed. The same bytes selected as <code>cp932</code> are decoded only as CP932 and fail
+when they are not a valid CP932 sequence.
+For <code>cp932</code>, bytes <code>00</code> through <code>7F</code> retain the identical ASCII code points;
+<code>80</code>, <code>A0</code>, and <code>FD</code> through <code>FF</code> are invalid. Half-width and double-byte code
+units are decoded strictly, including Windows-31J extension characters.</p>
+<h2 id="kvhostlink-write-node">kvhostlink-write node</h2>
+<table>
+<thead>
+<tr>
+<th>Config field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Optional display-only label; it is not sent, emitted as metadata, or used as the connection identity.</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td><code>kvhostlink-connection</code> config node.</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Literal text, <code>msg</code>, <code>flow</code>, <code>global</code>, or <code>env</code>.</td>
+</tr>
+<tr>
+<td>Static updates</td>
+<td>JSON object when Source is <code>str</code>.</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td><code>full</code>, <code>minimal</code>, or <code>off</code>.</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>throw</code>, <code>msg.error</code>, or second output.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Input msg field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>msg.updates</code></td>
+<td>Object or JSON string updates.</td>
+</tr>
+<tr>
+<td><code>msg.address</code></td>
+<td>Single address for one write.</td>
+</tr>
+<tr>
+<td><code>msg.dtype</code></td>
+<td>Required for a bare single-write address. Use exactly <code>BIT</code>, <code>U</code>, <code>S</code>, <code>D</code>, <code>L</code>, <code>F</code>, or <code>H</code>. Omit it when the address already contains a dtype or word-bit selector; specifying both is an error. <code>COMMENT</code> is read-only.</td>
+</tr>
+<tr>
+<td><code>msg.value</code></td>
+<td>Single write value. Required when <code>msg.address</code> is used.</td>
+</tr>
+<tr>
+<td><code>msg.topic</code></td>
+<td><code>connect</code>, <code>disconnect</code>, or <code>reinitialize</code> for connection control.</td>
+</tr>
+<tr>
+<td><code>msg.connect</code></td>
+<td>Set to <code>true</code> to connect.</td>
+</tr>
+<tr>
+<td><code>msg.disconnect</code></td>
+<td>Set to <code>true</code> to disconnect.</td>
+</tr>
+<tr>
+<td><code>msg.reinitialize</code></td>
+<td>Set to <code>true</code> to close and reconnect.</td>
+</tr>
+</tbody>
+</table>
+<p>Runtime write fields are authoritative when present. <code>msg.updates</code> and
+<code>msg.address</code> are mutually exclusive, and <code>msg.value</code>/<code>msg.dtype</code> are valid only
+with <code>msg.address</code>. Invalid, empty, conflicting, or isolated runtime fields fail;
+the node does not execute configured updates as a fallback.</p>
+<p>Every update is validated before the first PLC request. Numeric values must be
+finite JavaScript numbers in the selected format's exact range; strings,
+Booleans, fractional integers, wraparound values, and Float32 overflow are
+rejected. Float32 is valid only for ordinary one-word <code>.U</code> device families
+that support consecutive two-word access. Direct-bit and special-response
+families such as <code>R</code>, <code>T</code>, <code>C</code>, and <code>AT</code> reject it before FIFO admission or
+transport. Direct-bit write values must be
+actual JavaScript Booleans; numeric/string <code>0</code>, <code>1</code>, <code>ON</code>, and <code>OFF</code> are not
+coerced. An empty update object performs no write and is rejected.</p>
+<p>A complete <code>writeNamed</code> update set is snapshotted, compiled, and checked before
+connecting. It is accepted only when it can be sent as one wire request within
+the applicable limit: 1000 word points, 500 dword/Float32 points, or 120
+timer/counter points. A plan requiring multiple requests fails as a whole before
+transport. State-changing operations are never auto-split or auto-retried.
+<code>writeNamed</code> never selects a bit-in-word read-modify-write implicitly. Library
+consumers that deliberately require that policy can call the explicit helper:</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="nx">writeBitInWord</span><span class="p">(</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="s2">"DM150"</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</code></pre></div>
+<p>The value must be a JavaScript Boolean, the index is <code>0..15</code>, and the target
+must be an ordinary 16-bit word device. Invalid plans fail before FIFO
+admission. After activation, one absolute transaction deadline covers exactly
+one word read followed by one word write in one FIFO turn; queue wait is outside
+that deadline. The write is sent even if the requested state is unchanged.
+There is no fallback, resend, success readback, or automatic retry.</p>
+<p>The helper is not PLC-atomic. PLC logic or another connection can update the
+word between requests and its change can be lost. Use PLC-side coordination, a
+handshake, or exclusive complete-word ownership for stronger guarantees.
+Cancellation before the write begins sends no write; failure after write
+transmission may have started is outcome-unknown and requires deliberate reopen
+and PLC-state reconciliation. A complete PLC error is definitive and does not
+by itself retire a healthy connection.</p>
+<p>Expansion-unit buffer memory uses a separate explicit route helper:</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="nx">writeBitInExpansionUnitBuffer</span><span class="p">(</span><span class="nx">client</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</code></pre></div>
+<p>The unit/address and one <code>.U</code> word remain fixed across exactly one <code>URD</code> point
+and one <code>UWR</code> point. Ordinary-device and expansion-unit routes never fall back
+to one another. The shared-deadline, cancellation, outcome-unknown,
+no-readback, and non-PLC-atomic rules are otherwise identical.</p>
+<p>For <code>R</code>, <code>MR</code>, <code>LR</code>, and <code>CR</code> direct <code>BIT</code> updates, consecutive planning uses
+the logical sixteen-bit bank order rather than the displayed decimal number.
+For example, insertion-ordered <code>R115:BIT</code> then <code>R200:BIT</code> is one consecutive
+request starting at <code>R115</code>; the two values retain that order. <code>writeNamed</code> does
+not sort, deduplicate, fill a gap, or merge another device family or dtype.
+Duplicates, reverse order, and non-consecutive logical bits therefore remain a
+complete pre-transport rejection. Existing <code>00</code> through <code>15</code> display-bit
+validation and the 1000-bit request limit still apply.</p>
+<table>
+<thead>
+<tr>
+<th>Output msg field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>msg.payload</code></td>
+<td>Original payload is passed through.</td>
+</tr>
+<tr>
+<td><code>msg.kvhostlink</code></td>
+<td>Metadata when enabled.</td>
+</tr>
+<tr>
+<td><code>msg.error</code></td>
+<td>Error object when Errors is <code>msg.error</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Success is always sent through output 1. <code>throw</code> reports failure through
+<code>done(error)</code> without a message, <code>msg.error</code> sends the failed message on output
+1, and <code>Second output</code> sends it only on output 2. The saved terminal count must
+match the selected mode exactly; conflicting old flows are rejected for review.</p>
+<h2 id="address-syntax">Address syntax</h2>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Example</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Word value</td>
+<td><code>DM100:U</code></td>
+<td>Read or write an unsigned word value.</td>
+</tr>
+<tr>
+<td>Signed 16-bit</td>
+<td><code>DM100:S</code></td>
+<td>Interpret one word as signed 16-bit.</td>
+</tr>
+<tr>
+<td>Unsigned 32-bit</td>
+<td><code>DM120:D</code></td>
+<td>Interpret two words as unsigned 32-bit.</td>
+</tr>
+<tr>
+<td>Signed 32-bit</td>
+<td><code>DM130:L</code></td>
+<td>Interpret two words as signed 32-bit.</td>
+</tr>
+<tr>
+<td>Float32</td>
+<td><code>DM130:F</code></td>
+<td>Interpret two words as a 32-bit float.</td>
+</tr>
+<tr>
+<td>Hex word</td>
+<td><code>DM140:H</code></td>
+<td>Read or write a word as uppercase hexadecimal text.</td>
+</tr>
+<tr>
+<td>Comment read</td>
+<td><code>DM145:COMMENT</code></td>
+<td>Read explicit-codec text or the exact raw RDC body Buffer.</td>
+</tr>
+<tr>
+<td>Bit in word</td>
+<td><code>DM150.3</code></td>
+<td>Read bit 3 in <code>DM150</code>; writing requires the explicit <code>writeBitInWord(client, "DM150", 3, bool)</code> API.</td>
+</tr>
+<tr>
+<td>Word array</td>
+<td><code>DM160:U,4</code></td>
+<td>Read or write four consecutive unsigned word values.</td>
+</tr>
+<tr>
+<td>Bit array</td>
+<td><code>R200:BIT,4</code></td>
+<td>Read or write four consecutive relay bits.</td>
+</tr>
+<tr>
+<td>Timer preset</td>
+<td><code>T10:D</code></td>
+<td>Read timer preset value.</td>
+</tr>
+<tr>
+<td>Counter preset</td>
+<td><code>C10:D</code></td>
+<td>Read counter preset value.</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>:</code> for data types and <code>.0</code> through <code>.F</code> for bit-in-word access.
+<code>DM100.D</code> means bit <code>D</code> inside <code>DM100</code>; use <code>DM100:D</code> for a 32-bit value.
+High-level read/write addresses must specify the data type explicitly, such as <code>:U</code>, <code>:D</code>, or <code>:BIT</code>.
+Each address contains exactly one complete selector: one dtype, or one word-bit
+selector, followed by an optional positive safe-integer count only where that
+form supports a count. <code>BIT</code> is limited to direct-bit device families.
+Float32 <code>F</code> is limited to ordinary one-word <code>.U</code> families with consecutive
+two-word access; direct-bit and special-response families such as <code>R</code>, <code>T</code>,
+<code>C</code>, and <code>AT</code> are invalid. <code>COMMENT</code> is limited to devices supported by <code>RDC</code>.
+Comment and word-bit forms do not accept a count.
+The editor and runtime use this same grammar. Extra selectors or text before,
+between, or after addresses is an error rather than being ignored.
+The public parser, normalizer, formatter, JavaScript-array input, JSON-array
+input, and delimited-list input apply the same device/data-type rules. Valid
+list entries retain their trimmed spelling for result keys.</p>
+<p>Named reads require one entry per semantic address. Case and leading-zero
+variants, including an omitted versus explicit count of one, are duplicates.
+Different dtypes or bit indexes and non-identical overlapping ranges remain
+valid. Polling requires a positive integer interval of at most <code>2147483647</code>
+milliseconds; use at least <code>1</code>, never zero.</p>
+<h2 id="timer-and-counter">Timer and counter</h2>
+<p><code>T10:D</code> and <code>C10:D</code> use the high-level timer/counter behavior.
+Reads return the preset value for compatibility with ordinary scalar reads.
+Composite responses require exactly three fields: status, current, and preset.
+Status is a structural field validated from the raw first token as exact <code>0</code> or
+<code>1</code>; it remains numeric <code>0</code> or <code>1</code> and is never interpreted using the selected
+numeric format. The requested <code>.U</code>, <code>.S</code>, <code>.H</code>, <code>.D</code>, or <code>.L</code> parser and bounds
+apply only to current and preset. For example, <code>T0.H</code> may return
+<code>0,270F,270F</code>, which decodes as <code>[0, "270F", "270F"]</code>. A non-exact status,
+wrong field count, malformed current or preset, or out-of-range value is a
+protocol error that retires the supplying transport generation.
+Timer/counter preset writes use Host Link <code>WS</code> and <code>WSS</code>, which are supported only on KV-8000/7000-series CPU units.
+Other CPU units may return PLC error <code>E1</code>.</p>
+<p>Use <code>TC</code>, <code>TS</code>, <code>CC</code>, and <code>CS</code> when you want the timer/counter current/contact device families directly.</p>
+<h2 id="low-level-monitor-words">Low-level monitor words</h2>
+<p>The low-level <code>registerMonitorWords</code> API accepts a bare direct-bit target such
+as <code>"R5000"</code>. It sends the exact registration <code>MWS R5000</code>; the matching MWR
+field is the unsigned 16-bit value packed from <code>R5000</code> through <code>R5015</code>.
+One through five ASCII decimal digits are accepted because the manual does not
+guarantee fixed-width padding. <code>00013</code>, for example, is returned as JavaScript
+number <code>13</code>. This special word
+monitor behavior does not apply to bare scalar <code>RD</code> or <code>MBS</code>/<code>MBR</code>, whose
+responses remain strict individual bits.</p>
+<h2 id="node-status-and-diagnosis">Node status and diagnosis</h2>
+<p>Node status is a concise progress indicator. Use the selected error route and
+its Error object for diagnosis; do not parse status text as an error code.</p>
+<table>
+<thead>
+<tr>
+<th>Node / state</th>
+<th>Fill</th>
+<th>Shape</th>
+<th>Exact text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection created</td>
+<td>grey</td>
+<td>ring</td>
+<td><code>ready</code></td>
+</tr>
+<tr>
+<td>Connection opening</td>
+<td>yellow</td>
+<td>ring</td>
+<td><code>connecting</code></td>
+</tr>
+<tr>
+<td>Connection open</td>
+<td>green</td>
+<td>dot</td>
+<td><code>connected</code></td>
+</tr>
+<tr>
+<td>Connection closing</td>
+<td>yellow</td>
+<td>ring</td>
+<td><code>disconnecting</code></td>
+</tr>
+<tr>
+<td>Connection closed by a disconnect operation</td>
+<td>red</td>
+<td>ring</td>
+<td><code>disconnected</code></td>
+</tr>
+<tr>
+<td>Connection closing and opening again</td>
+<td>yellow</td>
+<td>ring</td>
+<td><code>reinitializing</code></td>
+</tr>
+<tr>
+<td>Config node removed or runtime stopped</td>
+<td>grey</td>
+<td>ring</td>
+<td><code>closed</code></td>
+</tr>
+<tr>
+<td>Read in progress</td>
+<td>blue</td>
+<td>dot</td>
+<td><code>reading</code></td>
+</tr>
+<tr>
+<td>Write in progress</td>
+<td>blue</td>
+<td>dot</td>
+<td><code>writing</code></td>
+</tr>
+<tr>
+<td>Successful read or write</td>
+<td>green</td>
+<td>dot</td>
+<td><code>N item(s)</code></td>
+</tr>
+<tr>
+<td>Failed read, write, or control action</td>
+<td>red</td>
+<td>ring</td>
+<td>The actual <code>error.message</code></td>
+</tr>
+</tbody>
+</table>
+<p>A <code>connect</code>, <code>disconnect</code>, or <code>reinitialize</code> control message first shows a
+yellow ring with that exact action name. Success then shows a dot with the same
+text: green for <code>connect</code> and <code>reinitialize</code>, red for <code>disconnect</code>.</p>
+<p>The failure status is deliberately dynamic. Timeout and
+operation-outcome-unknown failures are error classifications, not promised
+status strings. Depending on the configured Errors mode, inspect the Error
+passed to <code>done(error)</code> or the Error in <code>msg.error</code> on output 1 or output 2.
+Its JavaScript type and structured fields such as <code>code</code>, <code>reason</code>, and
+<code>cause</code> provide the available diagnosis.</p>
+<p>PLC profile selection and unsupported local input are validated before
+transport; such a failure does not prove that a PLC rejected a request. If a
+state-changing request may have been sent and its outcome is unknown, the node
+does not retry it automatically. Confirm PLC/application state with an
+appropriate read or operator procedure before deciding whether to issue
+another write.</p>
+<h2 id="connection-control-messages">Connection control messages</h2>
+<p>Both read and write nodes accept connection control messages.</p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>msg.topic = "connect"</code></td>
+<td>Connect the shared connection.</td>
+</tr>
+<tr>
+<td><code>msg.topic = "disconnect"</code></td>
+<td>Disconnect the shared connection.</td>
+</tr>
+<tr>
+<td><code>msg.topic = "reinitialize"</code></td>
+<td>Disconnect, then connect again.</td>
+</tr>
+<tr>
+<td><code>msg.connect = true</code></td>
+<td>Connect the shared connection.</td>
+</tr>
+<tr>
+<td><code>msg.disconnect = true</code></td>
+<td>Disconnect the shared connection.</td>
+</tr>
+<tr>
+<td><code>msg.reinitialize = true</code></td>
+<td>Disconnect, then connect again.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operational-recipes">Operational recipes</h2>
+<p>The <code>examples/flows/kvhostlink-multi-plc-monitor.json</code> flow is a read-only multi-PLC monitor. It polls <code>DM100:U</code>, emits long-form rows shaped as <code>timestamp,plc,tag,value</code>, and uses <code>connected</code>, <code>lost</code>, <code>reconnecting</code>, and <code>recovered</code> state transitions with a 1 second to 30 second backoff.</p>
+<p>The basic, typed, and array write buttons are manual controlled-test paths.
+Each saves the original value or snapshot, generates format-valid random test
+values, writes once, restores the saved state, and reads again. Restoration is
+best effort after communication failure. The device-matrix flow is read-only;
+its write controls and write router are deliberately disabled.</p>
+<p>For config-driven polling, keep a JSON config in an Inject or Function node and feed <code>msg.addresses</code> into <code>kvhostlink-read</code>; no extra node type is required.</p>
+<p>To persist CSV-equivalent rows, route the long-form row messages through a CSV node with <code>timestamp</code>, <code>plc</code>, <code>tag</code>, and <code>value</code> columns, then into a File node in append mode.</p>
+<h2 id="metadata-output">Metadata output</h2>
+<table>
+<thead>
+<tr>
+<th>Metadata mode</th>
+<th><code>msg.kvhostlink</code> fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>full</code></td>
+<td>Adds current <code>operation</code>, <code>itemCount</code>, <code>metadataMode</code>, connection, and current read <code>addresses</code> or write <code>updates</code>.</td>
+</tr>
+<tr>
+<td><code>minimal</code></td>
+<td>Adds current <code>operation</code>, <code>itemCount</code>, and <code>metadataMode</code>; owned full-mode fields are removed.</td>
+</tr>
+<tr>
+<td><code>off</code></td>
+<td>Leaves <code>msg.kvhostlink</code> unchanged.</td>
+</tr>
+</tbody>
+</table>
+<p>With <code>off</code>, a pre-existing <code>msg.kvhostlink</code> value is not guaranteed to describe
+the current operation or result.</p>
+<p>The connection metadata contains <code>host</code>, <code>port</code>, <code>transport</code>, and <code>timeout</code>.</p>
+<h2 id="error-handling">Error handling</h2>
+<table>
+<thead>
+<tr>
+<th>Errors setting</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Throw</code></td>
+<td>Calls Node-RED <code>done(error)</code>.</td>
+</tr>
+<tr>
+<td><code>msg.error</code></td>
+<td>Adds the error object to <code>msg.error</code> and sends the message on output 1.</td>
+</tr>
+<tr>
+<td><code>Second output</code></td>
+<td>Sends normal messages on output 1 and error messages on output 2.</td>
+</tr>
+</tbody>
+</table>
+<p>JavaScript callers can classify failures by exported type/code:</p>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Caller meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ValueError</code></td>
+<td>Local input/configuration error; no send.</td>
+</tr>
+<tr>
+<td><code>HostLinkNotConnectedError</code></td>
+<td>Call <code>connect()</code> explicitly.</td>
+</tr>
+<tr>
+<td><code>HostLinkCanceledError</code></td>
+<td>Caller cancellation.</td>
+</tr>
+<tr>
+<td><code>HostLinkTimeoutError</code></td>
+<td>The absolute active deadline expired.</td>
+</tr>
+<tr>
+<td><code>HostLinkClosedError</code></td>
+<td>Explicit close rejected the operation.</td>
+</tr>
+<tr>
+<td><code>HostLinkConnectionError</code></td>
+<td>DNS/socket/transport failure.</td>
+</tr>
+<tr>
+<td><code>HostLinkProtocolError</code></td>
+<td>Invalid framing, bytes, tokens, or response shape.</td>
+</tr>
+<tr>
+<td><code>HostLinkError</code></td>
+<td>Complete PLC <code>E0</code> through <code>E9</code>; inspect <code>code</code>.</td>
+</tr>
+<tr>
+<td><code>HostLinkOperationOutcomeUnknownError</code></td>
+<td>A state change may have reached the PLC; inspect <code>reason</code> and <code>cause</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>An application may reconnect and retry a read according to its own policy. Do
+not automatically retry an outcome-unknown write: reconcile PLC/application
+state first, because repeating it can duplicate a state change.</p>
+<h2 id="traffic-statistics">Traffic statistics</h2>
+<p>Call <code>client.trafficStats()</code> to inspect completed framed sends and responses. Close/reconnect does not reset it.
+For TCP, a received line counts its body plus the first CR/LF terminator; extra CR/LF separators
+are consumed but not counted. For UDP, the complete response datagram is counted.</p>
+<h2 id="this-library">This library</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source</td>
+<td><a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink">node-red-contrib-plc-comm-kvhostlink</a></td>
+</tr>
+<tr>
+<td>Package</td>
+<td><a href="https://www.npmjs.com/package/@fa_yoshinobu/node-red-contrib-plc-comm-kvhostlink">npm: @fa_yoshinobu/node-red-contrib-plc-comm-kvhostlink</a></td>
+</tr>
+<tr>
+<td>Changelog</td>
+<td><a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink/blob/main/CHANGELOG.md">CHANGELOG.md</a></td>
+</tr>
+<tr>
+<td>Report a problem</td>
+<td><a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink/issues">Issues</a></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../GETTING_STARTED/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting started">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Getting started
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../API_REFERENCE/" class="md-footer__link md-footer__link--next" aria-label="Next: API reference">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                API reference
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
