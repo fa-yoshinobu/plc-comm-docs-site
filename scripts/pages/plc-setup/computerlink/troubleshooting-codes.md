@@ -1,6 +1,5 @@
 ---
 description: "Common TOYOPUC Computerlink response errors, their likely causes, and how to resolve them."
-title: "Computerlink troubleshooting and error codes"
 ---
 
 # Computerlink Troubleshooting & Codes

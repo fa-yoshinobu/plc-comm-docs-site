@@ -30,6 +30,86 @@ so triggering one per source push
 cost more build time and queueing than on-demand publishing is worth. This note
 is kept so the history is clear if automatic rebuilds are ever reconsidered.
 
+## Page title and description policy
+
+Every library ships the same five page names, so a nav label alone gives twelve
+pages the title "Getting started". The nav label is the right thing in the
+sidebar, but MkDocs also uses it for the `<title>`, the search-result heading,
+`og:title`, and the social card heading — where twelve identical entries are
+indistinguishable.
+
+Material resolves all of those from `page.meta.title` when the page sets one and
+falls back to the nav label otherwise, so `scripts/collect_docs.py` writes a
+front matter `title` and `description` into each collected and generated page:
+
+| Page set | Title | Where it comes from |
+|----------|-------|--------------------|
+| The five pages of each library | `SLMP for Python — Getting started` | Derived in `library_page_metadata()` from the collect target directory |
+| Profile reference, API parity, shared PLC-setup pages | Written out per page | `GENERATED_PAGE_METADATA` |
+| This repo's own pages | Written in the page | Front matter in `docs/` |
+
+Existing front matter is never overwritten: a source repository that starts
+setting its own `title` or `description` keeps it.
+
+Two checks keep this from regressing. `collect_docs.py` fails if any page under
+`docs/` has no description, and `scripts/check_page_titles.py` fails the build if
+two pages in the built site share a title. Keep nav labels short — the front
+matter title, not the nav label, is what a reader sees outside the sidebar.
+
+## Link policy
+
+Source repositories link to shared site pages with **absolute URLs on the
+canonical domain** (`https://plc-comm-docs-site.fa-labo.com/...`), so the same
+Markdown also works when it is read on GitHub. Do not use the retired
+`fa-yoshinobu.github.io/plc-comm-docs-site` host: it still redirects, but a
+redirected link is one hop slower and hides which domain is authoritative.
+
+`scripts/collect_docs.py` rewrites those absolute URLs into **relative Markdown
+links** in the collected copy, so the site's own pages link internally and
+MkDocs can check them. This matters because an absolute URL is invisible to the
+link and anchor validation: a page can be renamed or removed and every absolute
+link to it keeps building cleanly while returning 404 in production. A URL that
+does not resolve to a collected page is deliberately left as-is rather than
+rewritten to an invented target; the CI link check reports it instead.
+
+Three layers cover links, and each catches what the previous one cannot:
+
+| Layer | Covers | Configured in |
+|-------|--------|---------------|
+| `validation` + `mkdocs build --strict` | Relative links, anchors, nav entries, orphaned files | `mkdocs.yml` |
+| Absolute-URL rewrite at collect time | Puts cross-repo links inside the layer above | `scripts/collect_docs.py` |
+| `lycheeverse/lychee-action` | URLs that leave the site | `.github/workflows/deploy.yml` |
+
+The link check runs after the build and blocks deployment on a dead link. It
+accepts `429` so a rate-limited host does not fail an otherwise good deploy;
+`GITHUB_TOKEN` is passed to keep github.com from rate-limiting in the first
+place.
+
+Section landing pages exist so that a section URL such as `/slmp/` or
+`/plc-setup/slmp/` resolves instead of returning 404, and so that a protocol has
+a page to rank for on its own name. Register one in `nav:` **without a title**,
+as the first child of its section, so `navigation.indexes` turns the section
+header into the link and the page keeps its own `<title>` instead of the nav
+label.
+
+| Landing page | Written by hand in | Ignored by git |
+|--------------|--------------------|----------------|
+| `/slmp/`, `/hostlink/`, `/computerlink/`, `/mcprotocol/` | `docs/<protocol>/index.md` | no |
+| `/plc-setup/<protocol>/` | `docs/plc-setup/<protocol>/index.md` | no |
+| `/<protocol>/profile-reference/` | Generated in `scripts/collect_docs.py` | yes |
+
+`.gitignore` therefore ignores only the *collected subdirectories* of a protocol
+(`docs/slmp/*/`), not the protocol directory itself. A new generated file placed
+directly in `docs/<protocol>/` must be added to `.gitignore` by name, as
+`docs/slmp/api-parity.md` is.
+
+Each collected library page also ends with a "This library" footer naming its
+own repository, registry entry, changelog, and issue tracker, appended by
+`append_library_footers()`. The site header's repository link points at this
+docs repo, so without that footer a reader on a library page has no route to the
+library itself. Registry URLs live in `REGISTRY_LINKS`; add an entry there when
+a new library is collected, or the collect step fails.
+
 ## Full documentation sources and their locations
 
 | Repo | Docs location | Collected to |
@@ -72,6 +152,26 @@ Run it once after the last change of a batch rather than after each repo; the
 build always collects the current `main` of all 12 full-documentation repos and the 3 profile repos,
 so a single run
 picks up everything that has been pushed.
+
+## Pages this repo generates rather than collects
+
+Some pages are not owned by any library repository: the profile reference
+overviews, the SLMP API parity table, and the shared PLC-setup troubleshooting,
+device-range, and register pages. Their bodies live as Markdown in
+`scripts/pages/`, under the same relative path they are published at:
+
+```text
+scripts/pages/plc-setup/slmp/troubleshooting-codes.md
+  -> docs/plc-setup/slmp/troubleshooting-codes.md
+  -> /plc-setup/slmp/troubleshooting-codes/
+```
+
+Editing an end-code table is therefore a Markdown change with a readable diff,
+not an edit inside a Python string literal. To add one, drop the Markdown file
+under `scripts/pages/` and add its path to `GENERATED_PAGES` in
+`scripts/collect_docs.py`; the collect step fails if a listed page has no source
+file. `scripts/pages/partials/` holds fragments that are composed into a
+generated page rather than published on their own.
 
 ## How to add a new page to the site
 
@@ -197,7 +297,9 @@ python scripts/collect_docs.py --source-root _src
 | `requirements-docs.txt` | MkDocs, mkdocstrings, and Python package dependencies used for site builds |
 | `docs/index.md` | Top-level landing page |
 | `scripts/collect_docs.py` | Collects source repo docs into the MkDocs tree |
+| `scripts/pages/` | Bodies of the pages this repo generates rather than collects |
 | `scripts/check_python_api_packages.py` | Verifies canonical Python distribution names, versions, and required API symbols |
+| `scripts/check_page_titles.py` | Fails the build when two published pages share a browser title |
 | `.github/workflows/deploy.yml` | Checks out source repos, collects docs, and deploys to GitHub Pages |
 | `README.md` | Short repository overview |
 | `SITE_MANAGEMENT.md` | Maintainer guide for this repo |

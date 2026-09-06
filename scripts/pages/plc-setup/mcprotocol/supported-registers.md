@@ -1,6 +1,5 @@
 ---
 description: "Device families supported by the MC Protocol Serial libraries on MELSEC serial targets."
-title: "MC Protocol Serial supported registers"
 ---
 
 # MC Protocol Serial Supported Registers

@@ -2,7 +2,9 @@
 description: "The maintainer's message on why these hardware-verified PLC communication libraries exist and how they are developed."
 ---
 
-# なぜ、このプロジェクトを始めたのか / Why I Started This Project
+# <span lang="ja">なぜ、このプロジェクトを始めたのか</span> / Why I Started This Project
+
+<section lang="ja" markdown>
 
 ## 日本語
 
@@ -30,6 +32,8 @@ AIも積極的に活用しています。しかし、AIはあくまで開発を�
 **世界で最も信頼されるPLC通信ライブラリを目指すことです。**
 
 世界一とは、対応機能の数だけを競うことではありません。実機による検証、継続的な改善、正確なドキュメント、利用者からの信頼を積み重ねた結果として、多くの人にそう評価されるライブラリを目指しています。
+
+</section>
 
 ## English
 

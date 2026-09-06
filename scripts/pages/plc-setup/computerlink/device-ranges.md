@@ -1,6 +1,5 @@
 ---
 description: "Device families, address notation, and practical range reference for TOYOPUC Computerlink communication."
-title: "Computerlink device ranges"
 ---
 
 # Computerlink Device Ranges

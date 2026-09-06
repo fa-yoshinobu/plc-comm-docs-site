@@ -26,6 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Set up the interpreter before anything runs on it, so the collect step,
+      # the tests, and the build all use the same Python rather than whichever
+      # version the runner image happens to ship.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Checkout source repos
         run: |
           set -euo pipefail
@@ -54,13 +62,11 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      # These tests read the documented examples against the checked-out source
+      # repositories, not against the installed release packages, so they run
+      # before the documentation dependencies are installed.
       - name: Test documentation generators
         run: python -m unittest discover -s scripts -p "test_*.py"
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
       - name: Install image libraries for social cards
         run: sudo apt-get update && sudo apt-get install -y libcairo2-dev libfreetype6-dev libffi-dev libjpeg-dev libpng-dev libz-dev
@@ -73,6 +79,29 @@ jobs:
 
       - name: Build
         run: mkdocs build --strict
+
+      - name: Verify every page has a unique title
+        run: python scripts/check_page_titles.py
+
+      # mkdocs --strict validates relative links and anchors. This step covers
+      # the links it cannot see: URLs that leave the site.
+      - name: Check documentation links
+        uses: lycheeverse/lychee-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # crates.io answers 404 unless an HTML Accept header is sent, and some
+          # registries answer 403 to any non-browser client. Both mean "the host
+          # refused this request", not "the page is gone", so they are accepted;
+          # a 404 with the header below still fails the build.
+          args: >-
+            --no-progress
+            --max-retries 3
+            --max-concurrency 8
+            --header "accept: text/html,application/xhtml+xml,*/*"
+            --accept 200,206,403,429
+            "docs/**/*.md"
+          fail: true
 
       - name: Configure git
         run: |

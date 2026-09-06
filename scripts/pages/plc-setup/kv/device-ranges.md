@@ -1,6 +1,5 @@
 ---
 description: "Device families, address notation, and range reference for KEYENCE KV Host Link communication."
-title: "KV Host Link device ranges"
 ---
 
 # KV Host Link Device Ranges

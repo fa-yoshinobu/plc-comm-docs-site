@@ -1,6 +1,5 @@
 ---
 description: "Common KEYENCE KV Host Link errors seen during PLC setup, with practical checks for each."
-title: "KV Host Link troubleshooting and error codes"
 ---
 
 # KV Host Link Troubleshooting & Codes

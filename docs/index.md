@@ -141,10 +141,10 @@ of the MC Protocol Serial C++ library instead.
 
 | Your PLC | Connection | Use |
 |----------|-----------|-----|
-| MELSEC (iQ-R/F/L, MX-R/F, Q, L) | Ethernet (TCP/UDP) | **SLMP** |
-| MELSEC (iQ-R/L, Q, A) | RS-232C/RS-485 serial module | **MC Protocol Serial** |
-| KEYENCE KV series | Ethernet (TCP/UDP) | **KV Host Link** |
-| JTEKT TOYOPUC | Ethernet (TCP/UDP) | **Computerlink** |
+| MELSEC (iQ-R/F/L, MX-R/F, Q, L) | Ethernet (TCP/UDP) | **[SLMP](slmp/index.md)** |
+| MELSEC (iQ-R/L, Q, A) | RS-232C/RS-485 serial module | **[MC Protocol Serial](mcprotocol/index.md)** |
+| KEYENCE KV series | Ethernet (TCP/UDP) | **[KV Host Link](hostlink/index.md)** |
+| JTEKT TOYOPUC | Ethernet (TCP/UDP) | **[Computerlink](computerlink/index.md)** |
 
 For MELSEC PLCs, prefer **SLMP over Ethernet** whenever an Ethernet port or
 communication unit is available — it is faster and easier to wire. Choose
@@ -155,10 +155,10 @@ is available, such as on legacy Q/A installations.
 
 | Protocol | Getting started |
 |----------|----------------|
-| **SLMP** (MELSEC, Ethernet) | [.NET](slmp/dotnet/GETTING_STARTED.md) · [Python](slmp/python/GETTING_STARTED.md) · [Rust](slmp/rust/GETTING_STARTED.md) · [C++ Arduino/PlatformIO](slmp/cpp/GETTING_STARTED.md) · [Node-RED](slmp/nodered/GETTING_STARTED.md) |
-| **MC Protocol Serial** (MELSEC, serial) | [C++ Arduino/PlatformIO](mcprotocol/cpp/GETTING_STARTED.md) |
-| **KV Host Link** (KEYENCE KV) | [.NET](hostlink/dotnet/GETTING_STARTED.md) · [Python](hostlink/python/GETTING_STARTED.md) · [Rust](hostlink/rust/GETTING_STARTED.md) · [Node-RED](hostlink/nodered/GETTING_STARTED.md) |
-| **Computerlink** (JTEKT TOYOPUC) | [.NET](computerlink/dotnet/GETTING_STARTED.md) · [Python](computerlink/python/GETTING_STARTED.md) |
+| **[SLMP](slmp/index.md)** (MELSEC, Ethernet) | [.NET](slmp/dotnet/GETTING_STARTED.md) · [Python](slmp/python/GETTING_STARTED.md) · [Rust](slmp/rust/GETTING_STARTED.md) · [C++ Arduino/PlatformIO](slmp/cpp/GETTING_STARTED.md) · [Node-RED](slmp/nodered/GETTING_STARTED.md) |
+| **[MC Protocol Serial](mcprotocol/index.md)** (MELSEC, serial) | [C++ Arduino/PlatformIO](mcprotocol/cpp/GETTING_STARTED.md) |
+| **[KV Host Link](hostlink/index.md)** (KEYENCE KV) | [.NET](hostlink/dotnet/GETTING_STARTED.md) · [Python](hostlink/python/GETTING_STARTED.md) · [Rust](hostlink/rust/GETTING_STARTED.md) · [Node-RED](hostlink/nodered/GETTING_STARTED.md) |
+| **[Computerlink](computerlink/index.md)** (JTEKT TOYOPUC) | [.NET](computerlink/dotnet/GETTING_STARTED.md) · [Python](computerlink/python/GETTING_STARTED.md) |
 
 Not sure which one fits? [Choosing a language](choosing-a-language.md) compares
 the five implementations by runtime environment, footprint, and protocol

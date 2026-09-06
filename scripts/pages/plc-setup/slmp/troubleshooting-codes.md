@@ -1,6 +1,5 @@
 ---
 description: "Common SLMP setup issues and error codes observed during live MELSEC PLC verification."
-title: "SLMP troubleshooting and end codes"
 ---
 
 # SLMP Troubleshooting & Codes

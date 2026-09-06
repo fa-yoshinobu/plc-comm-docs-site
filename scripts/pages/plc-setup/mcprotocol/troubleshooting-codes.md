@@ -1,6 +1,5 @@
 ---
 description: "Practical guide to the errors returned by MELSEC serial MC Protocol targets and how to diagnose them."
-title: "MC Protocol Serial troubleshooting and error codes"
 ---
 
 # MC Protocol Serial Troubleshooting & Codes
