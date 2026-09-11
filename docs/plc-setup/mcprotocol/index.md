@@ -26,7 +26,7 @@ tool requires it.
 MC Protocol Serial is implemented in C++ for Arduino and PlatformIO targets, and
 the same library builds host-side for bring-up tools.
 
-[C++ (Arduino/PlatformIO) Getting started](../../mcprotocol/cpp/GETTING_STARTED.md)
+[C++ Getting started](../../mcprotocol/cpp/GETTING_STARTED.md)
 
 PLC Scope does not cover MC Protocol Serial. For a first read-only check on a
 serial PLC, use the bring-up scripts in

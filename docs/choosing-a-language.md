@@ -29,7 +29,7 @@ own installation before designing a control loop around a specific value.
 | **Python** | You want a quick answer today: bring-up scripts, one-off verification, logging and data analysis | [SLMP](slmp/python/GETTING_STARTED.md) · [KV Host Link](hostlink/python/GETTING_STARTED.md) · [Computerlink](computerlink/python/GETTING_STARTED.md) |
 | **.NET** | The code ships as a Windows desktop or server application: WPF HMI, Windows service, enterprise stack | [SLMP](slmp/dotnet/GETTING_STARTED.md) · [KV Host Link](hostlink/dotnet/GETTING_STARTED.md) · [Computerlink](computerlink/dotnet/GETTING_STARTED.md) |
 | **Rust** | You want the smallest deployed footprint with no runtime to install and no garbage collector: embedded Linux, AGVs, long-running resident processes | [SLMP](slmp/rust/GETTING_STARTED.md) · [KV Host Link](hostlink/rust/GETTING_STARTED.md) |
-| **C++ (Arduino/PlatformIO)** | The client is microcontroller firmware — ESP32/RP2040-class boards — or you need MC Protocol Serial | [SLMP](slmp/cpp/GETTING_STARTED.md) · [MC Protocol Serial](mcprotocol/cpp/GETTING_STARTED.md) |
+| **C++** | You need ESP32/RP2040 firmware, or MC Protocol Serial in firmware or a Windows/Linux host application | [SLMP](slmp/cpp/GETTING_STARTED.md) · [MC Protocol Serial](mcprotocol/cpp/GETTING_STARTED.md) |
 | **Node-RED** | You would rather wire nodes than write code: dashboards, and PLC data added to an existing flow | [SLMP](slmp/nodered/GETTING_STARTED.md) · [KV Host Link](hostlink/nodered/GETTING_STARTED.md) |
 
 ### Python
@@ -59,13 +59,16 @@ clients and 100 MB for Node-RED — a reference figure, not a like-for-like
 comparison, since the runtimes host very differently shaped processes. Rust
 covers SLMP and KV Host Link.
 
-### C++ (Arduino/PlatformIO)
+### C++
 
-For firmware rather than for a PC: ESP32/RP2040-class boards using
-Arduino-compatible cores or PlatformIO, where there is no runtime and no
-operating system to depend on. C++ is also the only implementation of
-MC Protocol Serial over RS-232C/RS-485, and that library builds host-side as
-well for bring-up tools.
+Use C++ for ESP32/RP2040 firmware with the supported board framework and
+PlatformIO build environment. Arduino is a framework; PlatformIO manages the
+project, dependencies, and build.
+
+C++ is also the only implementation of MC Protocol Serial over RS-232C/RS-485.
+That library supports Windows/Linux host applications through a source and CMake
+build with host serial backends. Its optional Arduino-ESP32 UART adapter provides
+synchronous and asynchronous communication for ESP32 firmware.
 
 ### Node-RED
 

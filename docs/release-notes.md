@@ -32,7 +32,7 @@ Version numbers are deliberately not reproduced on this site. Follow the
 
 | Library | What it is | Follow |
 |---------|-----------|--------|
-| **plc-comm-mcprotocol-serial-cpp** | MC Protocol serial client for Arduino and PlatformIO, for MELSEC serial communication modules. | [Releases](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/releases) · [Changelog](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/CHANGELOG.md) |
+| **plc-comm-mcprotocol-serial-cpp** | MC Protocol serial client for ESP32/RP2040 firmware and Windows/Linux host applications, for MELSEC serial communication. | [Releases](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/releases) · [Changelog](https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp/blob/main/CHANGELOG.md) |
 
 ## KEYENCE KV Host Link (Ethernet)
 

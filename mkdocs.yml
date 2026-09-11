@@ -132,8 +132,9 @@ nav:
       - Gotchas: slmp/nodered/GOTCHAS.md
   - MC Protocol Serial:
     - mcprotocol/index.md
-    - C++ (Arduino/PlatformIO):
+    - C++:
       - Getting started: mcprotocol/cpp/GETTING_STARTED.md
+      - Arduino-ESP32 UART adapter: mcprotocol/cpp/ARDUINO_ESP32_UART.md
       - Usage guide: mcprotocol/cpp/USAGE_GUIDE.md
       - API reference: mcprotocol/cpp/API_REFERENCE.md
       - Profiles: mcprotocol/cpp/PROFILES.md

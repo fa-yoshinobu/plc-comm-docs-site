@@ -1,6 +1,6 @@
 ---
 title: "MELSEC MC Protocol Serial communication library"
-description: "Talk to MELSEC PLCs over an RS-232C, RS-422, or RS-485 serial communication module with MC Protocol, from C++ on Arduino, PlatformIO, or a Linux host."
+description: "Talk to MELSEC PLCs over RS-232C, RS-422, or RS-485 with MC Protocol, from C++ firmware on ESP32/RP2040 or host applications on Windows/Linux."
 ---
 
 # MC Protocol Serial — MELSEC over RS-232C/RS-485
@@ -27,11 +27,18 @@ wire, not for the client.
 
 | Language | Install | Start here |
 |----------|---------|-----------|
-| **C++ (Arduino/PlatformIO)** | `fa-yoshinobu/mcprotocol-serial-cpp` | [Getting started](cpp/GETTING_STARTED.md) |
+| **C++** | PlatformIO: `fa-yoshinobu/mcprotocol-serial-cpp`; source + CMake for hosts | [Getting started](cpp/GETTING_STARTED.md) |
 
-This is the only implementation. It targets ESP32/RP2040-class boards and
-Arduino-compatible cores, and the same library builds host-side on Linux for
-bring-up tools.
+This is the only implementation. The C++17 communication core is independent of
+Arduino and the transport. Choose the integration for your application:
+
+- **ESP32/RP2040 firmware:** use the PlatformIO package with your board's UART integration.
+- **Arduino-ESP32:** use the optional [UART adapter](cpp/ARDUINO_ESP32_UART.md) for synchronous or asynchronous reads and writes, UART ownership, and RTS-controlled RS-485. This adapter is specific to Arduino-ESP32; it is not the RP2040 integration.
+- **Windows/Linux host applications:** build from source with CMake to use `HostSyncClient` and the host serial backends. These components are not included in the PlatformIO build.
+
+The UART adapter guide covers configuration, buffer sizing, callbacks, cancellation,
+and explicit recovery. Its examples include keeping an LCD and buttons responsive
+while a read is pending.
 
 ## Configure the PLC and the wiring first
 
