@@ -1,5 +1,5 @@
 ---
-description: "Applications built on the plc-comm libraries: PLC Scope (Windows monitor), FA Labo PLC Console (Android/iOS), and the Factory I/O SLMP / Host Link Gateway."
+description: "Applications built on the plc-comm libraries: PLC Scope, FA Labo PLC Console, Factory I/O SLMP / Host Link Gateway, and M5Stack STAMPLC demos."
 ---
 
 # Applications built with these libraries
@@ -12,7 +12,7 @@ check a PLC connection before you write any code of your own.
 Each application selects a connection option set, picks a PLC profile, and reads
 or writes devices by name — the same model described throughout this
 documentation. When a connection works in one of these tools, the protocol,
-host, port, profile, and address strings carry straight over into your own code.
+endpoint or serial settings, profile, and address strings carry straight over into your own code.
 
 ## PLC Scope
 
@@ -67,3 +67,19 @@ the PLC link drops while Factory I/O stays connected.
 | Built on | The .NET plc-comm libraries ([`PlcComm.Slmp`](slmp/dotnet/GETTING_STARTED.md), [`PlcComm.KvHostLink`](hostlink/dotnet/GETTING_STARTED.md)) |
 | Source | [github.com/fa-yoshinobu/factoryio-slmp-hostlink-gateway](https://github.com/fa-yoshinobu/factoryio-slmp-hostlink-gateway) |
 | License | MIT |
+
+## M5Stack STAMPLC demos
+
+Embedded demos that connect M5Stack STAMPLC to a Mitsubishi FX5U / FX5UC over
+its built-in RS-485 port using MC Protocol Serial. Start by reading D100 and
+displaying it on the LCD, then try button-driven value changes, asynchronous
+monitoring, and a trend graph. The accompanying article covers wiring,
+GX Works3 settings, and the PlatformIO projects.
+
+| | |
+|---|---|
+| Platform | M5Stack STAMPLC (ESP32-S3 / PlatformIO) |
+| Protocol | MELSEC MC Protocol Serial (RS-485) |
+| Built on | [`mcprotocol-serial-cpp`](mcprotocol/cpp/GETTING_STARTED.md) |
+| Article (Japanese) | [M5Stack STAMPLCと三菱PLCでMCプロトコル通信をする](https://qiita.com/fa_yoshinobu/items/eea4d81dc34d37bab4d8) |
+| Source | [github.com/fa-yoshinobu/StamPLC-demo](https://github.com/fa-yoshinobu/StamPLC-demo) |
