@@ -200,7 +200,7 @@ the parameter screens.
 ## License & support
 
 Maintained by [fa-yoshinobu](https://github.com/fa-yoshinobu) ·
-[FA Labo](https://fa-yoshinobu.github.io/FA_Labo/index.html)
+[FA Labo](https://fa-labo.com/)
 
 For license terms, commercial support, sponsorship, and donations, see
 [License & Support](support.md). To follow ongoing development, see
