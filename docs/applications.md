@@ -1,5 +1,5 @@
 ---
-description: "Applications built on the plc-comm libraries: PLC Scope, FA Labo PLC Console, Factory I/O SLMP / Host Link Gateway, and M5Stack STAMPLC demos."
+description: "Applications built on the plc-comm libraries: PLC Scope, PID Process Simulator, FA Labo PLC Console, Factory I/O SLMP / Host Link Gateway, and M5Stack STAMPLC demos."
 ---
 
 # Applications built with these libraries
@@ -31,6 +31,29 @@ configuration before a line of code is written.
 | Protocols | MELSEC SLMP, KEYENCE KV Host Link, JTEKT TOYOPUC Computer Link |
 | Built on | [`PlcComm.Slmp`](slmp/dotnet/GETTING_STARTED.md), [`PlcComm.KvHostLink`](hostlink/dotnet/GETTING_STARTED.md), [`PlcComm.Toyopuc`](computerlink/dotnet/GETTING_STARTED.md) |
 | Source | [github.com/fa-yoshinobu/plc-scope-dotnet](https://github.com/fa-yoshinobu/plc-scope-dotnet) |
+| License | MIT |
+
+## PID Process Simulator
+
+A Windows desktop application for testing PLC PID control without physical
+equipment. It reads the manipulated variable (MV) from the PLC, simulates the
+response of equipment such as heaters, tanks, pumps, and valves, and writes the
+process value (PV) back to the PLC. Connect to a MELSEC PLC over SLMP, use GX
+Simulator 3 with an iQ-R / iQ-L project, or start with the built-in dummy PLC.
+
+Run multiple process models at once, calculate model parameters from equipment
+conditions, inspect SP / PV / MV trends, and inject disturbances to check the
+control response. Projects can be saved and loaded, and trend data can be
+exported to CSV. The release ZIP includes a demo project and runs without a
+separate .NET installation.
+
+| | |
+|---|---|
+| Platform | Windows 10 / 11, x64 (.NET 9 / WPF) |
+| Connections | MELSEC SLMP, GX Simulator 3 (iQ-R / iQ-L), built-in dummy PLC |
+| Built on | [`PlcComm.Slmp`](slmp/dotnet/GETTING_STARTED.md) |
+| Download | [Windows releases](https://github.com/fa-yoshinobu/plc-pid-simulator-dotnet/releases) |
+| Source | [github.com/fa-yoshinobu/plc-pid-simulator-dotnet](https://github.com/fa-yoshinobu/plc-pid-simulator-dotnet) |
 | License | MIT |
 
 ## FA Labo PLC Console
