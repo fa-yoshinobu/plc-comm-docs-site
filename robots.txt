@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://plc-comm-docs-site.fa-labo.com/sitemap.xml
