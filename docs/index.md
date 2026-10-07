@@ -1,4 +1,5 @@
 ---
+lastmod: 2026-10-07
 description: "Open-source PLC communication libraries for MELSEC SLMP, KEYENCE KV Host Link, TOYOPUC Computerlink, and MC Protocol Serial, with .NET, Python, Rust, C++, and Node-RED implementations."
 ---
 
@@ -192,7 +193,7 @@ the parameter screens.
 |----------|---------------|
 | MELSEC SLMP | iQ-R, iQ-F, iQ-L, MX-R, MX-F, QnUDV, QnU, LCPU, RJ71EN71, QJ71E71-100, LJ71E71-100 |
 | KV Host Link | KV-X500, KV-8000, KV-7000, KV-5000, KV-XLE02 |
-| Computerlink | TOYOPUC (minimum checklist; full guide in preparation) |
+| Computerlink | TOYOPUC Nano, Plus, PC10G, PC3J — [PCwin](plc-setup/computerlink/pcwin.md) and [PCwin2](plc-setup/computerlink/pcwin2.md) settings |
 | MC Protocol Serial | MELSEC serial modules (iQ-R/L, Q, A) |
 
 → [Open PLC Setup Guide](plc-setup/index.md)

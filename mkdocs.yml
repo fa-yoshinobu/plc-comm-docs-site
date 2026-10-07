@@ -6,6 +6,8 @@ site_description: >-
   Node-RED implementations plus per-model PLC setup guides.
 repo_url: https://github.com/fa-yoshinobu/plc-comm-docs-site
 repo_name: fa-yoshinobu/plc-comm-docs-site
+hooks:
+  - scripts/page_dates.py
 theme:
   name: material
   language: en

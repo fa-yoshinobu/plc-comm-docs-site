@@ -25,6 +25,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       # Set up the interpreter before anything runs on it, so the collect step,
       # the tests, and the build all use the same Python rather than whichever
@@ -38,21 +40,21 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _src
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet.git _src/computerlink-dotnet
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-python.git _src/computerlink-python
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-computerlink-profiles.git _src/computerlink-profiles
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet.git _src/hostlink-dotnet
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-python.git _src/hostlink-python
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-rust.git _src/hostlink-rust
-          git clone --depth 1 https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink.git _src/hostlink-nodered
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-hostlink-profiles.git _src/hostlink-profiles
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet.git _src/slmp-dotnet
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-python.git _src/slmp-python
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-rust.git _src/slmp-rust
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal.git _src/slmp-cpp
-          git clone --depth 1 https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp.git _src/slmp-nodered
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-slmp-profiles.git _src/slmp-profiles
-          git clone --depth 1 https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp.git _src/mcprotocol-serial-cpp
+          git clone https://github.com/fa-yoshinobu/plc-comm-computerlink-dotnet.git _src/computerlink-dotnet
+          git clone https://github.com/fa-yoshinobu/plc-comm-computerlink-python.git _src/computerlink-python
+          git clone https://github.com/fa-yoshinobu/plc-comm-computerlink-profiles.git _src/computerlink-profiles
+          git clone https://github.com/fa-yoshinobu/plc-comm-hostlink-dotnet.git _src/hostlink-dotnet
+          git clone https://github.com/fa-yoshinobu/plc-comm-hostlink-python.git _src/hostlink-python
+          git clone https://github.com/fa-yoshinobu/plc-comm-hostlink-rust.git _src/hostlink-rust
+          git clone https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink.git _src/hostlink-nodered
+          git clone https://github.com/fa-yoshinobu/plc-comm-hostlink-profiles.git _src/hostlink-profiles
+          git clone https://github.com/fa-yoshinobu/plc-comm-slmp-dotnet.git _src/slmp-dotnet
+          git clone https://github.com/fa-yoshinobu/plc-comm-slmp-python.git _src/slmp-python
+          git clone https://github.com/fa-yoshinobu/plc-comm-slmp-rust.git _src/slmp-rust
+          git clone https://github.com/fa-yoshinobu/plc-comm-slmp-cpp-minimal.git _src/slmp-cpp
+          git clone https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp.git _src/slmp-nodered
+          git clone https://github.com/fa-yoshinobu/plc-comm-slmp-profiles.git _src/slmp-profiles
+          git clone https://github.com/fa-yoshinobu/plc-comm-mcprotocol-serial-cpp.git _src/mcprotocol-serial-cpp
 
       - name: Collect docs
         run: python scripts/collect_docs.py --source-root _src

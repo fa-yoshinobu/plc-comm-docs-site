@@ -16,6 +16,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from page_dates import write_page_dates
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -730,24 +732,38 @@ def postprocess_links(docs_root: Path) -> None:
 
 def collect_docs(source_root: Path, docs_root: Path) -> None:
     validate_slmp_api_indexes(source_root)
+    origins: dict[str, list[Path]] = {}
     for source in SOURCES:
         source_dir = resolve_source(source_root, source)
         target_dir = docs_root / source.target_dir
         copy_contents(source_dir, target_dir)
+        for path in source_dir.rglob("*.md"):
+            relative = (Path(source.target_dir) / path.relative_to(source_dir)).as_posix()
+            origins[relative] = [path]
         print(f"collected {source.repo_name}: {source_dir} -> {target_dir}")
 
     for source in SOURCE_FILES:
         source_file = resolve_source_file(source_root, source)
         target_file = docs_root / source.target_file
         copy_file(source_file, target_file)
+        origins[source.target_file] = [source_file]
         print(f"collected {source.repo_name}: {source_file} -> {target_file}")
 
     for relative in GENERATED_PAGES:
         write_generated_page(docs_root / relative, read_page_source(relative))
+        origins[relative] = [PAGES_ROOT / relative]
         print(f"generated {relative}")
 
     for relative_path, title, module_name, package_name in PYTHON_API_REFERENCE_PAGES:
         write_generated_page(docs_root / relative_path, python_api_reference_page(title, module_name, package_name))
+        source = next(item for item in SOURCES if item.target_dir == str(Path(relative_path).parent).replace("\\", "/"))
+        repo = resolve_source(source_root, source).parents[1]
+        module_path = repo / module_name
+        if not module_path.is_dir():
+            module_path = repo / "src" / module_name
+        origins[relative_path] = [repo / "pyproject.toml", module_path]
+        if module_name == "slmp":
+            origins[relative_path].append(PAGES_ROOT / "partials/slmp-python-api-operation-index.md")
 
     remove_unpublished_files(docs_root)
 
@@ -759,6 +775,7 @@ def collect_docs(source_root: Path, docs_root: Path) -> None:
     print(f"appended the source and package footer to {appended} pages")
 
     postprocess_links(docs_root)
+    write_page_dates(docs_root, origins)
 
 
 def main() -> int:

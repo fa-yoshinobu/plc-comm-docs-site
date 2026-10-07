@@ -56,6 +56,34 @@ Two checks keep this from regressing. `collect_docs.py` fails if any page under
 two pages in the built site share a title. Keep nav labels short — the front
 matter title, not the nav label, is what a reader sees outside the sidebar.
 
+## Sitemap modification dates
+
+MkDocs normally uses the build date for every sitemap entry. This site instead
+records each page's source modification date during `collect_docs.py` in
+`docs/.sitemap-dates.json`, an ignored, unpublished provenance manifest.
+`scripts/page_dates.py` is also a MkDocs hook: it validates the collected page
+hash and sets `page.update_date` before the standard sitemap template runs.
+
+Dates come from complete Git history, not checkout time or deployment time:
+
+- Handwritten pages use their own source file and embedded local images.
+- Collected pages and profile tables use their original source repository files.
+- Generated reference pages use their maintained `scripts/pages/` bodies.
+- Python API pages use the package module, `pyproject.toml`, and the SLMP
+  operation-index partial where applicable.
+
+The manifest includes source paths, commit IDs, and dates for review. Both this
+repository and all collected repositories must have full history; shallow
+clones fail collection rather than claim an incorrect date. Rebuilding without
+source changes preserves the dates. Re-run collection after editing a page so
+that its hash and date evidence remain current. For an edit awaiting commit,
+an explicit `lastmod: YYYY-MM-DD` front matter field records the known edit date;
+the later of that date and committed source history is used. Do not change it
+merely because a deployment is being run.
+If collection logic changes published titles, footers, or generated prose, also
+record that content-change date on the affected maintained page sources; build
+infrastructure changes alone must not advance every page's modification date.
+
 ## Link policy
 
 Source repositories link to shared site pages with **absolute URLs on the
