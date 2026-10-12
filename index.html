@@ -5274,6 +5274,9 @@ your own code.</p>
 Do your first connectivity check with the Monitor tab only, and confirm
 that an address range is safe for the connected equipment before writing
 anything or changing CPU state.</p>
+<p>Before writing through a library API, read <a href="bit-write-safety/">Bit Write Safety</a>
+for Boolean inputs, concurrent updates to bits inside a word, and recovery
+when a write's outcome is unknown.</p>
 </div>
 <p><strong>MC Protocol Serial is not covered by PLC Scope.</strong> For a serial PLC, use the
 read-only bring-up scripts in
