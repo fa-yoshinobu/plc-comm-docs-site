@@ -1,5 +1,5 @@
 ---
-lastmod: 2026-10-07
+lastmod: 2026-10-13
 description: "Open-source PLC communication libraries for MELSEC SLMP, KEYENCE KV Host Link, TOYOPUC Computerlink, and MC Protocol Serial, with .NET, Python, Rust, C++, and Node-RED implementations."
 ---
 
@@ -132,6 +132,10 @@ your own code.
     Do your first connectivity check with the Monitor tab only, and confirm
     that an address range is safe for the connected equipment before writing
     anything or changing CPU state.
+
+    Before writing through a library API, read [Bit Write Safety](bit-write-safety.md)
+    for Boolean inputs, concurrent updates to bits inside a word, and recovery
+    when a write's outcome is unknown.
 
 **MC Protocol Serial is not covered by PLC Scope.** For a serial PLC, use the
 read-only bring-up scripts in
