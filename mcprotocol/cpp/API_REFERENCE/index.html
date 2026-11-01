@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -30141,7 +30141,7 @@ Do not edit it manually; run <code>scripts/update_api_reference.py</code> instea
 <h3 id="class-mcprotocolserialmelsecserialclient">Class <code>mcprotocol::serial::MelsecSerialClient</code></h3>
 <p>Asynchronous MC protocol client for UART / serial integrations.</p>
 <p>The intended MCU-side workflow is: call configure() start an async_* request call notify_tx_started(now_ms) immediately before the first UART write transmit pending_tx_frame() with the board UART layer call notify_tx_complete(now_ms, transport_status) when TX finishes or aborts feed received bytes with on_rx_bytes() call notify_rx_failure(receive_status) if the transport aborts response reception call poll() from the main loop or scheduler for deadline handling</p>
-<p>Output spans passed to async_<em> requests must remain valid until the completion callback fires. Only one request may be active. A second enabled async_</em> request returns Busy before changing the active request's output storage, request metadata, or monitor state. Same-instance calls from different operating-system threads are prohibited; the caller owns scheduling. Separate instances are independent and may progress concurrently. Cancelling before notify_tx_started() completes immediately as Cancelled. Cancelling during TX records the cancellation but does not complete the request until the UART reports physical TX completion or abort through notify_tx_complete(). Likewise, a deadline reached while physical TX is pending is latched: poll() marks the transport for reset but keeps the request busy and leaves the RS-485 direction/completion callbacks pending until notify_tx_complete() reports that TX finished or was aborted. Once the decoder retains a possible response, TimeoutConfig::inter_byte_timeout_ms also bounds inactivity between chunks without extending the absolute transaction deadline. After transmission may have begun, any unconfirmed state-changing command completes as OperationOutcomeUnknown; the client never retries it automatically.</p>
+<p>Output spans passed to async_* requests must remain valid until the completion callback fires. Only one request may be active. A second enabled async_* request returns Busy before changing the active request's output storage, request metadata, or monitor state. Same-instance calls from different operating-system threads are prohibited; the caller owns scheduling. Separate instances are independent and may progress concurrently. Cancelling before notify_tx_started() completes immediately as Cancelled. Cancelling during TX records the cancellation but does not complete the request until the UART reports physical TX completion or abort through notify_tx_complete(). Likewise, a deadline reached while physical TX is pending is latched: poll() marks the transport for reset but keeps the request busy and leaves the RS-485 direction/completion callbacks pending until notify_tx_complete() reports that TX finished or was aborted. Once the decoder retains a possible response, TimeoutConfig::inter_byte_timeout_ms also bounds inactivity between chunks without extending the absolute transaction deadline. After transmission may have begun, any unconfirmed state-changing command completes as OperationOutcomeUnknown; the client never retries it automatically.</p>
 <h4 id="member-functions">Member Functions</h4>
 <h4 id="melsecserialclient"><code>MelsecSerialClient</code></h4>
 <div class="highlight"><pre><span></span><code><span class="n">mcprotocol</span><span class="o">::</span><span class="n">serial</span><span class="o">::</span><span class="n">MelsecSerialClient</span><span class="o">::</span><span class="n">MelsecSerialClient</span><span class="p">()</span><span class="o">=</span><span class="k">default</span>
@@ -32717,10 +32717,10 @@ Do not edit it manually; run <code>scripts/update_api_reference.py</code> instea
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
       
     
   </body>

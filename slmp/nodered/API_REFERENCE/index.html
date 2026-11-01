@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -3485,6 +3485,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#plc-clock-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PLC clock setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#this-library" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5143,6 +5154,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#plc-clock-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PLC clock setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#this-library" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5634,6 +5656,64 @@ field; omitted route targets still use the own-station route <code>0x03FF</code>
 <h2 id="traffic-statistics">Traffic Statistics</h2>
 <p><code>SlmpClient.trafficStats()</code> returns a frozen <code>{ requestCount, txBytes, rxBytes }</code> snapshot.
 Counters are cumulative for the client lifetime and are not reset by close or reconnect.</p>
+<h2 id="plc-clock-setting">PLC clock setting</h2>
+<p><code>SlmpClient.setTime(value, options = {})</code> writes SM210 OFF, SD210 clock words, then SM210 ON under one client operation lock. Q/QnU/QnUDV/L use four packed BCD words; iQ-R/iQ-F/iQ-L/MX-F/MX-R use seven BIN words. Ethernet module profiles use the CPU's clock layout. Unknown layouts reject before sending. <code>Date</code> uses host local fields (1980..2079). Seven-integer arrays use <code>[YY, month, day, hour, minute, second, weekday]</code>, YY 0..79, Sunday 0. Target options are forwarded to every write. The return value confirms write acknowledgements only; follow the target CPU's clock-processing requirements and verify actual clock application separately. Q/L and iQ-R/iQ-F require END processing. Do not automatically retry partial failures.</p>
+<table>
+<thead>
+<tr>
+<th>Series / profiles</th>
+<th>Clock registers</th>
+<th>Encoding</th>
+<th>Clock specification reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QCPU, QnU, QnUDV, including QJ71E71-100</td>
+<td>SD210..SD213</td>
+<td>Four packed BCD words: YY/month, day/hour, minute/second, century/weekday</td>
+<td>QCPU User's Manual (Hardware Design, Maintenance and Inspection), SH-080483ENG-BB, Appendix 2 (SM210/SM213), Appendix 3 (SD210..SD213); QnUCPU Function Explanation, SH-080807ENG-AF, 3.5</td>
+</tr>
+<tr>
+<td>LCPU, including LJ71E71-100</td>
+<td>SD210..SD213</td>
+<td>Same four-word BCD layout</td>
+<td>SH-080483ENG-BB, Appendix 2 and 3, corresponding CPU columns for LCPU</td>
+</tr>
+<tr>
+<td>iQ-R, including RJ71EN71</td>
+<td>SD210..SD216</td>
+<td>Seven BIN words: year, month, day, hour, minute, second, weekday</td>
+<td>MELSEC iQ-R Programmable Controller CPU Module User's Manual, SH-082488ENG-G, Clock Function and special register list</td>
+</tr>
+<tr>
+<td>iQ-F (FX5)</td>
+<td>SD210..SD216</td>
+<td>Same seven-word BIN layout</td>
+<td>MELSEC iQ-F FX5 User's Manual (Application), JY997D54301AF, 18.1</td>
+</tr>
+<tr>
+<td>iQ-L</td>
+<td>SD210..SD216</td>
+<td>Same seven-word BIN layout</td>
+<td>MELSEC iQ-L CPU Module User Manual (Application), SH-082170CHN-H, 4.1 and Appendix 5 (SD210..SD216)</td>
+</tr>
+<tr>
+<td>MX-F</td>
+<td>SD210..SD216</td>
+<td>Same seven-word BIN layout</td>
+<td>MELSEC MX Controller MX-F Model User's Manual, SH-082633-E, Appendix 4 (Clock Data), Appendix 7 (SD210..SD216)</td>
+</tr>
+<tr>
+<td>MX-R, including RJ71EN71</td>
+<td>SD210..SD216</td>
+<td>Same seven-word BIN layout</td>
+<td>MELSEC MX Controller MX-R Model User's Manual, SH-082640-D, Appendix 4 (Clock Data), Appendix 7 (SD210..SD216)</td>
+</tr>
+</tbody>
+</table>
+<p>All listed series use SM210 OFF-to-ON to request setting and SM213 ON to refresh the clock registers for reading. Q/L and iQ-F do not document the automatic SM210 reset used by iQ-R/iQ-L/MX-F/MX-R; an acknowledged write alone does not guarantee that SM210 is OFF. The iQ-R example's SM210-OFF completion check is specific to that example. Coordinate these special devices with the PLC program and other clients.</p>
+<p>Clock layout references: <a href="https://fa-faq.mitsubishielectric.com/faq/show/44365">FX5 clock setting (SD210..SD216)</a>, <a href="https://dl.mitsubishielectric.com/dl/fa/document/manual/plc/sh080807eng/sh080807engaf.pdf">QnU clock function (SD210..SD213)</a>, and <a href="https://www.mitsubishielectric.com/dl/fa/document/manual/plc/sh082488eng/sh082488engf.pdf">iQ-R CPU clock function</a>. This helper uses Device Write (1401), not a dedicated SLMP clock command.</p>
 <h2 id="this-library">This library</h2>
 <table>
 <thead>
@@ -5759,10 +5839,10 @@ Counters are cumulative for the client lifetime and are not reset by close or re
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
       
     
   </body>

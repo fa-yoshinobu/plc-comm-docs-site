@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -2202,6 +2202,17 @@
     <span class="md-ellipsis">
       
         Traffic statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plc-clock-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PLC clock setting
       
     </span>
   </a>
@@ -5143,6 +5154,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#plc-clock-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PLC clock setting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#this-library" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5461,6 +5483,9 @@ reconcile PLC/application state because repeating a change can duplicate it.</p>
 <p><code>trafficStats()</code> returns a frozen lifetime <code>{ requestCount, txBytes, rxBytes }</code>
 snapshot. TCP receive bytes include the body and first terminator; UDP counts the
 accepted datagram. Close/reconnect does not reset the counters.</p>
+<h2 id="plc-clock-setting">PLC clock setting</h2>
+<p>The <code>kvhostlink-set-time</code> node exposes <code>HostLinkClient.setTime(value)</code>. Pass a local <code>Date</code> (2000..2099) or <code>[YY, month, day, hour, minute, second, weekday]</code> in <code>msg.payload</code>; Sunday is 0. Errors are reported to Catch nodes. The output preserves the message after the WRT acknowledgement.</p>
+<p>The node opens the shared connection before writing, including after a disconnect. Clock-register readback can lag the WRT acknowledgement; wait for the PLC clock data to refresh when verifying the result.</p>
 <h2 id="this-library">This library</h2>
 <table>
 <thead>
@@ -5586,10 +5611,10 @@ accepted datagram. Close/reconnect does not reset the counters.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.footer", "navigation.top", "navigation.instant", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
       
     
   </body>
