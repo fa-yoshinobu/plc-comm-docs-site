@@ -5484,8 +5484,36 @@ reconcile PLC/application state because repeating a change can duplicate it.</p>
 snapshot. TCP receive bytes include the body and first terminator; UDP counts the
 accepted datagram. Close/reconnect does not reset the counters.</p>
 <h2 id="plc-clock-setting">PLC clock setting</h2>
-<p>The <code>kvhostlink-set-time</code> node exposes <code>HostLinkClient.setTime(value)</code>. Pass a local <code>Date</code> (2000..2099) or <code>[YY, month, day, hour, minute, second, weekday]</code> in <code>msg.payload</code>; Sunday is 0. Errors are reported to Catch nodes. The output preserves the message after the WRT acknowledgement.</p>
-<p>The node opens the shared connection before writing, including after a disconnect. Clock-register readback can lag the WRT acknowledgement; wait for the PLC clock data to refresh when verifying the result.</p>
+<p><code>HostLinkClient.setTime(value, options)</code> sends the Host Link <code>WRT</code> command.
+The optional operation options support cancellation with <code>{ signal }</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Date</code></td>
+<td>Host-local calendar fields, with a year in 2000..2099.</td>
+</tr>
+<tr>
+<td>Seven-integer array</td>
+<td><code>[YY, month, day, hour, minute, second, weekday]</code>; YY = 0..99 and Sunday = 0. No timezone conversion.</td>
+</tr>
+</tbody>
+</table>
+<p>Missing values, strings, timestamps, invalid dates, out-of-range fields, and a
+weekday inconsistent with the array's calendar date are rejected before sending WRT.
+The method resolves after the PLC acknowledgement, without a readback result.
+Clock-register readback can lag the acknowledgement; allow the clock data to
+refresh before verifying the change. Do not automatically retry a failed write
+whose outcome is uncertain.</p>
+<p>The <code>kvhostlink-set-time</code> node passes <code>msg.payload</code> to this method, opens the
+shared connection before writing (including after a disconnect), preserves the
+input message on success, and reports errors to Catch nodes. See the
+<a href="../USAGE_GUIDE/#kvhostlink-set-time-node">node usage and sample</a>.</p>
 <h2 id="this-library">This library</h2>
 <table>
 <thead>

@@ -3457,6 +3457,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#slmp-set-time-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        slmp-set-time node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#address-syntax" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5242,6 +5253,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#slmp-set-time-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        slmp-set-time node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#address-syntax" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5383,7 +5405,7 @@
 <tbody>
 <tr>
 <td><code>slmp-connection</code></td>
-<td>Shared MELSEC SLMP connection profile for <code>slmp-read</code> and <code>slmp-write</code>.</td>
+<td>Shared MELSEC SLMP connection profile for read, write, and clock-setting nodes.</td>
 </tr>
 <tr>
 <td><code>slmp-read</code></td>
@@ -5392,6 +5414,10 @@
 <tr>
 <td><code>slmp-write</code></td>
 <td>Writes one or more device values from static configuration or incoming messages.</td>
+</tr>
+<tr>
+<td><code>slmp-set-time</code></td>
+<td>Sets the PLC clock from an explicit Date or clock-field array.</td>
 </tr>
 </tbody>
 </table>
@@ -5832,6 +5858,33 @@ manual opt-in, random format-valid test values, and best-effort snapshot restora
 </tr>
 </tbody>
 </table>
+<h2 id="slmp-set-time-node">slmp-set-time node</h2>
+<p>Select the shared <code>slmp-connection</code> and send the desired time in <code>msg.payload</code>.
+To use the Node-RED host's current local time, connect a manual Inject node to a
+Function node containing:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">msg</span><span class="p">.</span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">();</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">msg</span><span class="p">;</span>
+</code></pre></div>
+<p>Alternatively, send a JSON array such as <code>[26, 10, 31, 12, 34, 56, 6]</code>:
+<code>[YY, month, day, hour, minute, second, weekday]</code>, with Sunday = 0.
+Date inputs use the host's local timezone and accept years 1980..2079; arrays
+specify PLC wall-clock time with YY = 0..79 (2000..2079).
+Missing or invalid input is rejected.</p>
+<p>The same input format works for iQ-R/iQ-F/iQ-L/MX-F/MX-R and Q/QnU/QnUDV/L,
+including their Ethernet module profiles. The selected profile determines the
+PLC register encoding; callers do not pack BIN or BCD words themselves.
+See the <a href="../API_REFERENCE/#plc-clock-setting">clock layout table and client API</a>.</p>
+<p>The single output preserves the input message after write acknowledgements;
+it does not verify a clock change. Route failures to a Catch node and check the
+PLC state before deciding whether to repeat a failed write. Coordinate <code>SM210</code>,
+<code>SM213</code>, and the <code>SD210</code> clock registers with the PLC program and other clients.
+Follow the target CPU's clock-processing requirements, including END processing.</p>
+<p>Import the <a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp/blob/main/examples/flows/slmp-set-time.json">clock-setting sample</a>
+for manual setting, iQ-R readback through <code>SM213</code> / <code>SD210..SD216</code>, and clock
+comparison. It also has a manual readback button. This readback sequence is for
+iQ-R; Q/L use a different register layout. Configure the endpoint and follow the
+<a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-slmp/blob/main/examples/flows/README.md#clock-setting-and-readback">sample prerequisites</a>
+before use.</p>
 <h2 id="address-syntax">Address syntax</h2>
 <table>
 <thead>

@@ -5657,6 +5657,8 @@ field; omitted route targets still use the own-station route <code>0x03FF</code>
 <p><code>SlmpClient.trafficStats()</code> returns a frozen <code>{ requestCount, txBytes, rxBytes }</code> snapshot.
 Counters are cumulative for the client lifetime and are not reset by close or reconnect.</p>
 <h2 id="plc-clock-setting">PLC clock setting</h2>
+<p>For Node-RED input examples and the readback flow, see the
+<a href="../USAGE_GUIDE/#slmp-set-time-node">slmp-set-time node usage</a>.</p>
 <p><code>SlmpClient.setTime(value, options = {})</code> writes SM210 OFF, SD210 clock words, then SM210 ON under one client operation lock. Q/QnU/QnUDV/L use four packed BCD words; iQ-R/iQ-F/iQ-L/MX-F/MX-R use seven BIN words. Ethernet module profiles use the CPU's clock layout. Unknown layouts reject before sending. <code>Date</code> uses host local fields (1980..2079). Seven-integer arrays use <code>[YY, month, day, hour, minute, second, weekday]</code>, YY 0..79, Sunday 0. Target options are forwarded to every write. The return value confirms write acknowledgements only; follow the target CPU's clock-processing requirements and verify actual clock application separately. Q/L and iQ-R/iQ-F require END processing. Do not automatically retry partial failures.</p>
 <table>
 <thead>

@@ -2198,6 +2198,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#kvhostlink-set-time-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-set-time node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#address-syntax" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5276,6 +5287,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#kvhostlink-set-time-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kvhostlink-set-time node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#address-syntax" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5426,6 +5448,10 @@
 <tr>
 <td><code>kvhostlink-write</code></td>
 <td>Writes one or more high-level address/value updates.</td>
+</tr>
+<tr>
+<td><code>kvhostlink-set-time</code></td>
+<td>Sets the PLC clock from an explicit Date or clock-field array.</td>
 </tr>
 </tbody>
 </table>
@@ -5839,6 +5865,25 @@ validation and the 1000-bit request limit still apply.</p>
 <code>done(error)</code> without a message, <code>msg.error</code> sends the failed message on output
 1, and <code>Second output</code> sends it only on output 2. The saved terminal count must
 match the selected mode exactly; conflicting old flows are rejected for review.</p>
+<h2 id="kvhostlink-set-time-node">kvhostlink-set-time node</h2>
+<p>Select the shared <code>kvhostlink-connection</code> and send the desired time in <code>msg.payload</code>.
+To use the Node-RED host's current local time, connect a manual Inject node to a
+Function node containing:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">msg</span><span class="p">.</span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">();</span>
+<span class="k">return</span><span class="w"> </span><span class="nx">msg</span><span class="p">;</span>
+</code></pre></div>
+<p>Alternatively, send a JSON array such as <code>[26, 10, 31, 12, 34, 56, 6]</code>:
+<code>[YY, month, day, hour, minute, second, weekday]</code>, with Sunday = 0.
+Date inputs use the host's local timezone; arrays specify PLC wall-clock time
+without timezone conversion. Years are 2000..2099. Missing or invalid input is rejected.</p>
+<p>The single output preserves the input message after the WRT acknowledgement;
+it does not verify a clock change. Route failures to a Catch node and check the
+PLC clock before deciding whether to repeat a failed write.</p>
+<p>Import the <a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink/blob/main/examples/flows/kvhostlink-set-time.json">clock-setting sample</a>
+for manual setting, delayed <code>CM700..CM706</code> readback, clock comparison, and an
+independent read-only clock button. Configure the endpoint and PLC profile as
+described in the <a href="https://github.com/fa-yoshinobu/node-red-contrib-plc-comm-kvhostlink/blob/main/examples/flows/README.md#clock-setting-and-readback">sample instructions</a>.
+See the <a href="../API_REFERENCE/#plc-clock-setting">API reference</a> for the client method.</p>
 <h2 id="address-syntax">Address syntax</h2>
 <table>
 <thead>
