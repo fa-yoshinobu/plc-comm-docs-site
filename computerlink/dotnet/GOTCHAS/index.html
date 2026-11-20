@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1036,6 +1036,17 @@
     <span class="md-ellipsis">
       
         The PLC clock has no century or timezone
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-responses-require-an-explicit-reconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extra responses require an explicit reconnect
       
     </span>
   </a>
@@ -5198,6 +5209,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#extra-responses-require-an-explicit-reconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extra responses require an explicit reconnect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#a-timeout-discards-the-transport-session" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5280,6 +5302,9 @@ therefore does not match this PLC configuration.</p>
 <p><code>OpenAsync()</code> does not dispatch a synchronous <code>Open()</code> override. If a derived client previously customized only <code>Open()</code>, add an explicit <code>OpenAsync(CancellationToken)</code> override; ordinary clients require no migration.</p>
 <h2 id="the-plc-clock-has-no-century-or-timezone">The PLC clock has no century or timezone</h2>
 <p>Pass an explicit century to <code>AsDateTime(yearBase)</code> and clock writes. Use a timezone-unspecified <code>DateTime</code> representing PLC local time.</p>
+<h2 id="extra-responses-require-an-explicit-reconnect">Extra responses require an explicit reconnect</h2>
+<p>The client checks for unowned TCP bytes or UDP datagrams before each send and for immediately visible extra data after receiving a response. This includes partial TCP frames and empty UDP datagrams. Detected extra data raises <code>ToyopucProtocolError</code>, closes the transport, and requires an explicit <code>Open()</code> or <code>OpenAsync()</code>; the request is not automatically retried or resent. A request rejected before send is not reported as outcome-unknown. After a state-changing send, the existing malformed-response outcome-unknown rules apply, including the fixed-local-port UDP taint restriction below.</p>
+<p>These checks do not guarantee complete duplicate-response detection. Computerlink responses have no transaction serial, and a delayed duplicate with the same command and response shape that arrives after the next send cannot always be distinguished from that request's response. Do not treat reconnecting to the same fixed UDP port as proof that late datagrams are gone.</p>
 <h2 id="a-timeout-discards-the-transport-session">A timeout discards the transport session</h2>
 <p>This prevents a late response from an expired request from being consumed as the response to a later request. A subsequent ordinary command may reconnect for TCP or ephemeral-port UDP. A fixed-local-port UDP client is terminal after an uncertain post-send failure: Computerlink has no request serial that can distinguish a late response from a later request to the same endpoint. Because the TOYOPUC link parameters require the PC's fixed UDP port to match the Other Node Table, create a new client with that configured port only after late responses can no longer be present.</p>
 <p>Connection timeouts, retry delays, and polling intervals have a common inclusive maximum of <code>2,147,483,647</code> milliseconds (<code>2,147,483.647</code> seconds, about 24.86 days). Timeouts and polling intervals must be greater than zero; retry delay may be zero. Invalid values raise <code>ArgumentOutOfRangeException</code> before communication or waiting starts.</p>
