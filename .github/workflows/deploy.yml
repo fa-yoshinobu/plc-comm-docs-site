@@ -12,27 +12,31 @@ on:
       - .github/workflows/deploy.yml
   workflow_dispatch:
 
-permissions:
-  contents: write
+permissions: {}
 
 concurrency:
   group: deploy-docs
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      site-artifact-id: ${{ steps.save-site.outputs.artifact-id }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       # Set up the interpreter before anything runs on it, so the collect step,
       # the tests, and the build all use the same Python rather than whichever
       # version the runner image happens to ship.
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
 
@@ -60,7 +64,7 @@ jobs:
         run: python scripts/collect_docs.py --source-root _src
 
       - name: Set up .NET SDK for documentation examples
-        uses: actions/setup-dotnet@v6
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6
         with:
           dotnet-version: 10.0.x
 
@@ -85,10 +89,22 @@ jobs:
       - name: Verify every page has a unique title
         run: python scripts/check_page_titles.py
 
+      # Upload the already-built static site before running the external link
+      # checker. The deploy job still requires that the checker succeeds.
+      - name: Save built site
+        id: save-site
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: built-docs-site
+          path: site/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 1
+
       # mkdocs --strict validates relative links and anchors. This step covers
       # the links it cannot see: URLs that leave the site.
       - name: Check documentation links
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -105,10 +121,31 @@ jobs:
             "docs/**/*.md"
           fail: true
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Verify site artifact ID
+        env:
+          SITE_ARTIFACT_ID: ${{ needs.build.outputs.site-artifact-id }}
+        run: '[[ "$SITE_ARTIFACT_ID" =~ ^[0-9]+$ ]]'
+
+      - name: Download checked site
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          artifact-ids: ${{ needs.build.outputs.site-artifact-id }}
+          path: ${{ runner.temp }}/built-docs-site
+          digest-mismatch: error
+
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy
-        run: mkdocs gh-deploy --force --clean
+        run: bash scripts/deploy_site.sh "$RUNNER_TEMP/built-docs-site"
